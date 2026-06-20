@@ -89,32 +89,34 @@
 </div>
 
 <script>
-    // قاعدة البيانات الأصلية
-    const customersDatabase = {
-        
-        "29602110201779": { name: "طارق السيد متولي الدمرداش", loan: 30000, wallet: "فودافون كاش", walletNum: "01007110631", status: "approved" },
-        // ========== العملاء الجدد من استمارة طلب عميل (1).xlsx ==========
-"27111162101976": { name: "محمود عبدالرحيم شريف مصطفى", loan: 70000, wallet: "اتصالات كاش", walletNum: "01117498093", status: "approved" },
-"26702262601032": { name: "العربي محمد عبدالله محمد", loan: 200000, wallet: "فودافون كاش", walletNum: "01006456440", status: "approved" },
-"30202072200574": { name: "جابر علاء الدين جابر", loan: 200000, wallet: "فودافون كاش", walletNum: "01040132958", status: "approved" },
-"26803160201995": { name: "أسامه سليمان فاضل عثمان", loan: 120000, wallet: "فودافون كاش", walletNum: "01018925904", status: "approved" },
-"27803022401359": { name: "حشمت سيد عبدالباقي فراج", loan: 60000, wallet: "فودافون كاش", walletNum: "01061597099", status: "approved" },
-"27902263200077": { name: "رفعت سيد آدم حربي", loan: 120000, wallet: "اتصالات كاش", walletNum: "01149065430", status: "approved" },
-"27105051802215": { name: "حافظ عيسى حافظ محمد", loan: 70000, wallet: "فودافون كاش", walletNum: "01229432216", status: "approved" },
-"27808081401712": { name: "على احمد بيومى احمد", loan: 50000, wallet: "اتصالات كاش", walletNum: "01114552407", status: "approved" },
-"25901211400678": { name: "حامد محمود علي الجوهري", loan: 90000, wallet: "فودافون كاش", walletNum: "01030095923", status: "approved" },
-"26408290103999": { name: "نبيل محمد محمد محمد", loan: 50000, wallet: "فودافون كاش", walletNum: "01003320356", status: "approved" },
-"28304290100491": { name: "عبد الله بركات شحاته محمود", loan: 35000, wallet: "فودافون كاش", walletNum: "01080189531", status: "approved" },
-"28203051200717": { name: "صابر محمد احمد محمد حريز", loan: 200000, wallet: "فودافون كاش", walletNum: "01010476120", status: "approved" },
-"27411101601651": { name: "صالح السيد فراج", loan: 50000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
-"26912011500037": { name: "حسين حسن إسماعيل أحمد", loan: 200000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
-"27301261600228": { name: "حنان فؤاد محمد حسن", loan: 45000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
-"28604081401754": { name: "حجاج صلاح الدين محمد جاد", loan: 200000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
-"27812062504303": { name: "نهى نبيه عبد الرشيد عيسى", loan: 200000, wallet: "فودافون كاش", walletNum: "01010947899", status: "approved" },
-"27507020101589": { name: "هند ابراهيم علي عيد", loan: 0, wallet: "اتصالات كاش", walletNum: "غير مسجل", status: "pending" },
-"27109251501371": { name: "سمير محمد ابو فوده", loan: 0, wallet: "اتصالات كاش", walletNum: "غير مسجل", status: "pending" },
-"29501022100139": { name: "عبدالرحمن حسن إبراهيم نور", loan: 50000, wallet: "فودافون كاش", walletNum: "01090586268", status: "approved" }
-    };
+const customersDatabase = {
+    // ========== العملاء الجدد (24 عميلاً) ==========
+    "27111162101976": { name: "محمود عبدالرحيم شريف مصطفى", loan: 70000, wallet: "اتصالات كاش", walletNum: "01117498093", status: "approved" },
+    "26702262601032": { name: "العربي محمد عبدالله محمد", loan: 200000, wallet: "فودافون كاش", walletNum: "01006456440", status: "approved" },
+    "30202072200574": { name: "جابر علاء الدين جابر", loan: 200000, wallet: "فودافون كاش", walletNum: "01040132958", status: "approved" },
+    "26803160201995": { name: "أسامه سليمان فاضل عثمان", loan: 120000, wallet: "فودافون كاش", walletNum: "01018925904", status: "approved" },
+    "27803022401359": { name: "حشمت سيد عبدالباقي فراج", loan: 60000, wallet: "فودافون كاش", walletNum: "01061597099", status: "approved" },
+    "27902263200077": { name: "رفعت سيد آدم حربي", loan: 120000, wallet: "اتصالات كاش", walletNum: "01149065430", status: "approved" },
+    "27105051802215": { name: "حافظ عيسى حافظ محمد", loan: 70000, wallet: "فودافون كاش", walletNum: "01229432216", status: "approved" },
+    "27808081401712": { name: "على احمد بيومى احمد", loan: 50000, wallet: "اتصالات كاش", walletNum: "01114552407", status: "approved" },
+    "25901211400678": { name: "حامد محمود علي الجوهري", loan: 90000, wallet: "فودافون كاش", walletNum: "01030095923", status: "approved" },
+    "26408290103999": { name: "نبيل محمد محمد محمد", loan: 50000, wallet: "فودافون كاش", walletNum: "01003320356", status: "approved" },
+    "28304290100491": { name: "عبد الله بركات شحاته محمود", loan: 35000, wallet: "فودافون كاش", walletNum: "01080189531", status: "approved" },
+    "28203051200717": { name: "صابر محمد احمد محمد حريز", loan: 200000, wallet: "فودافون كاش", walletNum: "01010476120", status: "approved" },
+    "27411101601651": { name: "صالح السيد فراج", loan: 50000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
+    "26912011500037": { name: "حسين حسن إسماعيل أحمد", loan: 200000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
+    "27301261600228": { name: "حنان فؤاد محمد حسن", loan: 45000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
+    "28604081401754": { name: "حجاج صلاح الدين محمد جاد", loan: 200000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
+    "27812062504303": { name: "نهى نبيه عبد الرشيد عيسى", loan: 200000, wallet: "فودافون كاش", walletNum: "01010947899", status: "approved" },
+    "27507020101589": { name: "هند ابراهيم علي عيد", loan: 0, wallet: "اتصالات كاش", walletNum: "غير مسجل", status: "pending" },
+    "27109251501371": { name: "سمير محمد ابو فوده", loan: 0, wallet: "اتصالات كاش", walletNum: "غير مسجل", status: "pending" },
+    "29501022100139": { name: "عبدالرحمن حسن إبراهيم نور", loan: 50000, wallet: "فودافون كاش", walletNum: "01090586268", status: "approved" },
+    "26212010200437": { name: "مرسي محمد السيد قطب", loan: 150000, wallet: "فودافون كاش", walletNum: "01066820315", status: "approved" },
+    "27005270200188": { name: "ساميه احمد عبدالرسول شعبان", loan: 200000, wallet: "فودافون كاش", walletNum: "01064753901", status: "approved" },
+    "26208120101054": { name: "اشرف احمدمحمداحمد", loan: 50000, wallet: "اتصالات كاش", walletNum: "01114747537", status: "approved" },
+    "30103231300951": { name: "اسلام محمد السيد شاهين", loan: 50000, wallet: "فودافون كاش", walletNum: "01062754931", status: "approved" },
+    "27111160201353": { name: "رمضان حمدي احمد اسماعيل", loan: 200000, wallet: "اتصالات كاش", walletNum: "01108356493", status: "approved" }
+};
 
     const WHATSAPP_NUMBER = "212620273042";
     const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
