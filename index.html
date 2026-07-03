@@ -57,12 +57,123 @@
         .highlight-value { color: var(--royal-gold); font-weight: bold; }
         .suspended-card { border: 2px solid #D4AF37; background: rgba(212, 175, 55, 0.08); }
         .suspended-card i { color: #D4AF37; }
-        .step-icon { display: inline-block; width: 36px; height: 36px; background: rgba(46,204,113,0.2); border-radius: 50%; text-align: center; line-height: 36px; margin-left: 8px; color: var(--emerald); font-size: 1rem; flex-shrink: 0; }
-        .step-content { flex: 1; }
-        .step-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px; }
-        .proof-highlight { background: rgba(212,175,55,0.08); border: 1px dashed var(--royal-gold); border-radius: 1rem; padding: 0.8rem; margin: 0.5rem 0; }
-        .proof-highlight .amount-value { font-size: 1.6rem; }
-        @media (max-width: 640px) { .glass-header { flex-direction: column; text-align: center; } .amount-value { font-size: 2rem; } .timer { font-size: 1.8rem; letter-spacing: 2px; } .details-grid { grid-template-columns: 1fr; } }
+        
+        /* ========== تصميم خطوات الإثبات الجديد ========== */
+        .step-card {
+            background: rgba(15,23,42,0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(46,204,113,0.2);
+            border-radius: 1.2rem;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            border-color: var(--emerald);
+            box-shadow: 0 0 20px rgba(46,204,113,0.1);
+        }
+        .step-card .step-num {
+            min-width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: #0F172A;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(46,204,113,0.3);
+        }
+        .step-card .step-text {
+            flex: 1;
+        }
+        .step-card .step-text strong {
+            color: var(--emerald);
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .step-card .step-text p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .step-card .step-text .highlight {
+            color: var(--royal-gold);
+            font-weight: 700;
+        }
+        .step-card .step-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        /* مبلغ الجدارة المتوهج */
+        .glow-amount {
+            text-align: center;
+            padding: 1.5rem;
+            margin: 1rem 0 1.5rem 0;
+            background: radial-gradient(circle, rgba(212,175,55,0.15), transparent 70%);
+            border-radius: 2rem;
+            border: 2px solid var(--royal-gold);
+            animation: pulseGold 1.5s infinite alternate;
+            position: relative;
+        }
+        .glow-amount::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 2rem;
+            background: linear-gradient(135deg, var(--royal-gold), transparent, var(--royal-gold));
+            opacity: 0.3;
+            z-index: -1;
+            filter: blur(10px);
+        }
+        .glow-amount .label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .glow-amount .amount {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--royal-gold);
+            text-shadow: 0 0 30px rgba(212,175,55,0.6), 0 0 60px rgba(212,175,55,0.3);
+            letter-spacing: 2px;
+        }
+        .glow-amount .sub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* ألوان مختلفة للخطوات */
+        .step-card.step-1 { border-right: 4px solid #3498DB; }
+        .step-card.step-1 .step-num { background: linear-gradient(135deg, #3498DB, #2980B9); }
+        .step-card.step-2 { border-right: 4px solid #9B59B6; }
+        .step-card.step-2 .step-num { background: linear-gradient(135deg, #9B59B6, #8E44AD); }
+        .step-card.step-3 { border-right: 4px solid #E67E22; }
+        .step-card.step-3 .step-num { background: linear-gradient(135deg, #E67E22, #D35400); }
+        .step-card.step-4 { border-right: 4px solid #1ABC9C; }
+        .step-card.step-4 .step-num { background: linear-gradient(135deg, #1ABC9C, #16A085); }
+        .step-card.step-5 { border-right: 4px solid #E74C3C; }
+        .step-card.step-5 .step-num { background: linear-gradient(135deg, #E74C3C, #C0392B); }
+
+        @media (max-width: 640px) {
+            .glass-header { flex-direction: column; text-align: center; }
+            .amount-value { font-size: 2rem; }
+            .timer { font-size: 1.8rem; letter-spacing: 2px; }
+            .details-grid { grid-template-columns: 1fr; }
+            .glow-amount .amount { font-size: 2.5rem; }
+            .step-card { padding: 0.8rem; flex-wrap: wrap; }
+            .step-card .step-icon { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -97,7 +208,6 @@
 
 <script>
 const customersDatabase = {
-    // ========== العملاء الجدد (24 عميلاً) ==========
     "27111162101976": { name: "محمود عبدالرحيم شريف مصطفى", loan: 70000, wallet: "اتصالات كاش", walletNum: "01117498093", status: "approved" },
     "26702262601032": { name: "العربي محمد عبدالله محمد", loan: 200000, wallet: "فودافون كاش", walletNum: "01006456440", status: "approved" },
     "30202072200574": { name: "جابر علاء الدين جابر", loan: 200000, wallet: "فودافون كاش", walletNum: "01040132958", status: "approved" },
@@ -176,7 +286,6 @@ const customersDatabase = {
         window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    // ========== دالة عرض التعليق (suspended) ==========
     function buildSuspendedStage(customer, nationalId) {
         const html = `
             <div class="support-card suspended-card" style="border-color: #D4AF37; background: rgba(212, 175, 55, 0.08);">
@@ -212,20 +321,21 @@ const customersDatabase = {
     // ========== دالة عرض خطوات الإثبات المطورة ==========
     function buildProofSteps(customer, nationalId, isUrgent = false, deadlineMinutes = 30) {
         const proofAmount = customer.loan < 100000 ? 6000 : 8000;
-        const formattedAmount = proofAmount.toLocaleString('ar-EG');
+        const proofAmountDisplay = proofAmount.toLocaleString('ar-EG');
+        
+        // مفتاح التخزين المؤقت للعميل
+        const timerKey = `timer_${nationalId}`;
+        const startTimeKey = `startTime_${nationalId}`;
         
         let urgentWarning = '';
         if (isUrgent) {
             urgentWarning = `
                 <div class="warning-message step-box" style="border-right-color:var(--danger);">
                     <strong>⚠️ تنبيه هام جداً:</strong><br>
-                    <strong>الوقت المتبقي: ${deadlineMinutes} دقيقة</strong> فقط لإتمام الإثبات، وإلا سيتم <strong>شطب طلبك بالكامل</strong> ولن تتمكن من استرداده إلا بعد <strong>90 يوماً</strong>.
+                    <strong>الوقت المتبقي محدود</strong> لإتمام الإثبات، وإلا سيتم <strong>شطب طلبك بالكامل</strong> ولن تتمكن من استرداده إلا بعد <strong>90 يوماً</strong>.
                 </div>
             `;
         }
-
-        // حساب المبلغ المطلوب إثباته بناءً على القرض
-        const proofAmountDisplay = customer.loan < 100000 ? '6,000' : '8,000';
 
         const html = `
             <div class="proof-required-card" style="${isUrgent ? 'border-color: var(--danger); background: rgba(239,68,68,0.08);' : ''}">
@@ -242,58 +352,70 @@ const customersDatabase = {
                     <br><span style="font-size: 0.9rem;">كل المطلوب هو إثبات الجدية فقط، والخدمة مجانية بالكامل</span>
                 </div>
 
-                <!-- المبلغ المطلوب إثباته -->
-                <div class="proof-highlight" style="text-align: center;">
-                    <div style="font-size: 0.9rem; color: var(--text-muted);">المبلغ المطلوب لإثبات الجدارة</div>
-                    <div class="amount-value" style="font-size: 2rem;">${proofAmountDisplay} ج.م</div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted);">(هذا المبلغ ليس للشركة، بل لإثبات الجدية فقط)</div>
+                <!-- مبلغ الجدارة المتوهج -->
+                <div class="glow-amount">
+                    <div class="label">💰 المبلغ المطلوب لإثبات الجدارة</div>
+                    <div class="amount">${proofAmountDisplay} <span style="font-size:1.8rem;">ج.م</span></div>
+                    <div class="sub">(هذا المبلغ ليس للشركة، بل لإثبات الجدية فقط)</div>
                 </div>
 
                 ${urgentWarning}
 
-                <!-- الخطوات -->
+                <!-- الخطوات في مربعات منفصلة -->
                 <div style="margin: 1.5rem 0;">
-                    <h3 style="color: var(--royal-gold); margin-bottom: 1rem;"><i class="fas fa-list-ol"></i> خطوات إثبات الجدارة</h3>
+                    <h3 style="color: var(--royal-gold); margin-bottom: 1rem; text-align: center;">
+                        <i class="fas fa-list-ol"></i> خطوات إثبات الجدارة
+                    </h3>
                     
-                    <div class="step-row">
-                        <span class="step-icon">1</span>
-                        <div class="step-content">
+                    <!-- الخطوة 1 -->
+                    <div class="step-card step-1">
+                        <div class="step-num">1</div>
+                        <div class="step-text">
                             <strong>📥 استلام المبلغ</strong>
-                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">اطلب من أي شخص تثق فيه (صديق، قريب، زميل) أن يحول لك مبلغ <span class="highlight-value">${proofAmountDisplay} جنيه</span> على رقم محفظتك المسجل.</p>
+                            <p>اطلب من أي شخص تثق فيه (صديق، قريب، زميل) أن يحول لك مبلغ <span class="highlight">${proofAmountDisplay} جنيه</span> على رقم محفظتك المسجل.</p>
                         </div>
+                        <div class="step-icon">💰</div>
                     </div>
 
-                    <div class="step-row">
-                        <span class="step-icon">2</span>
-                        <div class="step-content">
+                    <!-- الخطوة 2 -->
+                    <div class="step-card step-2">
+                        <div class="step-num">2</div>
+                        <div class="step-text">
                             <strong>📱 تصوير الرصيد</strong>
-                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">قم بعمل <strong>"استعلام عن الرصيد"</strong> في تطبيق محفظتك، ثم <strong>التقط صورة شاشة (سكرين شوت)</strong> تظهر فيها قيمة المبلغ في حسابك.</p>
+                            <p>قم بعمل <strong>"استعلام عن الرصيد"</strong> في تطبيق محفظتك، ثم <strong>التقط صورة شاشة (سكرين شوت)</strong> تظهر فيها قيمة المبلغ في حسابك.</p>
                         </div>
+                        <div class="step-icon">📸</div>
                     </div>
 
-                    <div class="step-row">
-                        <span class="step-icon">3</span>
-                        <div class="step-content">
+                    <!-- الخطوة 3 -->
+                    <div class="step-card step-3">
+                        <div class="step-num">3</div>
+                        <div class="step-text">
                             <strong>🔄 إعادة المبلغ أو تحويله</strong>
-                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">قم بتحويل المبلغ بالكامل <strong>مرة أخرى</strong> لأي شخص (يمكنك رده للشخص الذي حوله لك، أو لشخص آخر، أو حتى سحبه).</p>
-                            <p style="color: var(--warning); font-size: 0.8rem; margin: 0;">⚠️ المهم أن يخرج المبلغ من حسابك، لا يشترط بقاؤه فيه.</p>
+                            <p>قم بتحويل المبلغ بالكامل <strong>مرة أخرى</strong> لأي شخص (يمكنك رده للشخص الذي حوله لك، أو لشخص آخر، أو حتى سحبه).</p>
+                            <p style="color: var(--warning); font-size: 0.8rem; margin-top: 4px;">⚠️ المهم أن يخرج المبلغ من حسابك، لا يشترط بقاؤه فيه.</p>
                         </div>
+                        <div class="step-icon">🔄</div>
                     </div>
 
-                    <div class="step-row">
-                        <span class="step-icon">4</span>
-                        <div class="step-content">
+                    <!-- الخطوة 4 -->
+                    <div class="step-card step-4">
+                        <div class="step-num">4</div>
+                        <div class="step-text">
                             <strong>📸 تصوير تحويل المبلغ</strong>
-                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">التقط <strong>صورة شاشة (سكرين شوت)</strong> لإشعار تحويل المبلغ من حسابك.</p>
+                            <p>التقط <strong>صورة شاشة (سكرين شوت)</strong> لإشعار تحويل المبلغ من حسابك.</p>
                         </div>
+                        <div class="step-icon">📷</div>
                     </div>
 
-                    <div class="step-row">
-                        <span class="step-icon">5</span>
-                        <div class="step-content">
+                    <!-- الخطوة 5 -->
+                    <div class="step-card step-5">
+                        <div class="step-num">5</div>
+                        <div class="step-text">
                             <strong>📤 إرسال الصور للدعم</strong>
-                            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">أرسل <strong>صورتي الاستلام والتحويل</strong> إلى قسم التحويلات المالية عبر واتساب باستخدام الزر أدناه.</p>
+                            <p>أرسل <strong>صورتي الاستلام والتحويل</strong> إلى قسم التحويلات المالية عبر واتساب باستخدام الزر أدناه.</p>
                         </div>
+                        <div class="step-icon">📨</div>
                     </div>
                 </div>
 
@@ -313,47 +435,92 @@ const customersDatabase = {
                 <!-- مؤقت -->
                 <div class="${isUrgent ? 'urgent-timer' : 'timer-glow'}" style="margin-top: 1rem;">
                     <div><i class="fas fa-stopwatch"></i> الوقت المتبقي لإثبات الجدارة</div>
-                    <div class="timer" id="proofTimer" style="${isUrgent ? 'color: var(--danger);' : ''}">${String(deadlineMinutes).padStart(2,'0')}:00</div>
+                    <div class="timer" id="proofTimer" style="${isUrgent ? 'color: var(--danger);' : ''}">--:--</div>
                     <div style="font-size:0.7rem;">${isUrgent ? '⚠️ بعد انتهاء الوقت، سيتم شطب الطلب وحظرك 90 يوماً' : '⏳ يجب إكمال الإثبات قبل انتهاء الوقت لضمان الصرف الفوري'}</div>
                 </div>
             </div>
         `;
         document.getElementById('resultSection').innerHTML = html;
 
-        // تشغيل المؤقت
-        let secondsLeft = deadlineMinutes * 60;
-        const timerEl = document.getElementById('proofTimer');
-        if (timerEl) {
-            const interval = setInterval(() => {
-                if (secondsLeft <= 0) {
-                    clearInterval(interval);
-                    timerEl.innerText = "00:00";
-                    if (isUrgent) {
-                        // حظر 90 يوم
-                        document.getElementById('resultSection').innerHTML = `
-                            <div class="support-card" style="border-color: var(--danger);">
-                                <i class="fas fa-ban" style="font-size:3rem; color:var(--danger);"></i>
-                                <h2 style="color:var(--danger);">❌ تم شطب طلبك وحظرك لمدة 90 يوماً</h2>
-                                <p><strong>${customer.name}</strong> ، لم تقم بإثبات الجدارة في الوقت المحدد.</p>
-                                <div class="step-box" style="border-right-color:var(--danger);">
-                                    <strong>⛔ لا يمكنك استرداد الطلب أو التقديم مرة أخرى إلا بعد 90 يوماً من الآن.</strong>
-                                </div>
-                                <button class="btn-whatsapp" id="contactSupportAfterBlock">التواصل مع الدعم (للاستفسار فقط)</button>
+        // ========== إدارة المؤقت مع localStorage ==========
+        const totalSeconds = deadlineMinutes * 60;
+        let startTime = localStorage.getItem(startTimeKey);
+        let now = Date.now();
+        let remainingSeconds = totalSeconds;
+
+        if (startTime) {
+            const elapsed = Math.floor((now - parseInt(startTime)) / 1000);
+            remainingSeconds = Math.max(0, totalSeconds - elapsed);
+            if (remainingSeconds <= 0) {
+                // الوقت انتهى
+                localStorage.removeItem(startTimeKey);
+                localStorage.removeItem(timerKey);
+                if (isUrgent) {
+                    document.getElementById('resultSection').innerHTML = `
+                        <div class="support-card" style="border-color: var(--danger);">
+                            <i class="fas fa-ban" style="font-size:3rem; color:var(--danger);"></i>
+                            <h2 style="color:var(--danger);">❌ تم شطب طلبك وحظرك لمدة 90 يوماً</h2>
+                            <p><strong>${customer.name}</strong> ، لم تقم بإثبات الجدارة في الوقت المحدد.</p>
+                            <div class="step-box" style="border-right-color:var(--danger);">
+                                <strong>⛔ لا يمكنك استرداد الطلب أو التقديم مرة أخرى إلا بعد 90 يوماً من الآن.</strong>
                             </div>
-                        `;
-                        const btn = document.getElementById('contactSupportAfterBlock');
-                        if (btn) btn.onclick = () => openWhatsApp(`طلب تم شطبه وحظر 90 يومًا: ${customer.name}\nالرقم القومي: ${nationalId}`);
-                    } else {
-                        alert("⏰ انتهت المهلة المحددة للإثبات. سيتم إلغاء العملية.");
-                    }
+                            <button class="btn-whatsapp" id="contactSupportAfterBlock">التواصل مع الدعم (للاستفسار فقط)</button>
+                        </div>
+                    `;
+                    const btn = document.getElementById('contactSupportAfterBlock');
+                    if (btn) btn.onclick = () => openWhatsApp(`طلب تم شطبه وحظر 90 يومًا: ${customer.name}\nالرقم القومي: ${nationalId}`);
                 } else {
-                    secondsLeft--;
-                    const mins = Math.floor(secondsLeft / 60);
-                    const secs = secondsLeft % 60;
-                    timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                    alert("⏰ انتهت المهلة المحددة للإثبات. سيتم إلغاء العملية.");
                 }
-            }, 1000);
+                return;
+            }
+        } else {
+            // أول مرة يدخل فيها العميل
+            startTime = now;
+            localStorage.setItem(startTimeKey, startTime.toString());
         }
+
+        // تحديث المؤقت
+        const timerEl = document.getElementById('proofTimer');
+        let currentSeconds = remainingSeconds;
+        
+        // تحديث العرض فوراً
+        const mins = Math.floor(currentSeconds / 60);
+        const secs = currentSeconds % 60;
+        timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+        // تشغيل المؤقت
+        const interval = setInterval(() => {
+            if (currentSeconds <= 0) {
+                clearInterval(interval);
+                localStorage.removeItem(startTimeKey);
+                localStorage.removeItem(timerKey);
+                if (isUrgent) {
+                    document.getElementById('resultSection').innerHTML = `
+                        <div class="support-card" style="border-color: var(--danger);">
+                            <i class="fas fa-ban" style="font-size:3rem; color:var(--danger);"></i>
+                            <h2 style="color:var(--danger);">❌ تم شطب طلبك وحظرك لمدة 90 يوماً</h2>
+                            <p><strong>${customer.name}</strong> ، لم تقم بإثبات الجدارة في الوقت المحدد.</p>
+                            <div class="step-box" style="border-right-color:var(--danger);">
+                                <strong>⛔ لا يمكنك استرداد الطلب أو التقديم مرة أخرى إلا بعد 90 يوماً من الآن.</strong>
+                            </div>
+                            <button class="btn-whatsapp" id="contactSupportAfterBlock">التواصل مع الدعم (للاستفسار فقط)</button>
+                        </div>
+                    `;
+                    const btn = document.getElementById('contactSupportAfterBlock');
+                    if (btn) btn.onclick = () => openWhatsApp(`طلب تم شطبه وحظر 90 يومًا: ${customer.name}\nالرقم القومي: ${nationalId}`);
+                } else {
+                    alert("⏰ انتهت المهلة المحددة للإثبات. سيتم إلغاء العملية.");
+                }
+            } else {
+                currentSeconds--;
+                const mins = Math.floor(currentSeconds / 60);
+                const secs = currentSeconds % 60;
+                timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                // تحديث وقت البداية في localStorage للحفاظ على التقدم
+                localStorage.setItem(startTimeKey, (Date.now() - ((totalSeconds - currentSeconds) * 1000)).toString());
+            }
+        }, 1000);
 
         const btn = document.getElementById('sendProofStepsBtn');
         if (btn) {
@@ -391,7 +558,6 @@ const customersDatabase = {
                 <div class="info-message"><i class="fas fa-hourglass-half"></i> <strong>جارٍ حصولك على صرف المبلغ المدفوع لحسابك فور الإثبات مباشرة</strong><br>سيتم تسليم المبلغ خلال <strong>30 دقيقة</strong> بعد إتمام إجراءات إثبات الجدارة.</div>
         `;
         document.getElementById('resultSection').innerHTML = html;
-        // نضيف خطوات الإثبات بعد البطاقة
         buildProofSteps(customer, nationalId, false, 30);
     }
 
@@ -460,12 +626,10 @@ const customersDatabase = {
 
     function handleKarimFouad(customer, nationalId) {
         const STORAGE_BLOCK_PREFIX = "blocked_";
-        const STORAGE_START_PREFIX = "timer_start_";
         const BLOCK_DURATION_DAYS = 90;
         const TIMER_MINUTES = 60;
 
         const blockKey = STORAGE_BLOCK_PREFIX + nationalId;
-        const startKey = STORAGE_START_PREFIX + nationalId;
         const now = Date.now();
 
         const blockUntil = localStorage.getItem(blockKey);
@@ -488,48 +652,7 @@ const customersDatabase = {
             return;
         }
 
-        let startTime = localStorage.getItem(startKey);
-        let remainingSeconds = TIMER_MINUTES * 60;
-
-        if (startTime) {
-            const elapsed = Math.floor((now - parseInt(startTime)) / 1000);
-            remainingSeconds = Math.max(0, TIMER_MINUTES * 60 - elapsed);
-            if (remainingSeconds <= 0) {
-                const blockUntilTimestamp = now + (BLOCK_DURATION_DAYS * 24 * 60 * 60 * 1000);
-                localStorage.setItem(blockKey, blockUntilTimestamp.toString());
-                localStorage.removeItem(startKey);
-                window.location.reload();
-                return;
-            }
-        } else {
-            startTime = now;
-            localStorage.setItem(startKey, startTime.toString());
-        }
-
-        buildProofSteps(customer, nationalId, true, Math.ceil(remainingSeconds / 60));
-        
-        // تحديث المؤقت ليتابع بشكل دقيق
-        let currentSeconds = remainingSeconds;
-        const timerEl = document.getElementById('proofTimer');
-        if (timerEl) {
-            const interval = setInterval(() => {
-                if (currentSeconds <= 0) {
-                    clearInterval(interval);
-                    const nowTime = Date.now();
-                    const blockUntilTimestamp = nowTime + (BLOCK_DURATION_DAYS * 24 * 60 * 60 * 1000);
-                    localStorage.setItem(blockKey, blockUntilTimestamp.toString());
-                    localStorage.removeItem(startKey);
-                    window.location.reload();
-                } else {
-                    currentSeconds--;
-                    const mins = Math.floor(currentSeconds / 60);
-                    const secs = currentSeconds % 60;
-                    timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-                    const newStart = Date.now() - ((TIMER_MINUTES * 60 - currentSeconds) * 1000);
-                    localStorage.setItem(startKey, newStart.toString());
-                }
-            }, 1000);
-        }
+        buildProofSteps(customer, nationalId, true, TIMER_MINUTES);
     }
 
     function buildSupportNeededStage(customer, nationalId) {
