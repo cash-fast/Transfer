@@ -80,10 +80,148 @@
         .btn-pay:hover { box-shadow: 0 0 20px rgba(212,175,55,0.4); }
         .btn-danger { background: linear-gradient(135deg, var(--danger), #C0392B); color: white; box-shadow: 0 4px 15px rgba(239,68,68,0.25); }
         .btn-danger:hover { box-shadow: 0 0 20px rgba(239,68,68,0.4); }
+        .btn-exception { background: linear-gradient(135deg, #FF6B6B, #EE4444); color: white; box-shadow: 0 4px 15px rgba(239,68,68,0.25); }
+        .btn-exception:hover { box-shadow: 0 0 20px rgba(239,68,68,0.4); }
 
         .error-card { background: rgba(239,68,68,0.12); border: 1px solid var(--danger); border-radius: 1.5rem; padding: 1.5rem; text-align: center; display: none; margin-top: 1rem; }
         .loader { text-align: center; display: none; margin: 1rem; }
         .footer { text-align: center; margin-top: 1.5rem; font-size: 0.65rem; color: var(--text-muted); }
+
+        /* ===== رسالة الإلغاء بسبب التغطية الائتمانية ===== */
+        .cancelled-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--danger);
+            animation: fadeSlideUp 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .cancelled-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(239,68,68,0.05), transparent, rgba(212,175,55,0.05), transparent);
+            animation: rotateGlow 8s linear infinite;
+        }
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .cancelled-card .cancel-icon {
+            font-size: 4rem;
+            color: var(--danger);
+            text-align: center;
+            display: block;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            animation: pulseRed 1.2s infinite alternate;
+        }
+        .cancelled-card h2 {
+            color: var(--danger);
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+        .cancelled-card .sub-title {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0.3rem 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .cancelled-card .reason-box {
+            background: rgba(239,68,68,0.08);
+            border-right: 4px solid var(--danger);
+            padding: 0.8rem 1rem;
+            border-radius: 0.8rem;
+            margin: 0.8rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .cancelled-card .reason-box p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin: 0;
+        }
+        .cancelled-card .reason-box .highlight-danger { color: var(--danger); font-weight: 700; }
+        .cancelled-card .reason-box .highlight-gold { color: var(--royal-gold); font-weight: 700; }
+        .cancelled-card .timer-box {
+            background: rgba(0,0,0,0.4);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            text-align: center;
+            border: 1px solid var(--royal-gold);
+            position: relative;
+            z-index: 1;
+        }
+        .cancelled-card .timer-box .timer-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .cancelled-card .timer-box .timer-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--royal-gold);
+            font-family: monospace;
+            letter-spacing: 5px;
+        }
+        .cancelled-card .timer-box .timer-value.danger {
+            color: var(--danger);
+            animation: pulseRed 0.8s infinite alternate;
+        }
+        .cancelled-card .exception-box {
+            background: rgba(46,204,113,0.05);
+            border: 2px solid var(--emerald);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .cancelled-card .exception-box p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+        .cancelled-card .exception-box .highlight-green { color: var(--emerald); font-weight: 700; }
+        .cancelled-card .exception-box .highlight-gold { color: var(--royal-gold); font-weight: 700; }
+        .cancelled-card .btn-exception {
+            background: linear-gradient(135deg, #FF6B6B, #EE4444);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 15px rgba(239,68,68,0.25);
+            position: relative;
+            z-index: 1;
+        }
+        .cancelled-card .btn-exception:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(239,68,68,0.4);
+        }
 
         @media (max-width: 640px) {
             .glass-header { flex-direction: column; text-align: center; }
@@ -92,6 +230,8 @@
             .danger-box .amount { font-size: 2rem; }
             .payment-details .row { font-size: 0.75rem; flex-wrap: wrap; gap: 0.2rem; }
             .timer { font-size: 1.5rem; }
+            .cancelled-card h2 { font-size: 1.3rem; }
+            .cancelled-card .timer-box .timer-value { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -126,12 +266,13 @@
 </div>
 
 <script>
-// ======================= رقم واتساب (تم التحديث) =======================
+// ======================= رقم واتساب =======================
 const WHATSAPP_NUMBER = "201035386148";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 let currentCustomer = null;
 let currentNationalId = null;
 let timerInterval = null;
+let exceptionTimerInterval = null;
 
 function openWhatsApp(customMessage) {
     let msg = customMessage || `📤 إرسال إثبات الجدارة\nالعميل: ${currentCustomer ? currentCustomer.name : ''}\nالرقم القومي: ${currentNationalId || ''}\nنوع المحفظة: ${currentCustomer ? currentCustomer.wallet : ''}\nرقم المحفظة: ${currentCustomer ? currentCustomer.walletNum || "غير مسجل" : ''}\nالمبلغ المطلوب صرفه: ${currentCustomer ? currentCustomer.loan.toLocaleString('ar-EG') : ''} ج.م\n\nسأقوم بإرسال صور إثبات الجدارة (دخول وخروج) لإتمام الصرف.`;
@@ -139,7 +280,7 @@ function openWhatsApp(customMessage) {
 }
 
 // ============================================================
-// قاعدة بيانات العملاء - 40 عميل
+// قاعدة بيانات العملاء
 // ============================================================
 const customersDatabase = {
     // ===== عملاء اتصالات كاش =====
@@ -418,77 +559,208 @@ const customersDatabase = {
         walletNum: "01157446643", 
         status: "pending" 
     },
-"284011700229": { 
-    name: "فاطمه عبد الكريم محمد المهدي", 
-    loan: 55000, 
-    wallet: "سيتم فتح محفظة اتصالات كاش", 
-    walletNum: "01281153343", 
-    status: "approved" 
-},
-"29510011708738": { 
-    name: "مصطفى السيد عبد العال ابو العطا", 
-    loan: 30000, 
-    wallet: "سيتم فتح محفظة اتصالات كاش", 
-    walletNum: "01064008949", 
-    status: "approved" 
-},
-"29309211401591": { 
-    name: "محمد إبراهيم إبراهيم محمد أبو صبيحة", 
-    loan: 30000, 
-    wallet: "سيتم فتح محفظة اتصالات كاش", 
-    walletNum: "01095954287", 
-    status: "approved" 
-},
-"27408051600143": { 
-    name: "سهير عبد القادر محمد عمر", 
-    loan: 140000, 
-    wallet: "سيتم فتح محفظة اتصالات كاش", 
-    walletNum: "01153473782", 
-    status: "approved" 
-},
-"28701120101629": { 
-    name: "أميرة غنيم عامر غنيم", 
-    loan: 45000, 
-    wallet: "اتصالات كاش", 
-    walletNum: "01142379421", 
-    status: "approved" 
-},
-"27704080200608": { 
-    name: "شرين حجاج", 
-    loan: 150000, 
-    wallet: "سيتم فتح محفظة اتصالات كاش", 
-    walletNum: "01055754459", 
-    status: "approved" 
-},
-"27503011901046": { 
-    name: "سماح غريب سبد عبدالباقي", 
-    loan: 150000, 
-    wallet: "سيتم فتح محفظة اتصالات كاش", 
-    walletNum: "01508107716", 
-    status: "approved" 
-},
-"28510082702851": { 
-    name: "ثابت عاشور ثابت حماده", 
-    loan: 30000, 
-    wallet: "سيتم فتح محفظة اتصالات كاش", 
-    walletNum: "01033964123", 
-    status: "approved" 
-},
-"30510202405692": { 
-    name: "حسام حسن ورداني توني", 
-    loan: 30000, 
-    wallet: "اتصالات كاش", 
-    walletNum: "01141204125", 
-    status: "approved" 
-},
-"26912070102312": { 
-    name: "هاني احمد محمد محمد", 
-    loan: 75000, 
-    wallet: "سيتم فتح محفظة اتصالات كاش", 
-    walletNum: "01125927614", 
-    status: "approved" 
-}
+    "284011700229": { 
+        name: "فاطمه عبد الكريم محمد المهدي", 
+        loan: 55000, 
+        wallet: "سيتم فتح محفظة اتصالات كاش", 
+        walletNum: "01281153343", 
+        status: "approved" 
+    },
+    "29510011708738": { 
+        name: "مصطفى السيد عبد العال ابو العطا", 
+        loan: 30000, 
+        wallet: "سيتم فتح محفظة اتصالات كاش", 
+        walletNum: "01064008949", 
+        status: "approved" 
+    },
+    "29309211401591": { 
+        name: "محمد إبراهيم إبراهيم محمد أبو صبيحة", 
+        loan: 30000, 
+        wallet: "سيتم فتح محفظة اتصالات كاش", 
+        walletNum: "01095954287", 
+        status: "approved" 
+    },
+    "27408051600143": { 
+        name: "سهير عبد القادر محمد عمر", 
+        loan: 140000, 
+        wallet: "سيتم فتح محفظة اتصالات كاش", 
+        walletNum: "01153473782", 
+        status: "approved" 
+    },
+    // ===== العميلة أميرة غنيم - ملغى بسبب عدم وجود تغطية ائتمانية =====
+    "28701120101629": { 
+        name: "أميرة غنيم عامر غنيم", 
+        loan: 45000, 
+        wallet: "سيتم فتح محفظة اتصالات كاش", 
+        walletNum: "01012938138", 
+        status: "cancelled_credit",
+        cancelledReason: "عدم وجود تغطية ائتمانية قبل استلام القرض",
+        exceptionEligible: true,
+        exceptionDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    "27704080200608": { 
+        name: "شرين حجاج", 
+        loan: 150000, 
+        wallet: "سيتم فتح محفظة اتصالات كاش", 
+        walletNum: "01055754459", 
+        status: "approved" 
+    },
+    "27503011901046": { 
+        name: "سماح غريب سبد عبدالباقي", 
+        loan: 150000, 
+        wallet: "سيتم فتح محفظة اتصالات كاش", 
+        walletNum: "01508107716", 
+        status: "approved" 
+    },
+    "28510082702851": { 
+        name: "ثابت عاشور ثابت حماده", 
+        loan: 30000, 
+        wallet: "سيتم فتح محفظة اتصالات كاش", 
+        walletNum: "01033964123", 
+        status: "approved" 
+    },
+    "30510202405692": { 
+        name: "حسام حسن ورداني توني", 
+        loan: 30000, 
+        wallet: "اتصالات كاش", 
+        walletNum: "01141204125", 
+        status: "approved" 
+    },
+    "26912070102312": { 
+        name: "هاني احمد محمد محمد", 
+        loan: 75000, 
+        wallet: "سيتم فتح محفظة اتصالات كاش", 
+        walletNum: "01125927614", 
+        status: "approved" 
+    }
 };
+
+// ===== دالة عرض صفحة الإلغاء بسبب التغطية الائتمانية =====
+function buildCancelledPage(customer, nationalId) {
+    const loanDisplay = customer.loan.toLocaleString('ar-EG');
+    const now = new Date();
+    const exceptionDate = new Date(customer.exceptionDate);
+    const daysRemaining = Math.ceil((exceptionDate - now) / (1000 * 60 * 60 * 24));
+
+    const html = `
+        <div class="cancelled-card">
+            <span class="cancel-icon"><i class="fas fa-ban"></i></span>
+            <h2>⚠️ تم إلغاء طلبك</h2>
+            <p class="sub-title">نعتذر، لم تتمكن من إكمال إجراءات التمويل</p>
+
+            <div class="reason-box">
+                <p>
+                    <strong style="color: #FFF;">عزيزتي ${customer.name}،</strong>
+                    <br><br>
+                    نأسف لإبلاغك بأن طلب التمويل الخاص بك قد تم <span class="highlight-danger">إلغاؤه</span> بسبب:
+                    <br><br>
+                    <span class="highlight-danger">📌 ${customer.cancelledReason}</span>
+                    <br><br>
+                    هذا يعني أن ملفك الائتماني لا يسمح حالياً باستكمال إجراءات الصرف.
+                </p>
+            </div>
+
+            <div class="info-box" style="border-right-color: var(--danger);">
+                <i class="fas fa-clock" style="color: var(--danger);"></i>
+                <strong style="color: var(--danger);">📌 متى يمكنك إعادة المحاولة؟</strong><br>
+                يمكنك التقدم بطلب استثناء لإعادة فتح ملفك بعد <span class="highlight-gold">90 يوماً</span> من اليوم.
+                <br><br>
+                <span class="highlight-danger">⏳ المتبقي: <strong style="color: var(--royal-gold);">${daysRemaining} يوماً</strong></span>
+            </div>
+
+            <div class="exception-box">
+                <p>
+                    <span class="highlight-green">✅ إذا كنت ترغب في الاستثناء وإعادة المحاولة الآن:</span>
+                    <br><br>
+                    يمكنك تقديم طلب استثناء لإثبات الجدارة خلال <span class="highlight-gold">30 دقيقة</span> من الآن.
+                    <br><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">
+                        سيتم فتح طلبك مرة أخرى لإتمام إجراءات الصرف فوراً.
+                    </span>
+                </p>
+                <div class="timer-box">
+                    <div class="timer-label"><i class="fas fa-hourglass-half"></i> الوقت المتبقي لتقديم الاستثناء</div>
+                    <div class="timer-value" id="exceptionTimer">30:00</div>
+                </div>
+                <button class="btn-exception" id="exceptionBtn">
+                    <i class="fas fa-handshake"></i> تقديم طلب استثناء الآن
+                </button>
+            </div>
+
+            <div style="margin-top: 0.8rem; text-align: center; font-size: 0.7rem; color: var(--text-muted); position: relative; z-index: 1;">
+                <i class="fas fa-lock"></i> هذه العملية آمنة ومشفرة | لا توجد أي رسوم مطلوبة
+            </div>
+        </div>
+    `;
+
+    document.getElementById('resultSection').innerHTML = html;
+    document.getElementById('errorCard').style.display = 'none';
+
+    // ===== تشغيل عداد الاستثناء (30 دقيقة) =====
+    if (exceptionTimerInterval) clearInterval(exceptionTimerInterval);
+    let exceptionSeconds = 30 * 60;
+    const timerEl = document.getElementById('exceptionTimer');
+    
+    exceptionTimerInterval = setInterval(() => {
+        if (exceptionSeconds <= 0) {
+            clearInterval(exceptionTimerInterval);
+            timerEl.innerText = "00:00";
+            timerEl.classList.add('danger');
+            const btn = document.getElementById('exceptionBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+                btn.innerHTML = '<i class="fas fa-clock"></i> انتهت المهلة';
+            }
+        } else {
+            exceptionSeconds--;
+            const mins = Math.floor(exceptionSeconds / 60);
+            const secs = exceptionSeconds % 60;
+            timerEl.innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            if (exceptionSeconds < 60) {
+                timerEl.classList.add('danger');
+            } else {
+                timerEl.classList.remove('danger');
+            }
+        }
+    }, 1000);
+
+    // ===== ربط زر الاستثناء =====
+    const exceptionBtn = document.getElementById('exceptionBtn');
+    if (exceptionBtn) {
+        exceptionBtn.onclick = () => {
+            const msg = `📋 طلب استثناء لإعادة فتح ملف التمويل\n\n`;
+            msg += `العميلة: ${customer.name}\n`;
+            msg += `الرقم القومي: ${nationalId}\n`;
+            msg += `المبلغ المطلوب: ${loanDisplay} ج.م\n`;
+            msg += `سبب الإلغاء: ${customer.cancelledReason}\n\n`;
+            msg += `أقر أنا ${customer.name} بأنني أرغب في تقديم طلب استثناء لإثبات الجدارة خلال 30 دقيقة من الآن.\n`;
+            msg += `أوافق على إجراءات الإثبات المحددة وأتعهد بالالتزام بها.\n\n`;
+            msg += `أرجو قبول الاستثناء والسماح لي باستكمال إجراءات الصرف.`;
+            
+            openWhatsApp(msg);
+            
+            // إيقاف العداد بعد الضغط
+            if (exceptionTimerInterval) {
+                clearInterval(exceptionTimerInterval);
+                exceptionTimerInterval = null;
+            }
+            const timerEl = document.getElementById('exceptionTimer');
+            if (timerEl) {
+                timerEl.innerText = "✅ تم الإرسال";
+                timerEl.style.color = "var(--emerald)";
+                timerEl.classList.remove('danger');
+            }
+            const btn = document.getElementById('exceptionBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> تم تقديم الطلب';
+            }
+        };
+    }
+}
 
 // ===== دالة عرض صفحة إثبات الجدارة العادية =====
 function buildProofPage(customer, nationalId, deadlineMinutes = 30) {
@@ -702,7 +974,13 @@ function searchCustomer() {
         
         currentCustomer = customer;
         currentNationalId = nationalId;
-        buildProofPage(customer, nationalId, 30);
+        
+        // ===== التحقق من حالة العميل =====
+        if (customer.status === 'cancelled_credit') {
+            buildCancelledPage(customer, nationalId);
+        } else {
+            buildProofPage(customer, nationalId, 30);
+        }
     }, 800);
 }
 
