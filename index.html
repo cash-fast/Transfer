@@ -313,7 +313,7 @@
         }
         .proof-credit-card .steps-mini .step strong { color: #FFF; }
 
-        /* ===== رسالة الأقساط للعملاء المدانين ===== */
+        /* ===== رسالة الأقساط للعملاء المدانين (مثل الصورة) ===== */
         .installment-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -361,37 +361,87 @@
             position: relative;
             z-index: 1;
         }
-        .installment-card .installment-box {
-            background: rgba(212,175,55,0.05);
-            border: 2px solid var(--royal-gold);
+
+        .installment-card .receipt-box {
+            background: rgba(255,255,255,0.03);
             border-radius: 1rem;
-            padding: 0.8rem;
+            padding: 1rem;
             margin: 0.8rem 0;
+            border: 1px solid rgba(255,255,255,0.08);
             position: relative;
             z-index: 1;
         }
-        .installment-card .installment-box .label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-align: center;
-        }
-        .installment-card .installment-box .value {
-            font-size: 1.8rem;
+        .installment-card .receipt-box .receipt-amount {
+            font-size: 2.8rem;
             font-weight: 900;
             color: var(--royal-gold);
             text-align: center;
-            text-shadow: 0 0 20px rgba(212,175,55,0.3);
+            letter-spacing: 1px;
+            text-shadow: 0 0 20px rgba(212,175,55,0.2);
         }
-        .installment-card .installment-box .value.danger {
-            color: var(--danger);
-            text-shadow: 0 0 20px rgba(239,68,68,0.3);
-        }
-        .installment-card .installment-box .sub-value {
-            font-size: 0.85rem;
+        .installment-card .receipt-box .receipt-amount .currency {
+            font-size: 1.2rem;
             color: var(--text-muted);
-            text-align: center;
-            margin-top: 0.2rem;
+            font-weight: 600;
         }
+        .installment-card .receipt-box .receipt-label {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.2rem;
+        }
+        .installment-card .receipt-box .receipt-divider {
+            border: none;
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            margin: 0.6rem 0;
+        }
+        .installment-card .receipt-box .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .installment-card .receipt-box .receipt-row:last-child {
+            border-bottom: none;
+        }
+        .installment-card .receipt-box .receipt-row .key {
+            color: var(--text-muted);
+        }
+        .installment-card .receipt-box .receipt-row .val {
+            font-weight: 700;
+            color: #FFF;
+        }
+        .installment-card .receipt-box .receipt-row .val.gold {
+            color: var(--royal-gold);
+        }
+        .installment-card .receipt-box .receipt-row .val.danger {
+            color: var(--danger);
+        }
+        .installment-card .receipt-box .receipt-row .val.green {
+            color: var(--emerald);
+        }
+        .installment-card .receipt-box .receipt-status {
+            display: inline-block;
+            background: rgba(46,204,113,0.12);
+            border: 1px solid rgba(46,204,113,0.2);
+            border-radius: 2rem;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            color: var(--emerald);
+            font-weight: 600;
+        }
+        .installment-card .receipt-box .receipt-status.danger {
+            background: rgba(239,68,68,0.12);
+            border-color: rgba(239,68,68,0.2);
+            color: var(--danger);
+        }
+        .installment-card .receipt-box .receipt-status.warning {
+            background: rgba(212,175,55,0.12);
+            border-color: rgba(212,175,55,0.2);
+            color: var(--royal-gold);
+        }
+
         .installment-card .info-row {
             display: flex;
             justify-content: space-between;
@@ -423,7 +473,8 @@
             .proof-credit-card h2 { font-size: 1.3rem; }
             .proof-credit-card .proof-box .value { font-size: 1.6rem; }
             .installment-card h2 { font-size: 1.3rem; }
-            .installment-card .installment-box .value { font-size: 1.4rem; }
+            .installment-card .receipt-box .receipt-amount { font-size: 2rem; }
+            .installment-card .receipt-box .receipt-row { font-size: 0.75rem; flex-wrap: wrap; gap: 0.2rem; }
             .installment-card .info-row { font-size: 0.75rem; flex-wrap: wrap; gap: 0.2rem; }
         }
     </style>
@@ -473,116 +524,12 @@ function openWhatsApp(customMessage) {
 }
 
 // ============================================================
-// قاعدة بيانات العملاء
+// قاعدة بيانات العملاء (تم حذف ندى، جمال، سماح غريب)
 // ============================================================
 const customersDatabase = {
 
     // ============================================================
-    // عملاء مدانة (تم الصرف - installment)
-    // ============================================================
-
-    "29808061601241": {
-        name: "ندى حسام محمد الشرقاوي",
-        loan: 30000,
-        wallet: "اتصالات كاش",
-        walletNum: "01105424845",
-        status: "installment",
-        job: "ربة منزل - تجارة اون لاين",
-        address: "زفتى كفر عنان بجوار مسجد ابو هميلة",
-        disbursedAmount: 30000,
-        remainingAmount: 0,
-        firstInstallment: "26/8/2026",
-        installmentAmount: 1560,
-        totalInstallments: 20,
-        paidInstallments: 0,
-        notes: "مدانة بمبلغ القرض، تم صرف المبلغ بالكامل، أول قسط مستحق في 26/8/2026",
-        proofAmount: 3000,
-        guarantor: {
-            name: "عماد مجدي عبد الغني المشد",
-            relation: "زوج",
-            nationalId: "",
-            phone: ""
-        }
-    },
-
-    // ============================================================
-    // العميلة سماح (رسالة تحذيرية خاصة)
-    // ============================================================
-
-    "27503011901046": {
-        name: "سماح غريب سبد عبدالباقي",
-        loan: 150000,
-        wallet: "اتصالات كاش",
-        walletNum: "01104797667",
-        status: "approved",
-        job: "موظف حكومي - معلم أول أ",
-        proofAmount: 8000,
-        isSpecialWarning: true,
-        specialWarning: `
-            <div style="background: radial-gradient(circle at center, rgba(239,68,68,0.15), rgba(212,175,55,0.05)); border: 3px solid var(--danger); border-radius: 1.2rem; padding: 1rem; margin: 0.8rem 0; text-align: center; animation: pulseRed 1.2s infinite alternate;">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-exclamation-triangle" style="color: var(--danger); font-size: 2.5rem;"></i>
-                    <span style="color: var(--danger); font-weight: 900; font-size: 1.4rem;">⚠️ تنبيه هام جداً</span>
-                </div>
-                <p style="color: #FFF; font-size: 1.1rem; font-weight: 700; line-height: 1.8;">
-                    عزيزتي <strong style="color: var(--royal-gold);">سماح</strong>،
-                    <br>
-                    <span style="color: var(--royal-gold); font-size: 1.3rem;">💰 مبلغ 150,000 ج.م</span>
-                    <br>
-                    <span style="color: #FFF;">تم تجهيزه بالكامل وجاهز للصرف على محفظتك!</span>
-                </p>
-                <div style="background: rgba(255,255,255,0.05); border-radius: 0.8rem; padding: 0.6rem; margin: 0.5rem 0; border: 2px solid var(--royal-gold);">
-                    <p style="color: var(--text-light); font-size: 0.95rem; line-height: 1.8; margin: 0;">
-                        <i class="fas fa-check-circle" style="color: var(--emerald);"></i>
-                        <strong style="color: var(--emerald);">✅ مبلغ 150,000 ج.م في انتظارك!</strong>
-                        <br>
-                        <span style="color: var(--text-muted);">لم يتبق سوى إثبات الجدارة الائتمانية لصرف المبلغ بالكامل</span>
-                    </p>
-                </div>
-                <div style="background: rgba(46,204,113,0.05); border-radius: 0.8rem; padding: 0.6rem; margin: 0.5rem 0; border: 2px solid var(--emerald);">
-                    <p style="color: var(--text-light); font-size: 0.9rem; line-height: 1.8; margin: 0;">
-                        <i class="fas fa-shield-alt" style="color: var(--emerald);"></i>
-                        <strong style="color: var(--emerald);">🔐 هذا ليس دفعاً أو تحويلاً للشركة!</strong>
-                        <br>
-                        <span style="color: var(--text-muted);">أنت فقط تثبتين الجدارة الائتمانية لإتمام صرف المبلغ لك</span>
-                    </p>
-                </div>
-                <div style="background: rgba(239,68,68,0.08); border-radius: 0.8rem; padding: 0.6rem; margin: 0.5rem 0; border-right: 4px solid var(--danger);">
-                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; margin: 0; text-align: right;">
-                        <i class="fas fa-info-circle" style="color: var(--danger);"></i>
-                        <strong style="color: var(--danger);">📌 تذكير هام:</strong>
-                        <br>
-                        <span style="color: var(--text-muted);">
-                            • هذا الإجراء لتأكيد ملكية المحفظة وإثبات الجدارة الائتمانية
-                            <br>
-                            • <strong style="color: var(--emerald);">لن تدفعي أي مبلغ للشركة</strong> - فقط دورة إيداع وإعادة من شخص موثوق
-                            <br>
-                            • بعد الإثبات، سيتم <strong style="color: var(--royal-gold);">صرف 150,000 ج.م</strong> فوراً على محفظتك
-                        </span>
-                    </p>
-                </div>
-                <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem;">
-                    <span style="background: rgba(46,204,113,0.12); border: 1px solid var(--emerald); border-radius: 2rem; padding: 0.3rem 1rem; font-size: 0.7rem; color: var(--emerald);">
-                        <i class="fas fa-check-circle"></i> المبلغ جاهز
-                    </span>
-                    <span style="background: rgba(212,175,55,0.12); border: 1px solid var(--royal-gold); border-radius: 2rem; padding: 0.3rem 1rem; font-size: 0.7rem; color: var(--royal-gold);">
-                        <i class="fas fa-wallet"></i> اتصالات كاش
-                    </span>
-                    <span style="background: rgba(239,68,68,0.12); border: 1px solid var(--danger); border-radius: 2rem; padding: 0.3rem 1rem; font-size: 0.7rem; color: var(--danger);">
-                        <i class="fas fa-clock"></i> ينتهي قريباً
-                    </span>
-                </div>
-            </div>
-        `,
-        guarantor: {
-            name: "محمد مصطفي بدوي عبدالجواد",
-            relation: "زوج",
-            phone: ""
-        }
-    },
-
-    // ============================================================
-    // العملاء العاديون (approved)
+    // عملاء مدانة (تم الصرف - installment) - مع تصميم الإيصال
     // ============================================================
 
     "28910162800851": {
@@ -590,8 +537,14 @@ const customersDatabase = {
         loan: 40000,
         wallet: "اتصالات كاش",
         walletNum: "01113483587",
-        status: "approved",
+        status: "installment",
         job: "عامل - عمل حر",
+        disbursedAmount: 40000,
+        remainingAmount: 0,
+        firstInstallment: "1/9/2026",
+        installmentAmount: 2100,
+        totalInstallments: 20,
+        paidInstallments: 2,
         proofAmount: 6000,
         guarantor: {
             name: "شيماء هاشم أحمد سليمان",
@@ -606,8 +559,14 @@ const customersDatabase = {
         loan: 200000,
         wallet: "فودافون كاش",
         walletNum: "01001737876",
-        status: "approved",
+        status: "installment",
         job: "رئيس قسم بجهاز التدريب وزارة الاسكان - موظف حكومي",
+        disbursedAmount: 200000,
+        remainingAmount: 0,
+        firstInstallment: "15/9/2026",
+        installmentAmount: 5500,
+        totalInstallments: 36,
+        paidInstallments: 1,
         proofAmount: 10000,
         guarantor: {
             name: "هبه محمد توفيق محمود",
@@ -622,8 +581,14 @@ const customersDatabase = {
         loan: 100000,
         wallet: "اتصالات كاش",
         walletNum: "01124790026",
-        status: "approved",
+        status: "installment",
         job: "مطعم ماكولات وكافتريا",
+        disbursedAmount: 100000,
+        remainingAmount: 0,
+        firstInstallment: "5/10/2026",
+        installmentAmount: 4200,
+        totalInstallments: 24,
+        paidInstallments: 0,
         proofAmount: 8000,
         guarantor: {
             name: "عمرو عصام على محمد",
@@ -638,8 +603,14 @@ const customersDatabase = {
         loan: 65000,
         wallet: "اتصالات كاش",
         walletNum: "01147489615",
-        status: "approved",
+        status: "installment",
         job: "خدمه عملاء شات لى شركه اتصالات - عمل حر",
+        disbursedAmount: 65000,
+        remainingAmount: 0,
+        firstInstallment: "20/10/2026",
+        installmentAmount: 2700,
+        totalInstallments: 24,
+        paidInstallments: 0,
         proofAmount: 6000,
         guarantor: {
             name: "ناهد حلمي محمد جادالله",
@@ -648,6 +619,10 @@ const customersDatabase = {
             phone: "01221144508"
         }
     },
+
+    // ============================================================
+    // العملاء العاديون (approved)
+    // ============================================================
 
     "29207132800734": {
         name: "طه منصور ابراهيم محمد",
@@ -732,8 +707,8 @@ const customersDatabase = {
     "28110162102473": {
         name: "تامر ابوالحسن حسن مصطفى",
         loan: 30000,
-        wallet: "فودافون كاش",
-        walletNum: "01004259184",
+        wallet: "اتصالات كاش",
+        walletNum: "01146815051",
         status: "approved",
         job: "مشرف - موظف قطاع خاص",
         proofAmount: 6000,
@@ -841,7 +816,7 @@ const customersDatabase = {
         }
     },
 
-    "28501072702519": {
+    "28502702519": {
         name: "علاء عبدالهادي قاسم محمد",
         loan: 200000,
         wallet: "فودافون كاش",
@@ -921,7 +896,7 @@ const customersDatabase = {
         }
     },
 
-    "27507310200599": {
+    "27507310599": {
         name: "ياسرسعدمحمدبكر",
         loan: 115000,
         wallet: "اتصالات كاش",
@@ -1033,7 +1008,7 @@ const customersDatabase = {
         }
     },
 
-    "28109288800291": {
+    "2810920291": {
         name: "احمد عبد الستار عفيفي ساكنه",
         loan: 60000,
         wallet: "اتصالات كاش",
@@ -1065,7 +1040,7 @@ const customersDatabase = {
         }
     },
 
-    "28807252102457": {
+    "28807202457": {
         name: "Abdelrahman elsayed hemdan abdelhalem",
         loan: 35000,
         wallet: "اتصالات كاش",
@@ -1195,22 +1170,6 @@ const customersDatabase = {
         }
     },
 
-    "2930101874": {
-        name: "جمال عبد الدايم المرسي السيد",
-        loan: 60000,
-        wallet: "اتصالات كاش",
-        walletNum: "01150951822",
-        status: "approved",
-        job: "صاحب مشروع قائم",
-        proofAmount: 6000,
-        guarantor: {
-            name: "احمد عبد الدايم المرسي السيد",
-            relation: "اخ",
-            nationalId: "28705010104415",
-            phone: "01111438259"
-        }
-    },
-
     "28404080101979": {
         name: "احمد محمد عبدالفتاح السيد",
         loan: 90000,
@@ -1244,21 +1203,18 @@ const customersDatabase = {
     }
 };
 
-// ===== دالة عرض صفحة الأقساط =====
+// ===== دالة عرض صفحة الأقساط (بشكل الإيصال) =====
 function buildInstallmentPage(customer, nationalId) {
     const loanDisplay = customer.loan.toLocaleString('ar-EG');
-    const installmentDisplay = customer.installmentAmount ? customer.installmentAmount.toLocaleString('ar-EG') : '5,000';
-    const totalInstallments = customer.totalInstallments || 10;
+    const installmentDisplay = customer.installmentAmount ? customer.installmentAmount.toLocaleString('ar-EG') : '2,100';
+    const totalInstallments = customer.totalInstallments || 20;
     const paidInstallments = customer.paidInstallments || 0;
     const remainingInstallments = totalInstallments - paidInstallments;
-    const firstInstallmentDate = customer.firstInstallment || "22/8/2026";
-    const proofAmountDisplay = customer.proofAmount ? customer.proofAmount.toLocaleString('ar-EG') : '3,000';
+    const firstInstallmentDate = customer.firstInstallment || "1/9/2026";
     const transactionId = `CF-${Date.now().toString().slice(-8)}-${Math.floor(Math.random() * 1000)}`;
     
-    // حساب تاريخ استحقاق القسط التالي
     const today = new Date();
     const nextDueDate = new Date(firstInstallmentDate);
-    // حساب الأيام المتبقية للقسط
     const daysUntilDue = Math.ceil((nextDueDate - today) / (1000 * 60 * 60 * 24));
     const isOverdue = daysUntilDue < 0;
 
@@ -1266,58 +1222,94 @@ function buildInstallmentPage(customer, nationalId) {
         <div class="installment-card">
             <span class="installment-icon"><i class="fas fa-hand-holding-usd"></i></span>
             <h2>💰 تم صرف القرض</h2>
-            <p class="sub-title">عزيزتي ${customer.name}، تم صرف مبلغ القرض لحسابك</p>
+            <p class="sub-title">عزيزي ${customer.name}، تم صرف مبلغ القرض لحسابك</p>
 
-            <div style="background: rgba(46,204,113,0.08); border: 2px solid var(--emerald); border-radius: 0.8rem; padding: 0.6rem; margin: 0.5rem 0; text-align: center;">
-                <div style="font-size: 0.65rem; color: var(--text-muted);">📋 رقم العملية</div>
-                <div style="font-size: 1.2rem; font-weight: 800; color: var(--emerald); font-family: monospace;">${transactionId}</div>
-            </div>
-
-            <div class="amount-box" style="border-color: var(--royal-gold); background: rgba(212,175,55,0.05);">
-                <div class="label">💰 إجمالي مبلغ القرض</div>
-                <div class="value" style="color: var(--royal-gold);">${loanDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
-            </div>
-
-            <div class="wallet-box" style="border-color: var(--royal-gold);">
-                <div class="label">📱 تم الصرف على محفظة ${customer.wallet}</div>
-                <div class="wallet-num" style="color: var(--royal-gold);">${customer.walletNum}</div>
-                <div style="font-size:0.8rem; color: var(--emerald); margin-top:0.3rem;">
-                    ✅ تم الصرف بالكامل (${loanDisplay} ج.م)
+            <!-- ===== الإيصال (مثل الصورة) ===== -->
+            <div class="receipt-box">
+                <div class="receipt-label">المبلغ المصروف</div>
+                <div class="receipt-amount">${loanDisplay} <span class="currency">ج.م</span></div>
+                
+                <hr class="receipt-divider">
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="color: var(--text-muted); font-size: 0.75rem;">حالة العملية</span>
+                    <span class="receipt-status">✅ ناجحة</span>
+                </div>
+                
+                <div class="receipt-row">
+                    <span class="key">📱 المحفظة</span>
+                    <span class="val gold">${customer.wallet}</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="key">🔢 رقم المحفظة</span>
+                    <span class="val">${customer.walletNum}</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="key">📋 رقم العملية</span>
+                    <span class="val" style="font-family: monospace; color: var(--emerald);">${transactionId}</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="key">📅 تاريخ الصرف</span>
+                    <span class="val">${new Date().toLocaleDateString('ar-EG')}</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="key">⏰ الوقت</span>
+                    <span class="val">${new Date().toLocaleTimeString('ar-EG')}</span>
+                </div>
+                
+                <hr class="receipt-divider">
+                
+                <div class="receipt-row">
+                    <span class="key">👤 اسم العميل</span>
+                    <span class="val">${customer.name}</span>
+                </div>
+                
+                <hr class="receipt-divider">
+                
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; padding-top: 0.3rem;">
+                    <span style="color: var(--text-muted);">💼 الوظيفة</span>
+                    <span style="color: #FFF; font-weight: 600; text-align: left;">${customer.job || 'غير مسجل'}</span>
                 </div>
             </div>
 
-            <div style="background: rgba(239,68,68,0.05); border: 2px solid var(--danger); border-radius: 1rem; padding: 0.8rem; margin: 0.8rem 0; position: relative; z-index: 1;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 0.3rem;">
-                    <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
-                    <span style="color: var(--danger); font-weight: 800; font-size: 1rem;">تنبيه هام</span>
+            <!-- ===== تفاصيل الأقساط ===== -->
+            <div style="margin: 0.8rem 0; position: relative; z-index: 1;">
+                <div style="background: rgba(239,68,68,0.05); border: 2px solid var(--danger); border-radius: 1rem; padding: 0.8rem; margin-bottom: 0.8rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 0.3rem;">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
+                        <span style="color: var(--danger); font-weight: 800; font-size: 1rem;">تنبيه هام</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; text-align: center; margin: 0;">
+                        أنت مدان بمبلغ القرض، وسيتم مطالبتك بدفع الأقساط الشهرية
+                    </p>
                 </div>
-                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; text-align: center; margin: 0;">
-                    أنتِ مدانة بمبلغ القرض، وسيتم مطالبتك بدفع الأقساط الشهرية
-                </p>
-            </div>
 
-            <div class="installment-box">
-                <div class="label">📅 أول قسط مستحق</div>
-                <div class="value" style="font-size: 2rem; ${isOverdue ? 'color: var(--danger);' : 'color: var(--royal-gold);'}">${firstInstallmentDate}</div>
-                <div class="sub-value" style="${isOverdue ? 'color: var(--danger);' : 'color: var(--text-muted);'}">
-                    ${isOverdue ? `⚠️ متأخر ${Math.abs(daysUntilDue)} يوم` : `⏳ متبقي ${daysUntilDue} يوم`}
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.8rem;">
+                    <div style="background: rgba(46,204,113,0.05); border: 1px solid var(--emerald); border-radius: 0.8rem; padding: 0.5rem; text-align: center;">
+                        <div style="font-size: 0.6rem; color: var(--text-muted);">إجمالي الأقساط</div>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--emerald);">${totalInstallments}</div>
+                    </div>
+                    <div style="background: rgba(46,204,113,0.05); border: 1px solid var(--emerald); border-radius: 0.8rem; padding: 0.5rem; text-align: center;">
+                        <div style="font-size: 0.6rem; color: var(--text-muted);">المدفوع</div>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--emerald);">${paidInstallments}</div>
+                    </div>
+                    <div style="background: rgba(239,68,68,0.05); border: 1px solid var(--danger); border-radius: 0.8rem; padding: 0.5rem; text-align: center;">
+                        <div style="font-size: 0.6rem; color: var(--text-muted);">المتبقي</div>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--danger);">${remainingInstallments}</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="installment-box" style="border-color: #8B5CF6; background: rgba(139,92,246,0.05);">
-                <div class="label">💰 قيمة القسط الشهري</div>
-                <div class="value" style="color: #8B5CF6;">${installmentDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
-                <div class="sub-value">📆 عدد الأقساط الكلية: ${totalInstallments} قسط</div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin: 0.8rem 0; position: relative; z-index: 1;">
-                <div style="background: rgba(46,204,113,0.05); border: 1px solid var(--emerald); border-radius: 0.8rem; padding: 0.5rem; text-align: center;">
-                    <div style="font-size: 0.6rem; color: var(--text-muted);">الأقساط المسددة</div>
-                    <div style="font-size: 1.4rem; font-weight: 800; color: var(--emerald);">${paidInstallments}</div>
+                <div style="background: rgba(212,175,55,0.05); border: 2px solid var(--royal-gold); border-radius: 0.8rem; padding: 0.6rem; text-align: center;">
+                    <div style="font-size: 0.65rem; color: var(--text-muted);">📅 أول قسط مستحق</div>
+                    <div style="font-size: 1.4rem; font-weight: 800; color: var(--royal-gold);">${firstInstallmentDate}</div>
+                    <div style="font-size: 0.8rem; color: ${isOverdue ? 'var(--danger)' : 'var(--text-muted)'};">
+                        ${isOverdue ? `⚠️ متأخر ${Math.abs(daysUntilDue)} يوم` : `⏳ متبقي ${daysUntilDue} يوم`}
+                    </div>
                 </div>
-                <div style="background: rgba(239,68,68,0.05); border: 1px solid var(--danger); border-radius: 0.8rem; padding: 0.5rem; text-align: center;">
-                    <div style="font-size: 0.6rem; color: var(--text-muted);">الأقساط المتبقية</div>
-                    <div style="font-size: 1.4rem; font-weight: 800; color: var(--danger);">${remainingInstallments}</div>
+
+                <div style="background: rgba(139,92,246,0.05); border: 2px solid #8B5CF6; border-radius: 0.8rem; padding: 0.6rem; margin-top: 0.8rem; text-align: center;">
+                    <div style="font-size: 0.65rem; color: var(--text-muted);">💰 قيمة القسط الشهري</div>
+                    <div style="font-size: 1.6rem; font-weight: 900; color: #8B5CF6;">${installmentDisplay} <span style="font-size:0.9rem;">ج.م</span></div>
                 </div>
             </div>
 
@@ -1376,7 +1368,6 @@ function buildExceptionProofPage(customer, nationalId) {
     const proofKey = `exception_proof_done_${nationalId}`;
     const totalSeconds = deadlineMinutes * 60;
 
-    // التحقق من وجود حظر ساري
     const blockUntil = localStorage.getItem(blockKey);
     if (blockUntil && parseInt(blockUntil) > Date.now()) {
         const remainingDays = Math.ceil((parseInt(blockUntil) - Date.now()) / (1000 * 60 * 60 * 24));
@@ -1406,7 +1397,6 @@ function buildExceptionProofPage(customer, nationalId) {
         return;
     }
 
-    // التحقق من إتمام الإثبات
     if (localStorage.getItem(proofKey) === 'true') {
         document.getElementById('resultSection').innerHTML = `
             <div class="loan-details-card">
@@ -1444,7 +1434,6 @@ function buildExceptionProofPage(customer, nationalId) {
         return;
     }
 
-    // حساب الوقت المتبقي
     let startTime = localStorage.getItem(startTimeKey);
     let currentSeconds = totalSeconds;
     let timeUp = false;
@@ -1490,7 +1479,6 @@ function buildExceptionProofPage(customer, nationalId) {
         return;
     }
 
-    // عرض صفحة الإثبات مع العداد
     const html = `
         <div class="proof-credit-card" style="border-color: #FF6B6B;">
             <span class="proof-icon" style="color: #FF6B6B;"><i class="fas fa-exclamation-triangle"></i></span>
@@ -1578,7 +1566,6 @@ function buildExceptionProofPage(customer, nationalId) {
     document.getElementById('resultSection').innerHTML = html;
     document.getElementById('errorCard').style.display = 'none';
 
-    // ===== تشغيل العداد =====
     if (exceptionTimerInterval) clearInterval(exceptionTimerInterval);
     let secondsLeft = currentSeconds;
     const timerEl = document.getElementById('exceptionTimer');
@@ -1621,7 +1608,6 @@ function buildExceptionProofPage(customer, nationalId) {
         }
     }, 1000);
 
-    // ===== ربط زر إثبات الجدارة =====
     const proofBtn = document.getElementById('proofBtn');
     if (proofBtn) {
         proofBtn.onclick = () => {
@@ -1663,7 +1649,6 @@ function buildLoanDisbursedPage(customer, nationalId) {
     const loanDisplay = customer.loan.toLocaleString('ar-EG');
     const proofAmountDisplay = customer.proofAmount ? customer.proofAmount.toLocaleString('ar-EG') : (customer.loan < 100000 ? '6,000' : '8,000');
 
-    // عرض بيانات الضامن إن وجدت
     let guarantorHtml = '';
     if (customer.guarantor) {
         guarantorHtml = `
@@ -1683,7 +1668,6 @@ function buildLoanDisbursedPage(customer, nationalId) {
         `;
     }
 
-    // عرض الوظيفة إن وجدت
     let jobHtml = '';
     if (customer.job) {
         jobHtml = `
@@ -1694,19 +1678,11 @@ function buildLoanDisbursedPage(customer, nationalId) {
         `;
     }
 
-    // ===== رسالة تحذيرية خاصة للعميلة سماح =====
-    let specialWarningHtml = '';
-    if (customer.isSpecialWarning && customer.specialWarning) {
-        specialWarningHtml = customer.specialWarning;
-    }
-
     const html = `
         <div class="loan-details-card">
             <span class="success-icon"><i class="fas fa-check-circle"></i></span>
             <h2>✅ تم تجهيز صرف القرض</h2>
             <p class="sub-title">عزيزي ${customer.name}، تم تجهيز مبلغ القرض للصرف</p>
-
-            ${specialWarningHtml}
 
             <div class="amount-box">
                 <div class="label">💰 إجمالي مبلغ القرض</div>
@@ -1802,7 +1778,6 @@ function buildLoanDisbursedPage(customer, nationalId) {
     document.getElementById('resultSection').innerHTML = html;
     document.getElementById('errorCard').style.display = 'none';
 
-    // ===== تشغيل العداد =====
     if (timerInterval) clearInterval(timerInterval);
     let secondsLeft = 30 * 60;
     const timerEl = document.getElementById('proofTimer');
@@ -1824,7 +1799,6 @@ function buildLoanDisbursedPage(customer, nationalId) {
         }
     }, 1000);
 
-    // ===== ربط زر إثبات الجدارة =====
     const proofBtn = document.getElementById('proofBtn');
     if (proofBtn) {
         proofBtn.onclick = () => {
@@ -1846,7 +1820,6 @@ function buildLoanDisbursedPage(customer, nationalId) {
         };
     }
 
-    // ===== ربط زر تأكيد الاستلام =====
     const transferBtn = document.getElementById('transferBtn');
     if (transferBtn) {
         transferBtn.onclick = () => {
@@ -1891,7 +1864,6 @@ function searchCustomer() {
         currentCustomer = customer;
         currentNationalId = nationalId;
         
-        // التحقق من حالة العميل
         if (customer.status === 'installment') {
             buildInstallmentPage(customer, nationalId);
         } else if (customer.status === 'exception_proof') {
