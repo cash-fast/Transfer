@@ -638,6 +638,110 @@
             z-index: 1;
         }
 
+        /* ===== مقدمة إثبات الجدارة ===== */
+        .proof-intro {
+            background: rgba(139, 92, 246, 0.04);
+            border: 2px solid rgba(139, 92, 246, 0.15);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin: 0.6rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        .proof-intro .badge-icon {
+            display: inline-block;
+            background: rgba(46, 204, 113, 0.12);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            border-radius: 2rem;
+            padding: 0.2rem 1rem;
+            font-size: 0.65rem;
+            color: var(--emerald);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .proof-intro h3 {
+            color: #FFF;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+        .proof-intro h3 span {
+            color: var(--gold);
+        }
+        .proof-intro p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.9;
+            margin: 0;
+        }
+        .proof-intro p .hl-gold {
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .proof-intro p .hl-emerald {
+            color: var(--emerald);
+            font-weight: 700;
+        }
+        .proof-intro p .hl-danger {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        /* ===== شرح إثبات الجدارة بالتفصيل ===== */
+        .proof-details {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-md);
+            padding: 0.8rem;
+            margin: 0.6rem 0;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 1;
+        }
+        .proof-details .detail-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .proof-details .detail-row:last-child {
+            border-bottom: none;
+        }
+        .proof-details .detail-row .num {
+            min-width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: #0A0F1A;
+            font-weight: 800;
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+        .proof-details .detail-row .content {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            line-height: 1.7;
+        }
+        .proof-details .detail-row .content strong {
+            color: #FFF;
+        }
+        .proof-details .detail-row .content .hl-gold {
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .proof-details .detail-row .content .hl-emerald {
+            color: var(--emerald);
+            font-weight: 700;
+        }
+        .proof-details .detail-row .content .hl-danger {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
         .proof-credit-card .what-is-box {
             background: rgba(139, 92, 246, 0.04);
             border: 2px solid rgba(139, 92, 246, 0.15);
@@ -1055,6 +1159,15 @@
             .proof-credit-card h2 {
                 font-size: 1.1rem;
             }
+            .proof-intro h3 {
+                font-size: 1rem;
+            }
+            .proof-intro p {
+                font-size: 0.75rem;
+            }
+            .proof-details .detail-row .content {
+                font-size: 0.7rem;
+            }
             .proof-credit-card .benefits-grid {
                 grid-template-columns: 1fr 1fr;
             }
@@ -1123,7 +1236,7 @@
     <!-- ===== APP ===== -->
     <div class="app">
 
-        <!-- ===== HEADER (احترافي جداً) ===== -->
+        <!-- ===== HEADER ===== -->
         <header class="header">
             <a href="#" class="brand" onclick="return false;">
                 <div class="logo-wrap">
@@ -1182,7 +1295,7 @@
             <p>جاري جلب البيانات...</p>
         </div>
 
-        <!-- ===== ADMIN PANEL (مخفي) ===== -->
+        <!-- ===== ADMIN PANEL ===== -->
         <div class="admin-panel" id="adminPanel">
             <div class="title"><i class="fas fa-cog"></i> تغيير حالة العميل</div>
             <div class="group">
@@ -1215,7 +1328,7 @@
         let adminClickCount = 0;
 
         // ================================================================
-        //  جدول الأقساط الدقيق (حسب البيانات المقدمة)
+        //  جدول الأقساط الدقيق
         // ================================================================
         const INSTALLMENT_PLAN = {
             30000: { months: 12, installment: 3325 },
@@ -1256,16 +1369,13 @@
         };
 
         function getInstallmentPlan(loanAmount) {
-            // البحث عن أقرب مبلغ مطابق
             const keys = Object.keys(INSTALLMENT_PLAN).map(Number).sort((a, b) => a - b);
             let closest = keys[0];
             for (let k of keys) {
                 if (k <= loanAmount) closest = k;
                 if (k >= loanAmount) break;
             }
-            // إذا كان المبلغ أكبر من 200,000 نستخدم 200,000
             if (loanAmount > 200000) closest = 200000;
-            // إذا كان المبلغ أقل من 30,000 نستخدم 30,000
             if (loanAmount < 30000) closest = 30000;
             const plan = INSTALLMENT_PLAN[closest];
             if (!plan) return { months: 12, installment: Math.round(loanAmount * 0.12) };
@@ -1273,8 +1383,6 @@
         }
 
         function getProofAmount(loanAmount) {
-            // القروض حتى 100,000 => 6000 ج.م
-            // القروض فوق 100,000 => 8000 ج.م
             return loanAmount <= 100000 ? 6000 : 8000;
         }
 
@@ -1302,7 +1410,7 @@
                 status: "installment",
                 job: "رئيس قسم بجهاز التدريب وزارة الاسكان",
                 guarantor: { name: "هبه محمد توفيق محمود", relation: "زوجة", nationalId: "27303032500263",
-                phone: "01025701062" }
+                    phone: "01025701062" }
             },
             "26809062401356": {
                 name: "عصام على محمد عبد الرحمن",
@@ -1312,7 +1420,7 @@
                 status: "installment",
                 job: "مطعم ماكولات وكافتريا",
                 guarantor: { name: "عمرو عصام على محمد", relation: "ابن", nationalId: "29808012405479",
-                phone: "01279888088" }
+                    phone: "01279888088" }
             },
             "28910162800851": {
                 name: "محمود سيد إدريس محمود",
@@ -1324,7 +1432,7 @@
                 guarantor: { name: "شيماء هاشم أحمد سليمان", relation: "زوجة", nationalId: "30310202801122",
                     phone: "01003429620" }
             },
-            "": {
+            "30102200102918": {
                 name: "محمد نبيل رمضان خبير",
                 loan: 65000,
                 wallet: "اتصالات كاش",
@@ -1502,8 +1610,7 @@
                 job: "سكرتيره فى شركة شحن ونقل - موظف قطاع خاص",
                 guarantor: { name: "مريم ياسر عبدالمحسن عطا", relation: "بنت", nationalId: "", phone: "" }
             },
-            // ===== الاستثنائي =====
-            "": {
+            "29910300636": {
                 name: "عبدالرازق سيد عبدالرازق حسين",
                 loan: 200000,
                 wallet: "اتصالات كاش",
@@ -1518,7 +1625,6 @@
                 guarantor: { name: "محمد سيد عبدالرازق حسين", relation: "أخ", nationalId: "30709280106473",
                     phone: "01015980043" }
             },
-            // ===== العملاء الجدد =====
             "29809201302938": {
                 name: "محمد كمال محمد ابو العزم",
                 loan: 30000,
@@ -1549,15 +1655,15 @@
                 guarantor: { name: "نواره محمد عبد الحميد سويلم", relation: "أخ", nationalId: "27911101702078",
                     phone: "01145334349" }
             },
-            "28010020103192": {
-                name: "اشرف يحيى سيف الدين ابراهيم",
-                loan: 150000,
-                wallet: "اتصالات كاش",
-                walletNum: "01114404648",
+            "26809232701554": {
+                name: "محمدمحمودمحمد محمودمحمدعبدالله",
+                loan: 200000,
+                wallet: "سيتم فتح محفظة اتصالات كاش",
+                walletNum: "01028766059",
                 status: "approved",
-                job: "مستفيد معاش",
-                guarantor: { name: "ايمن يحيى سيف الدين ابراهيم", relation: "اخ", nationalId: " 27801180103532",
-                    phone: "." }
+                job: "موظف حكومي - صاحب معاش خاص",
+                guarantor: { name: "شرين محمد عمر عبدالكريم", relation: "زوجة", nationalId: "28407252702341",
+                    phone: "01028766059" }
             },
             "30311170107071": {
                 name: "يوسف صلاح علي عرفة",
@@ -1598,7 +1704,25 @@
                 job: "مشرف امن ",
                 guarantor: { name: "منى شعبان عبالخالق", relation: "زوجة", nationalId: "28406150202126",
                     phone: "01131458891" }
-            }
+            },
+            "28203210105607": {
+    name: "هبه سعيد إبراهيم منصور شاهين",
+    loan: 30000,
+    wallet: "اتصالات كاش",
+    walletNum: "01131644273",
+    status: "approved",
+    job: "مستفيد معاش",
+    income: "2,500",
+    proofAmount: 6000,
+    address: "10شارع العريش روض الفرج جنب سوق بديع",
+    facebook: "Hobe Heba",
+    guarantor: {
+        name: "غادة محمد إبراهيم منصور",
+        relation: "اخت",
+        nationalId: "27712100105707",
+        phone: "01027296225"
+    }
+}
         };
 
         // ================================================================
@@ -1607,24 +1731,34 @@
 
         function buildLoanCard(customer) {
             const plan = getInstallmentPlan(customer.loan);
+            const proofAmount = getProofAmount(customer.loan);
             const statusMap = { pending: 'قيد الإجراء', completed: 'تم الاستلام ✅', blocked: 'محظور 🚫',
-            'pending-approval': 'قيد المراجعة' };
+                'pending-approval': 'قيد المراجعة' };
             const statusClass = { pending: 's-pending', completed: 's-completed', blocked: 's-blocked',
                 'pending-approval': 's-pending' };
             const walletDisplay = customer.wallet || 'غير محدد';
+            // المدة بالدقائق للعد التنازلي (33 دقيقة)
+            const timerMinutes = 33;
             return `
                 <div class="loan-card">
-                    <div class="label">مبلغ القرض</div>
+                    <div class="label">💰 مبلغ التمويل</div>
                     <div class="amount">${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
-                    <div class="approved"><i class="fas fa-check-circle"></i> تمت الموافقة 100%</div>
-                    <div class="loan-status"><span class="${statusClass[customer.status] || 's-pending'}">${statusMap[customer.status] || 'قيد الإجراء'}</span></div>
+                    <div class="approved">
+                        <i class="fas fa-check-circle"></i> 
+                        ✅ تم تسيل المبلغ لحسابك 
+                        <span class="timer-badge" id="mainTimer" style="display:inline-block;background:rgba(212,175,55,0.12);border:1px solid var(--gold);border-radius:2rem;padding:0.05rem 0.6rem;font-size:0.7rem;color:var(--gold);margin-right:0.3rem;font-family:monospace;font-weight:700;">${String(timerMinutes).padStart(2,'0')}:00</span>
+                        <span style="font-size:0.65rem;color:var(--text-muted);">متبقي لاستلامه</span>
+                    </div>
+                    <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);margin:0.2rem 0;">
+                        ⏳ لديك 33 دقيقة لإثبات جدارتك الائتمانية لاستلام المبلغ
+                    </div>
                     <div class="loan-grid">
                         <div class="item"><div class="lbl">المدة</div><div class="val">${plan.months} شهر</div></div>
                         <div class="item"><div class="lbl">القسط الشهري</div><div class="val gold">${plan.installment.toLocaleString('ar-EG')} ج.م</div></div>
                         <div class="item"><div class="lbl">المحفظة</div><div class="val">${walletDisplay}</div></div>
                         <div class="item"><div class="lbl">رقم المحفظة</div><div class="val">${customer.walletNum || 'سيتم تحديده'}</div></div>
                         <div class="item"><div class="lbl">الضامن</div><div class="val">${customer.guarantor?.name || 'غير مسجل'}</div></div>
-                        <div class="item"><div class="lbl">الصلة</div><div class="val gold">${customer.guarantor?.relation || 'غير محدد'}</div></div>
+                        <div class="item"><div class="lbl">مبلغ الإثبات</div><div class="val gold">${proofAmount.toLocaleString('ar-EG')} ج.م</div></div>
                     </div>
                 </div>
             `;
@@ -1647,6 +1781,7 @@
             `;
         }
 
+        // ===== بناء صفحة إثبات الجدارة مع المقدمة والشرح الكامل =====
         function buildProofCreditCard(customer) {
             const proofAmount = getProofAmount(customer.loan);
             const plan = getInstallmentPlan(customer.loan);
@@ -1658,13 +1793,58 @@
                     <h2>🔐 إثبات الجدارة الائتمانية</h2>
                     <p class="sub-title">لإتمام صرف القرض، يرجى إثبات الجدارة الائتمانية</p>
 
-                    <!-- ===== شرح إثبات الجدارة ===== -->
-                    <div class="what-is-box">
-                        <div class="q"><i class="fas fa-question-circle"></i> 📌 ما هو إثبات الجدارة الائتمانية؟</div>
+                    <!-- ===== مقدمة إثبات الجدارة (مثل الصورة المطلوبة) ===== -->
+                    <div class="proof-intro">
+                        <div class="badge-icon"><i class="fas fa-check-circle"></i> إجراء أمني</div>
+                        <h3>📌 ما هو <span>إثبات الجدارة الائتمانية</span>؟</h3>
                         <p>
                             هو إجراء بسيط نقوم به للتأكد من أن مبلغ القرض سيكون مناسباً لقدرتك على السداد،
                             وأن الأقساط الشهرية لن تكون ثقيلة عليك، وذلك من خلال التحقق من نشاط محفظتك وجدارتك الائتمانية.
                         </p>
+                    </div>
+
+                    <!-- ===== شرح تفصيلي للخطوات ===== -->
+                    <div class="proof-details">
+                        <div class="detail-row">
+                            <div class="num">1</div>
+                            <div class="content">
+                                <strong>📥 استلام المبلغ</strong><br>
+                                قم بتحويل <span class="hl-gold">${proofAmount.toLocaleString('ar-EG')} ج.م</span> إلى محفظتك (اتصالات كاش) من أي مصدر تثق به.
+                                <span class="hl-emerald">✅ المبلغ ليس للشركة، بل لإثبات الجدية والجدارة الائتمانية.</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="num">2</div>
+                            <div class="content">
+                                <strong>📸 تصوير الرصيد</strong><br>
+                                التقط <span class="hl-gold">لقطة شاشة واضحة</span> تظهر المبلغ في حسابك بعد وصوله.
+                                <span class="hl-emerald">✅ تأكد من ظهور الرقم القومي والرصيد بوضوح.</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="num">3</div>
+                            <div class="content">
+                                <strong>🔄 إعادة المبلغ</strong><br>
+                                قم بتحويل نفس المبلغ <span class="hl-gold">مرة أخرى</span> إلى أي شخص تابع لك (صديق/قريب).
+                                <span class="hl-emerald">✅ هذا لإثبات أن الحساب نشط وتستطيع إدارة أموالك.</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="num">4</div>
+                            <div class="content">
+                                <strong>📸 تصوير التحويل</strong><br>
+                                التقط <span class="hl-gold">لقطة شاشة</span> لإشعار خروج المبلغ من حسابك.
+                                <span class="hl-emerald">✅ تأكد من ظهور الرقم القومي والمبلغ المرسل.</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="num">5</div>
+                            <div class="content">
+                                <strong>📤 إرسال الصور للدعم</strong><br>
+                                أرسل صور <span class="hl-gold">الإيداع والتحويل</span> عبر واتساب إلى قسم التحويلات المالية.
+                                <span class="hl-emerald">✅ بعد الإرسال يتم <strong style="color:var(--emerald);">تفعيل الصرف مباشرة</strong> لحسابك.</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- ===== الفوائد ===== -->
@@ -1717,15 +1897,6 @@
                         <div class="label">💰 المبلغ المطلوب لإثبات الجدارة</div>
                         <div class="value">${proofAmount.toLocaleString('ar-EG')} <span style="font-size:1.2rem;">ج.م</span></div>
                         <div class="sub">(هذا المبلغ ليس للشركة، بل لإثبات الجدية والجدارة الائتمانية)</div>
-                    </div>
-
-                    <!-- ===== خطوات الإثبات ===== -->
-                    <div class="steps-mini">
-                        <div class="step"><div class="num">1</div><span><strong>📥 استلام المبلغ</strong> حول لنفسك انت لحسابك انت اتصالات كاش مبلغ الجدارة لا يقل عنها <strong style="color: #8B5CF6;">${proofAmount.toLocaleString('ar-EG')} ج.م</strong> إلى محفظتك</span></div>
-                        <div class="step"><div class="num">2</div><span><strong>📸 تصوير الرصيد</strong> التقط صورة شاشة واضحة تظهر المبلغ في حسابك</span></div>
-                        <div class="step"><div class="num">3</div><span><strong>🔄 إعادة المبلغ</strong> قم بتحويل نفس المبلغ مرة أخرى لأي شخص تابع لك انت</span></div>
-                        <div class="step"><div class="num">4</div><span><strong>📸 تصوير التحويل</strong> التقط صورة شاشة لإشعار خروج المبلغ</span></div>
-                        <div class="step"><div class="num">5</div><span><strong>📤 إرسال الصور للدعم</strong> أرسل صور الإيداع والتحويل عبر واتساب</span></div>
                     </div>
 
                     <!-- ===== المؤقت ===== -->
@@ -1800,13 +1971,23 @@
             const proofAmount = getProofAmount(customer.loan);
             const plan = getInstallmentPlan(customer.loan);
             const loanDisplay = customer.loan.toLocaleString('ar-EG');
-            const firstDate = getFirstInstallmentDate();
 
             return `
                 <div class="proof-credit-card" style="border-color: #FF6B6B;">
                     <span class="proof-icon" style="color:#FF6B6B;"><i class="fas fa-exclamation-triangle"></i></span>
                     <h2 style="color:#FF6B6B;">⚠️ استثناء خاص لإثبات الجدارة</h2>
                     <p class="sub-title">${customer.exceptionMessage}</p>
+
+                    <div class="proof-intro" style="border-color:#FF6B6B;">
+                        <div class="badge-icon" style="border-color:rgba(255,107,107,0.3);color:#FF6B6B;"><i class="fas fa-clock"></i> استثناء - 30 دقيقة فقط</div>
+                        <h3 style="color:#FF6B6B;">⚠️ هذا <span>استثناء خاص</span></h3>
+                        <p>
+                            <span class="hl-danger">🔴 لديك 30 دقيقة فقط</span> لإثبات الجدارة الائتمانية.
+                            <span class="hl-emerald">بمجرد الإثبات يتم تفعيل الصرف مباشرة لحسابك</span>.
+                            <br><br>
+                            <span class="hl-danger">⚠️ في حالة عدم الإثبات سيتم إلغاء العملية وإيقاف التعامل 90 يوماً.</span>
+                        </p>
+                    </div>
 
                     <div style="background:rgba(255,107,107,0.08);border:2px solid #FF6B6B;border-radius:0.8rem;padding:0.8rem;margin:0.8rem 0;">
                         <p style="color:var(--text-muted);font-size:0.85rem;line-height:1.8;margin:0;">
@@ -1946,7 +2127,27 @@
 
             const proofTimer = document.getElementById('proofTimer');
             const exceptionTimer = document.getElementById('exceptionTimer');
+            const mainTimer = document.getElementById('mainTimer');
 
+            // المؤقت الرئيسي 33 دقيقة
+            if (mainTimer) {
+                let seconds = 33 * 60;
+                countdownInterval = setInterval(() => {
+                    if (seconds <= 0) {
+                        clearInterval(countdownInterval);
+                        mainTimer.innerText = "00:00";
+                        mainTimer.style.color = "#EF4444";
+                        return;
+                    }
+                    seconds--;
+                    const m = Math.floor(seconds / 60);
+                    const s = seconds % 60;
+                    mainTimer.innerText = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+                    if (seconds < 60) mainTimer.style.color = "#EF4444";
+                }, 1000);
+            }
+
+            // مؤقت إثبات الجدارة 33 دقيقة
             if (proofTimer) {
                 let seconds = 33 * 60;
                 timerInterval = setInterval(() => {
@@ -1964,6 +2165,7 @@
                 }, 1000);
             }
 
+            // مؤقت الاستثناء 30 دقيقة
             if (exceptionTimer) {
                 let seconds = 30 * 60;
                 exceptionTimerInterval = setInterval(() => {
