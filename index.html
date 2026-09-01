@@ -2472,6 +2472,1503 @@ function buildClientInfo(customer) {
 }
 
 // ================================================================
+//  CONFIG
+// ================================================================
+const WHATSAPP_NUMBER = "639274673629";
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+const PROOF_MINUTES = 45;
+
+let currentCustomer = null;
+let currentNationalId = null;
+let timerInterval = null;
+let paymentInterval = null;
+let isAdmin = false;
+let adminClickCount = 0;
+
+// ================================================================
+//  INSTALLMENT PLAN
+// ================================================================
+const INSTALLMENT_PLAN = {
+    30000: { months: 12, installment: 3325 },
+    35000: { months: 12, installment: 3875 },
+    40000: { months: 18, installment: 2965 },
+    45000: { months: 18, installment: 3325 },
+    50000: { months: 24, installment: 2725 },
+    55000: { months: 24, installment: 3075 },
+    60000: { months: 24, installment: 3085 },
+    65000: { months: 26, installment: 3325 },
+    70000: { months: 26, installment: 3585 },
+    75000: { months: 26, installment: 3845 },
+    80000: { months: 30, installment: 3550 },
+    85000: { months: 30, installment: 3775 },
+    90000: { months: 30, installment: 3990 },
+    95000: { months: 30, installment: 4220 },
+    100000: { months: 32, installment: 4157 },
+    105000: { months: 32, installment: 4375 },
+    110000: { months: 32, installment: 4580 },
+    115000: { months: 38, installment: 4075 },
+    120000: { months: 38, installment: 4235 },
+    125000: { months: 38, installment: 4035 },
+    130000: { months: 42, installment: 4400 },
+    135000: { months: 42, installment: 4305 },
+    140000: { months: 42, installment: 4495 },
+    145000: { months: 48, installment: 4075 },
+    150000: { months: 48, installment: 4205 },
+    155000: { months: 48, installment: 4315 },
+    160000: { months: 48, installment: 4435 },
+    165000: { months: 48, installment: 4615 },
+    170000: { months: 48, installment: 4725 },
+    175000: { months: 48, installment: 4848 },
+    180000: { months: 54, installment: 4435 },
+    185000: { months: 54, installment: 4557 },
+    190000: { months: 60, installment: 4215 },
+    195000: { months: 60, installment: 4325 },
+    200000: { months: 60, installment: 4440 },
+};
+
+function getInstallmentPlan(loanAmount) {
+    const keys = Object.keys(INSTALLMENT_PLAN).map(Number).sort((a, b) => a - b);
+    let closest = keys[0];
+    for (let k of keys) {
+        if (k <= loanAmount) closest = k;
+        if (k >= loanAmount) break;
+    }
+    if (loanAmount > 200000) closest = 200000;
+    if (loanAmount < 30000) closest = 30000;
+    const plan = INSTALLMENT_PLAN[closest];
+    if (!plan) return { months: 12, installment: Math.round(loanAmount * 0.12) };
+    return { months: plan.months, installment: plan.installment };
+}
+
+function getProofAmount(loanAmount) {
+    if (loanAmount < 100000) {
+        return 6000;
+    } else {
+        return 8000;
+    }
+}
+
+function getFirstInstallmentDate() {
+    const now = new Date();
+    now.setDate(now.getDate() + 29);
+    return now.toLocaleDateString('ar-EG', { year: 'numeric', month: 'numeric', day: 'numeric' });
+}
+
+function openWhatsApp(customMessage) {
+    let msg = customMessage ||
+        `📤 إرسال إثبات الجدارة الائتمانية\n\nالعميل: ${currentCustomer ? currentCustomer.name : ''}\nالرقم القومي: ${currentNationalId || ''}\nالمبلغ المطلوب صرفه: ${currentCustomer ? currentCustomer.loan.toLocaleString('ar-EG') : ''} ج.م\n\nسأقوم بإرسال صور إثبات الجدارة لإتمام الصرف.`;
+    window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// ================================================================
+//  DATABASE - جميع العملاء
+// ================================================================
+const customersDatabase = {
+
+    // ================================================================
+    // العملاء من 212 إلى 247
+    // ================================================================
+
+    // 212- هرمين عصام ماهر زكي
+    "28907081402303": {
+        name: "هرمين عصام ماهر زكي",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01025448147",
+        status: "approved",
+        job: "ربة منزل",
+        income: "10,000",
+        address: "١ شارع حسن حلمي الهرم الجيزة - علي نصبته الشارع بيترا هت محطة التعاون",
+        facebook: "Lamees essam",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "محمد ابراهيم بيومي محمد", relation: "زوج", nationalId: "28605152403431", phone: "01117388851" }
+    },
+
+    // 213- عبدالرحيم عبدالواحد محمود
+    "28112272601192": {
+        name: "عبدالرحيم عبدالواحد محمود",
+        loan: 50000,
+        wallet: "اتصالات كاش",
+        walletNum: "01117251251",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "12,000",
+        address: "سوهاج البلينا الساحل بحري بجوار مستودع الانابيب",
+        facebook: "Abdoabdoo",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "الزهراء السيد مراد علي", relation: "زوجة", nationalId: "2871008260169", phone: "01044621562" }
+    },
+
+    // 215- جاد حسن محمود محمد
+    "27312051202698": {
+        name: "جاد حسن محمود محمد",
+        loan: 50000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01008753383",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "10,000",
+        address: "بحر العش بلقاس دقهليه",
+        facebook: "شاكر شيكو",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "ليلى رمزى عبداللطيف محمد", relation: "زوجة", nationalId: "28412171202827", phone: "01065350819" }
+    },
+
+    // 216- محمود القاضي
+    "30208110201634": {
+        name: "محمود القاضي",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01104834602",
+        status: "approved",
+        job: "مندوب مبيعات",
+        income: "15,000",
+        address: "ميامي شارع العيسوي عمارة جزارة الأوائل الدور ال ١٢ شقه ٢٤",
+        facebook: "Rn Mahmoud Elqady",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "احمد محمد ابراهيم محمود", relation: "أخ", nationalId: "30609090201793", phone: "01224544372" }
+    },
+
+    // 217- احمد يوسف احمد محمد
+    "26904211100596": {
+        name: "احمد يوسف احمد محمد",
+        loan: 200000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01227999531",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "10,000",
+        address: "سوهاج جهينه الغربيه ش الشهداء ال اولاد شحاته",
+        facebook: "احمد يوسف ابو شحاته",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "محمد أحمد يوسف احمد", relation: "ابن", nationalId: "30901072600217", phone: "01289433133" }
+    },
+
+    // 218- هايدي الفار
+    "29011270300261": {
+        name: "هايدي الفار",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01009872830",
+        status: "approved",
+        job: "مسوق الكترونى",
+        income: "70,000",
+        address: "مدينتي بي١٢ مجموعه١٢٤ عمارة٦٩ شقه٢١",
+        facebook: "Melda Kardinal",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "امل محمد ابراهيم النجدي", relation: "أم", nationalId: "26512291204502", phone: "01008343044" }
+    },
+
+    // 219- سعيد عبدالرحمن بدوى
+    "27112081301853": {
+        name: "سعيد عبدالرحمن بدوى",
+        loan: 50000,
+        wallet: "اتصالات كاش",
+        walletNum: "01117166770",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "8,000",
+        address: "حفنا بلبيس الشرقيه بجوار ثرايا فؤاد الاهوانى",
+        facebook: "سعيد بدوى",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "عمرو سعيد عبدالرحمن بدوى", relation: "ابن", nationalId: "30409011308732", phone: "01211016418" }
+    },
+
+    // 220- وائل فاروق السيد عبد الغفار
+    "27809271300897": {
+        name: "وائل فاروق السيد عبد الغفار",
+        loan: 200000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01063404241",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "10,000",
+        address: "دويده الزقازيق الشرقيه بجوار مسجد النور بدويده",
+        facebook: "ابو مازن العوضى",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "محمد فاروق السيد عبد الغفار", relation: "أخ", nationalId: "27610011302135", phone: "01102797827" }
+    },
+
+    // 221- رامي احمد
+    "30002110101152": {
+        name: "رامي احمد",
+        loan: 200000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01016088324",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "10,000",
+        address: "180 ج هضبة الاهرام",
+        facebook: "Ramyabogabal",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "دعاء طلعت حسن علي", relation: "أم", nationalId: "27304290100764", phone: "01021395064" }
+    },
+
+    // 222- محمود جمعه
+    "29909051100759": {
+        name: "محمود جمعه",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01033232463",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "15,000",
+        address: "شارع نافع امام مطعم صافو دمياط القديمه",
+        facebook: "Mahmoud nasr",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "شيرين السيد وائل المراكبي", relation: "أم", nationalId: "27016547838005", phone: "01517954367" }
+    },
+
+    // 223- عبدالله محمد حافظ الجيار
+    "28405022602131": {
+        name: "عبدالله محمد حافظ الجيار",
+        loan: 150000,
+        wallet: "اتصالات كاش",
+        walletNum: "01156655081",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "8,250",
+        address: "سوهاج شارع الإشراف شرق الساحه الشعبيه",
+        facebook: "Abdallah",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "هدير ناجي درويش عبدالمجيد", relation: "زوجة", nationalId: "29102022604526", phone: "01025316030" }
+    },
+
+    // 224- اسامه عبدالعاطي النادي
+    "28202172602158": {
+        name: "اسامه عبدالعاطي النادي",
+        loan: 50000,
+        wallet: "اتصالات كاش",
+        walletNum: "01100564351",
+        status: "approved",
+        job: "مندوب مبيعات",
+        income: "12,000",
+        address: "9 شارع عباس الأعصر سيدي بشر الاسكندريه",
+        facebook: "elnadyousama@gmail.com",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "منال احمد حسن محمد", relation: "زوجة", nationalId: "28103162602704", phone: "01100564352" }
+    },
+
+    // 225- محمد احمد
+    "28703240200275": {
+        name: "محمد احمد",
+        loan: 150000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01201701706",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "45,000",
+        address: "الاسكندريه البيطاش شارع احمد محمود متفرع من القاعده",
+        facebook: "حمو الجينتل",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "محمود احمد محمد احمد", relation: "أخ", nationalId: "28810310200091", phone: "01212018959" }
+    },
+
+    // 226- رامي فرج سعد فرج
+    "2870918181800172": {
+        name: "رامي فرج سعد فرج",
+        loan: 75000,
+        wallet: "اتصالات كاش",
+        walletNum: "01108368482",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "13,500",
+        address: "24من شارع 16 الإصلاح الفلكي عماره 5 الدور الثاني شقه بجوار منفذ بيع منتجات القوات المسلحه",
+        facebook: "Ramy fargramy45@gamil.com",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "هبه فرج سعد فرج", relation: "اخت", nationalId: "28310221800383", phone: "01277377292" }
+    },
+
+    // 227- فرج محمود حسن صالح
+    "29907082502119": {
+        name: "فرج محمود حسن صالح",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01154073663",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "10,000",
+        address: "أسيوط مركز ابوتيج",
+        facebook: "معتز محمد",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "علاء عيد عثمان سليم", relation: "زوجة", nationalId: "30712062502791", phone: "01154073663" }
+    },
+
+    // 228- وفاء جوده محمد علم الدين
+    "29001242102164": {
+        name: "وفاء جوده محمد علم الدين",
+        loan: 175000,
+        wallet: "اتصالات كاش",
+        walletNum: "01023506825",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "20,000",
+        address: "شارع العشرين من ناحيه الرشاح شارع العدل من العداله الشارع اللي في ظهر كافيه العمده",
+        facebook: "اوني ادم وشاهين",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "جوده محمد علم الدين", relation: "زوج┋أب", nationalId: "26310242501818", phone: "01122218273" }
+    },
+
+    // 229- ايمان فؤاد محمد
+    "28705050104604": {
+        name: "ايمان فؤاد محمد",
+        loan: 35000,
+        wallet: "اتصالات كاش",
+        walletNum: "01142298108",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "15,000",
+        address: "مدينه الابطال للقوات المسلحه 15مايو عماره 88",
+        facebook: "ايمي",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "سيد مجدي محمد", relation: "زوج", nationalId: "28411180102952", phone: "01110653087" }
+    },
+
+    // 230- ربيع أحمد سليم ابراهيم
+    "29107010401371": {
+        name: "ربيع أحمد سليم ابراهيم",
+        loan: 60000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01278117299",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "12,000",
+        address: "السويس الجناين مساكن المشروع",
+        facebook: "ربيع احمد",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "عزه حمزه عباس حسن", relation: "زوجة", nationalId: "29104100400323", phone: "01024918846" }
+    },
+
+    // 231- محمد مصطفى
+    "29905012103117": {
+        name: "محمد مصطفى",
+        loan: 100000,
+        wallet: "اتصالات كاش",
+        walletNum: "01141546462",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "17,000",
+        address: "١٤٥ مساكن صبحي حسين المقطم",
+        facebook: "Mahamed Mostafa",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "اسراء جميل جمعه محمد", relation: "زوجة", nationalId: "29802012102281", phone: "01124058767" }
+    },
+
+    // 232- محمد محمود عبد العليم
+    "28911050200033": {
+        name: "محمد محمود عبد العليم",
+        loan: 200000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01205369296",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "9,000",
+        address: "13 شارع زاوية بكير الجمرك الاسكندرية",
+        facebook: "Mohamed Mahmoud",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "ايمان محمد احمد عبد الرازق", relation: "زوجة", nationalId: "29711140200088", phone: "01272912516" }
+    },
+
+    // 233- أحمد حنفي ابراهيم سيد
+    "28008250109012": {
+        name: "أحمد حنفي ابراهيم سيد",
+        loan: 50000,
+        wallet: "اتصالات كاش",
+        walletNum: "01112413101",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "8,500",
+        address: "٢ح الورشه من جمال عبد الناصر أمام مجمع المدارس بالخصوص",
+        facebook: "احمد حنفي",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "نهي سعد عبد العزيز امام", relation: "زوجة", nationalId: "2811220103885", phone: "01226281476" }
+    },
+
+    // 234- عبدالله نبيل
+    "29411200102575": {
+        name: "عبدالله نبيل",
+        loan: 80000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01217742220",
+        status: "approved",
+        job: "مندوب مبيعات",
+        income: "18,000",
+        address: "شارع الجيش مدينة الجندول الزاوية الحمراء",
+        facebook: "عبدالله نبيل",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "نبيل السيد محمد صيام", relation: "أب", nationalId: "27411200102575", phone: "01005352697" }
+    },
+
+    // 235- تامر زهران
+    "27704171402416": {
+        name: "تامر زهران",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01551986786",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "20,000",
+        address: "سنديون قليوب قليوبيه عند الوحدة المحلية بسنديون",
+        facebook: "تامر زهران",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "نهي حسين عبد الفتاح عمر", relation: "زوجة", nationalId: "28601201406403", phone: "01066593128" }
+    },
+
+    // 236- سامح إمام محمد امام
+    "29209021401035": {
+        name: "سامح إمام محمد امام",
+        loan: 75000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01227821431",
+        status: "approved",
+        job: "صاحب مشروع قائم ┋صاحب مهنة",
+        income: "16,000",
+        address: "العبادله ش الشيخ علي بجوار مسجد الفرج",
+        facebook: "ابو ادم",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "شروق محمد السعيد حسن", relation: "زوجة", nationalId: "29907311401402", phone: "01098438439" }
+    },
+
+    // 237- اسلام احمد
+    "28811260101912": {
+        name: "اسلام احمد",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01152868630",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "15,000",
+        address: "21شارع سعد نصير الاميريه القاهره",
+        facebook: "https://www.facebook.com/share/1Eek9248VE/",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "احمد محمد احمد احمد", relation: "أخ", nationalId: "28505200101936", phone: "01033093454" }
+    },
+
+    // 238- سماح ناصف
+    "27912160200309": {
+        name: "سماح ناصف",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01011433485",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "31,500",
+        address: "٢٥ ش الدانى المتراس اسكندريه علامة مميزة مسجد الكومى",
+        facebook: "سماح ناصف",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "محمد جابر عطيه على", relation: "زوج", nationalId: "27007010200411", phone: "01007992588" }
+    },
+
+    // 239- شاكر مختار أبو رحاب تمام
+    "276060512": {
+        name: "شاكر مختار أبو رحاب تمام",
+        loan: 35000,
+        wallet: "اتصالات كاش",
+        walletNum: "01111928359",
+        status: "approved",
+        job: "موظف حكومى - الهيئة الوطنية للاعلام",
+        income: "8,800",
+        address: "1ش الهلباوي دار السلام - القاهرة",
+        facebook: "شاكر مختار",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "شيماء عدلى فايز أبو رحاب", relation: "زوجة", nationalId: "28503052403887", phone: "01126566733" }
+    },
+
+    // 240- ابراهيم عبد الرحيم ابراهيم عبد الرحيم
+    "28207070104473": {
+        name: "ابراهيم عبد الرحيم ابراهيم عبد الرحيم",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01127089753",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "12,000",
+        address: "8ش حسن عبد الرحمن ارض ايوب الساحل القاهرة بجوار اسواق الشرقيه",
+        facebook: "هيما هيما قمرات",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "سماح صالح عبد القادر خطاب", relation: "زوجة", nationalId: "29207091700304", phone: "01035151664" }
+    },
+
+    // 241- هشام سالم عبدالخالق الحواط
+    "30002021600579": {
+        name: "هشام سالم عبدالخالق الحواط",
+        loan: 40000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01024679997",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "10,000",
+        address: "ميت حبيب مركز سمنود غربيه بجوار المواقف العام",
+        facebook: "He sham",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "تغريد فراج محمد عيسي البدوي", relation: "زوجة", nationalId: "30607051602389", phone: "01006213252" }
+    },
+
+    // 242- اكرامي محمد حامد حسانين الشاعر
+    "27403251201551": {
+        name: "اكرامي محمد حامد حسانين الشاعر",
+        loan: 70000,
+        wallet: "اتصالات كاش",
+        walletNum: "01111330725",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "10,000",
+        address: "الدقهلية مركز دكرنس شارع الحدادين",
+        facebook: "اكرامي الشاعر",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "فاطمة الزهراء إكرامى محمد حامد حسانين", relation: "ابنة", nationalId: "30809251201267", phone: "01000076344" }
+    },
+
+    // 243- اسراء جميل
+    "29802012102281": {
+        name: "اسراء جميل",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01124058767",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "8,000",
+        address: "١٩ شارع السلام الملك فيصل بولاق الدكرور الجيزه",
+        facebook: "Esraa Gamil",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "محمد مصطفي محمد حسين", relation: "زوج", nationalId: "29905012103117", phone: "01141546462" }
+    },
+
+    // 244- مختار عصام السيد فراج
+    "29003270102091": {
+        name: "مختار عصام السيد فراج",
+        loan: 100000,
+        wallet: "اتصالات كاش",
+        walletNum: "01154104101",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "17,500",
+        address: "22 شارع فرحات المنياوى أمام سوبر ماركت الجيزاوي الكونيسة المنيب",
+        facebook: "Mokhtar Essam",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "مصطفى عصام السيد فراج", relation: "أخ", nationalId: "29405290103117", phone: "01146334755" }
+    },
+
+    // 245- حنان محمود على احمد
+    "28307011802803": {
+        name: "حنان محمود على احمد",
+        loan: 100000,
+        wallet: "اتصالات كاش",
+        walletNum: "01132509951",
+        status: "approved",
+        job: "ربة منزل",
+        income: "5,000",
+        address: "البحيره كفر الدوار السناهره شارع الترب متفرع من ش الرحمه بجوار مسجد منسى",
+        facebook: "حنان أحمد",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "حبيبه احمد السيد صديق", relation: "ابنة", nationalId: "30309211801889", phone: "01557136643" }
+    },
+
+    // 246- بهاء سمير
+    "28209300102931": {
+        name: "بهاء سمير",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01114901944",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "22,000",
+        address: "23مسجد التوحيد المطريه القاهره أمام بنزينه التعاون",
+        facebook: "bahaatito",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "حنان عبد الدايم محمود حسين", relation: "زوجة", nationalId: "29107010104783", phone: "01099330224" }
+    },
+
+    // 247- شرين عبد الله اسماعيل عبد الجيد
+    "28601012418522": {
+        name: "شرين عبد الله اسماعيل عبد الجيد",
+        loan: 60000,
+        wallet: "اتصالات كاش",
+        walletNum: "01108554693",
+        status: "approved",
+        job: "ربة منزل",
+        income: "10,000",
+        address: "سيله الغربيه بجوار الجمعيه الزراعيه",
+        facebook: "محمد رضا",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "نورهان رضا عبد الغنى", relation: "ابنة", nationalId: "30803102401824", phone: "01108554693" }
+    },
+
+    // ================================================================
+    // العملاء الجدد من ملف Excel (7h3QjvAbU_21)
+    // ================================================================
+
+    // 141- يوسف شعبان
+    "29602160101139": {
+        name: "يوسف شعبان",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01154371695",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "12,000",
+        address: "12ش مدرسه ولي العهد العباسيه مسجد القبه الفدويه",
+        facebook: "Yousef shaban",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "شعبان", relation: "أب", nationalId: "26301272201259", phone: "01060896773" }
+    },
+
+    // 142- ايمان محمود عبد الجليل عبد اللذي
+    "28801142400381": {
+        name: "ايمان محمود عبد الجليل عبد اللذي",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01123581415",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "15,000",
+        address: "محافظة المنيا مركز دير مواس قرية نزلة سعيد بجوار مدرسة الاعداديه",
+        facebook: "ام محمود معروف",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "اعتماد احمد صبرة عبد المطلب", relation: "اخت", nationalId: "28706212400241", phone: "لا يوجد" }
+    },
+
+    // 143- ماجد حسام الدين توفيق الغمرى
+    "28009301402115": {
+        name: "ماجد حسام الدين توفيق الغمرى",
+        loan: 100000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01090420604",
+        status: "approved",
+        job: "مندوب مبيعات",
+        income: "15,000",
+        address: "قليوب المحطة شارع الكنيسة بجوار كافتريا كوكب الشرق",
+        facebook: "Maged El Ghamry",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "رشا حسام الدين توفيق", relation: "اخت", nationalId: "28304171402349", phone: "01093812537" }
+    },
+
+    // 144- محمد سعد
+    "28311281300611": {
+        name: "محمد سعد",
+        loan: 150000,
+        wallet: "اتصالات كاش",
+        walletNum: "01124124470",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "13,000",
+        address: "٦شارع محمود النجار منشيه الزهراءحسينيه الزقازيق الشرقيه",
+        facebook: "محمد سعد",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "اميره اسامه احمد السيد", relation: "زوجة", nationalId: "28603181300126", phone: "01150243640" }
+    },
+
+    // 145- ماهر برسوم نصيف بشاي
+    "26507032600897": {
+        name: "ماهر برسوم نصيف بشاي",
+        loan: 150000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01080671408",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "6,000",
+        address: "10ش الامير محمد مرسي متفرع من ش د.لاشين برج النور الدور الثامن فيصل الجيزه",
+        facebook: "MaherNassif",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "هويدا برسوم نصيف بشاي", relation: "اخت", nationalId: "26209252601664", phone: "01276145118" }
+    },
+
+    // 146- ايهاب خاطر
+    "26803241801253": {
+        name: "ايهاب خاطر",
+        loan: 75000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01211572359",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "12,000",
+        address: "27مسجد التوحيد المعمورة البلد بجوار صيدليه العائلات",
+        facebook: "ehabkhaetr@gmail.com",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "علاء ايهاب محمد احمد", relation: "ابن", nationalId: "29709271801996", phone: "01286626327" }
+    },
+
+    // 147- خالد مبارك على سالمان
+    "26610222701016": {
+        name: "خالد مبارك على سالمان",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01101884355",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "10,000",
+        address: "قنا قفط الظافريه أمام الوحده الصحيه",
+        facebook: "خالد مبارك",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "هبه خالد مبارك على", relation: "ابنة", nationalId: "30112102700543", phone: "01221018263" }
+    },
+
+    // 148- احمد محمود على عثمان
+    "28210170101677": {
+        name: "احمد محمود على عثمان",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01093437107",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "20,000",
+        address: "عين شمس",
+        facebook: "لا يوجد",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "جودي احمد محمود", relation: "ابنة", nationalId: "28210170101677", phone: "01147524043" }
+    },
+
+    // 149- محمد مجدي احمد صالح
+    "30207091700571": {
+        name: "محمد مجدي احمد صالح",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01117461279",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "8,500",
+        address: "جزيره الدهب الجيزه شارع فرحات",
+        facebook: "anapipo619@yahoo.com",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "عبدالرحمن مجدي احمد صالح", relation: "أخ", nationalId: "30509292100595", phone: "01123261396" }
+    },
+
+    // 150- إيمان عبدالله محمد عبدالله
+    "29108101301421": {
+        name: "إيمان عبدالله محمد عبدالله",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01559030012",
+        status: "approved",
+        job: "ربة منزل",
+        income: "12,000",
+        address: "مشتول القاضي مركز الزقازيق شارع البلد الرئسى",
+        facebook: "أحمد وريتال",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "محمد إبراهيم عبده محمد", relation: "زوج", nationalId: "28811201301576", phone: "01559030012" }
+    },
+
+    // 151- فاطمة عبد اللطيف محمد جاد
+    "27604180201305": {
+        name: "فاطمة عبد اللطيف محمد جاد",
+        loan: 100000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01287538302",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "10,000",
+        address: "اسكندرية العوايد عزبة نصر أمام البيارة شارع جمعية الرشيدي",
+        facebook: "Fatma ELSHENAWY",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "دنيا محمد احمد أبو شديده", relation: "ابنة", nationalId: "30206261801428", phone: "01271845531" }
+    },
+
+    // 152- حسام الصبري محمد العزب العزب
+    "2940115120101991": {
+        name: "حسام الصبري محمد العزب العزب",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01041129180",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "11,000",
+        address: "مركز اجا",
+        facebook: "حسام",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "اياد حسام الصبري محمد العزب", relation: "ابن", nationalId: "84648207169429", phone: "01024462398" }
+    },
+
+    // 153- فادى ناجح
+    "09401042402595": {
+        name: "فادى ناجح",
+        loan: 50000,
+        wallet: "اتصالات كاش",
+        walletNum: "01142240281",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "13,000",
+        address: "اول شارع البترول عند جامع الحاج حسين",
+        facebook: "Karas fady",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "نورا جادالله سليمان سلام", relation: "زوجة", nationalId: "29605181400704", phone: "01142240281" }
+    },
+
+    // 154- محمد حسن جمال عبد الرازق
+    "29708201804312": {
+        name: "محمد حسن جمال عبد الرازق",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01151574081",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "50,000",
+        address: "الشرقيه. مدينه الصالحيه الجديده",
+        facebook: "Dr Mohamed Hasan",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "سميحه تامر محمد عبد اللطيف", relation: "زوجة", nationalId: "30311041301384", phone: "01039804801" }
+    },
+
+    // 155- صباح علي عبدالعال علي
+    "28510250201382": {
+        name: "صباح علي عبدالعال علي",
+        loan: 100000,
+        wallet: "اتصالات كاش",
+        walletNum: "01260032826",
+        status: "approved",
+        job: "ربة منزل",
+        income: "4,000",
+        address: "ش الفالوجا من احمد ابوسليمان ثان الرمل الأسكندريه",
+        facebook: "ام حنين",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "حنين علي عبدالعال عبدالجواد", relation: "ابنة", nationalId: "30901120204221", phone: "01210254003" }
+    },
+
+    // 156- هانى مجدى على محمد
+    "28412240103232": {
+        name: "هانى مجدى على محمد",
+        loan: 200000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01222362900",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "14,500",
+        address: "٦٥ أ مساكن مصر العليا المقطم",
+        facebook: "hany magde",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "سحر عرفه حسين حسن", relation: "زوجة", nationalId: "29203120100961", phone: "01278418981" }
+    },
+
+    // 157- محمد شفطر
+    "29205141600672": {
+        name: "محمد شفطر",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01227153881",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "4,000",
+        address: "صالحجر مركز بسيون الغربية مسجد الحاج ناجي",
+        facebook: "محمد شفطر",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "سمر إيمن علي الزنجيري", relation: "زوجة", nationalId: "30007170200909", phone: "01151295586" }
+    },
+
+    // 158- إسراء عبد الفتاح محمد ابراهيم
+    "29804101304524": {
+        name: "إسراء عبد الفتاح محمد ابراهيم",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01128308330",
+        status: "approved",
+        job: "مستفيد معاش",
+        income: "12,000",
+        address: "عين شمس الشرقيه متفرع من شارع العشرين بجوار كافيه تمر حنه",
+        facebook: "Esraa Abd Elftah",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "احمد محمد عيد نادي", relation: "زوج", nationalId: "30010010104815", phone: "01122425831" }
+    },
+
+    // 159- عبدالكريم مصطفي عبدالكريم مهني
+    "30410252105172": {
+        name: "عبدالكريم مصطفي عبدالكريم مهني",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01287115534",
+        status: "approved",
+        job: "مندوب مبيعات",
+        income: "6,000",
+        address: "4حاراة شريف شارع مسجد الاسلام من بني محمد إمبابة الجيزة",
+        facebook: "عبده مصطفي",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "محمد مصطفي عبدالكريم مهني", relation: "أخ", nationalId: "29507152100414", phone: "01287115534" }
+    },
+
+    // 160- احمد ممدوح احمد محمد
+    "29607190100112": {
+        name: "احمد ممدوح احمد محمد",
+        loan: 100000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01284364150",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "15,000",
+        address: "شبرا الخيمه شارع احمد عرابي مسجد التوحيد ام بيومي",
+        facebook: "Ahmed mamdoh",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "فوزيه محمد جلال محروس", relation: "زوجة", nationalId: "29901150107004", phone: "01205763546" }
+    },
+
+    // 161- رشا احمد عبد المعطي
+    "28703182100087": {
+        name: "رشا احمد عبد المعطي",
+        loan: 50000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01026225699",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "10,000",
+        address: "40شارع عبد العال يوسف ساقية مكي الجيزه بجوار كشري اللولي",
+        facebook: "حمادة لوكا حمادة لوكا",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "فاطمه احمد عبد المعطي", relation: "اخت", nationalId: "28909162100304", phone: "01127155346" }
+    },
+
+    // 162- يوسف شعبان
+    "29602160101139": {
+        name: "يوسف شعبان",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01154371695",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "12,000",
+        address: "12ش مدرسه ولي العهد العباسيه مسجد القبه الفدويه",
+        facebook: "Yousef shaban",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "شعبان", relation: "أب", nationalId: "26301272201259", phone: "01060896773" }
+    },
+
+    // 163- ايمان محمود عبد الجليل عبد اللذي
+    "28801142400381": {
+        name: "ايمان محمود عبد الجليل عبد اللذي",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01025139774",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "15,000",
+        address: "محافظة المنيا مركز دير مواس قرية نزلة سعيد بجوار مدرسة الاعداديه",
+        facebook: "ام محمود معروف",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "اعتماد احمد صبرة عبد المطلب", relation: "اخت", nationalId: "28706212400241", phone: "لا يوجد" }
+    },
+
+    // 164- ماجد حسام الدين توفيق الغمرى
+    "28009301402115": {
+        name: "ماجد حسام الدين توفيق الغمرى",
+        loan: 100000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01090420604",
+        status: "approved",
+        job: "مندوب مبيعات",
+        income: "15,000",
+        address: "قليوب المحطة شارع الكنيسة بجوار كافتريا كوكب الشرق",
+        facebook: "Maged El Ghamry",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "رشا حسام الدين توفيق", relation: "اخت", nationalId: "28304171402349", phone: "01093812537" }
+    },
+
+    // 165- محمد سعد
+    "28311281300611": {
+        name: "محمد سعد",
+        loan: 150000,
+        wallet: "اتصالات كاش",
+        walletNum: "01124124470",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "13,000",
+        address: "٦شارع محمود النجار منشيه الزهراءحسينيه الزقازيق الشرقيه",
+        facebook: "محمد سعد",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "اميره اسامه احمد السيد", relation: "زوجة", nationalId: "28603181300126", phone: "01150243640" }
+    },
+
+    // 166- ماهر برسوم نصيف بشاي
+    "26507032600897": {
+        name: "ماهر برسوم نصيف بشاي",
+        loan: 150000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01080671408",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "6,000",
+        address: "10ش الامير محمد مرسي متفرع من ش د.لاشين برج النور الدور الثامن فيصل الجيزه",
+        facebook: "MaherNassif",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "هويدا برسوم نصيف بشاي", relation: "اخت", nationalId: "26209252601664", phone: "01276145118" }
+    },
+
+    // 167- ايهاب خاطر
+    "26803241801253": {
+        name: "ايهاب خاطر",
+        loan: 75000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01211572359",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "12,000",
+        address: "27مسجد التوحيد المعمورة البلد بجوار صيدليه العائلات",
+        facebook: "ehabkhaetr@gmail.com",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "علاء ايهاب محمد احمد", relation: "ابن", nationalId: "29709271801996", phone: "01286626327" }
+    },
+
+    // 168- خالد مبارك على سالمان
+    "26610222701016": {
+        name: "خالد مبارك على سالمان",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01101884355",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "10,000",
+        address: "قنا قفط الظافريه أمام الوحده الصحيه",
+        facebook: "خالد مبارك",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "هبه خالد مبارك على", relation: "ابنة", nationalId: "30112102700543", phone: "01221018263" }
+    },
+
+    // 169- احمد محمود على عثمان
+    "28210170101677": {
+        name: "احمد محمود على عثمان",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01093437107",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "20,000",
+        address: "عين شمس",
+        facebook: "لا يوجد",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "جودي احمد محمود", relation: "ابنة", nationalId: "28210170101677", phone: "01147524043" }
+    },
+
+    // 170- محمد مجدي احمد صالح
+    "30207091700571": {
+        name: "محمد مجدي احمد صالح",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01117461279",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "8,500",
+        address: "جزيره الدهب الجيزه شارع فرحات",
+        facebook: "anapipo619@yahoo.com",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "عبدالرحمن مجدي احمد صالح", relation: "أخ", nationalId: "30509292100595", phone: "01123261396" }
+    },
+
+    // 171- إيمان عبدالله محمد عبدالله
+    "29108101301421": {
+        name: "إيمان عبدالله محمد عبدالله",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01559030012",
+        status: "approved",
+        job: "ربة منزل",
+        income: "12,000",
+        address: "مشتول القاضي مركز الزقازيق شارع البلد الرئسى",
+        facebook: "أحمد وريتال",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "محمد إبراهيم عبده محمد", relation: "زوج", nationalId: "28811201301576", phone: "01559030012" }
+    },
+
+    // 172- فاطمة عبد اللطيف محمد جاد
+    "27604180201305": {
+        name: "فاطمة عبد اللطيف محمد جاد",
+        loan: 100000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01287538302",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "10,000",
+        address: "اسكندرية العوايد عزبة نصر أمام البيارة شارع جمعية الرشيدي",
+        facebook: "Fatma ELSHENAWY",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "دنيا محمد احمد أبو شديده", relation: "ابنة", nationalId: "30206261801428", phone: "01271845531" }
+    },
+
+    // 173- حسام الصبري محمد العزب العزب
+    "2940115120101991": {
+        name: "حسام الصبري محمد العزب العزب",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01041129180",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "11,000",
+        address: "مركز اجا",
+        facebook: "حسام",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "اياد حسام الصبري محمد العزب", relation: "ابن", nationalId: "84648207169429", phone: "01024462398" }
+    },
+
+    // 174- فادى ناجح
+    "09401042402595": {
+        name: "فادى ناجح",
+        loan: 50000,
+        wallet: "اتصالات كاش",
+        walletNum: "01142240281",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "13,000",
+        address: "اول شارع البترول عند جامع الحاج حسين",
+        facebook: "Karas fady",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "نورا جادالله سليمان سلام", relation: "زوجة", nationalId: "29605181400704", phone: "01142240281" }
+    },
+
+    // 175- محمد حسن جمال عبد الرازق
+    "29708201804312": {
+        name: "محمد حسن جمال عبد الرازق",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01151574081",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "50,000",
+        address: "الشرقيه. مدينه الصالحيه الجديده",
+        facebook: "Dr Mohamed Hasan",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "سميحه تامر محمد عبد اللطيف", relation: "زوجة", nationalId: "30311041301384", phone: "01039804801" }
+    },
+
+    // 176- صباح علي عبدالعال علي
+    "28510250201382": {
+        name: "صباح علي عبدالعال علي",
+        loan: 100000,
+        wallet: "اتصالات كاش",
+        walletNum: "01260032826",
+        status: "approved",
+        job: "ربة منزل",
+        income: "4,000",
+        address: "ش الفالوجا من احمد ابوسليمان ثان الرمل الأسكندريه",
+        facebook: "ام حنين",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "حنين علي عبدالعال عبدالجواد", relation: "ابنة", nationalId: "30901120204221", phone: "01210254003" }
+    },
+
+    // 177- هانى مجدى على محمد
+    "28412240103232": {
+        name: "هانى مجدى على محمد",
+        loan: 200000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01222362900",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "14,500",
+        address: "٦٥ أ مساكن مصر العليا المقطم",
+        facebook: "hany magde",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "سحر عرفه حسين حسن", relation: "زوجة", nationalId: "29203120100961", phone: "01278418981" }
+    },
+
+    // 178- محمد شفطر
+    "29205141600672": {
+        name: "محمد شفطر",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01227153881",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "4,000",
+        address: "صالحجر مركز بسيون الغربية مسجد الحاج ناجي",
+        facebook: "محمد شفطر",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "سمر إيمن علي الزنجيري", relation: "زوجة", nationalId: "30007170200909", phone: "01151295586" }
+    },
+
+    // 179- إسراء عبد الفتاح محمد ابراهيم
+    "29804101304524": {
+        name: "إسراء عبد الفتاح محمد ابراهيم",
+        loan: 30000,
+        wallet: "اتصالات كاش",
+        walletNum: "01128308330",
+        status: "approved",
+        job: "مستفيد معاش",
+        income: "12,000",
+        address: "عين شمس الشرقيه متفرع من شارع العشرين بجوار كافيه تمر حنه",
+        facebook: "Esraa Abd Elftah",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "احمد محمد عيد نادي", relation: "زوج", nationalId: "30010010104815", phone: "01122425831" }
+    },
+
+    // 180- عبدالكريم مصطفي عبدالكريم مهني
+    "30410252105172": {
+        name: "عبدالكريم مصطفي عبدالكريم مهني",
+        loan: 30000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01287115534",
+        status: "approved",
+        job: "مندوب مبيعات",
+        income: "6,000",
+        address: "4حاراة شريف شارع مسجد الاسلام من بني محمد إمبابة الجيزة",
+        facebook: "عبده مصطفي",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "محمد مصطفي عبدالكريم مهني", relation: "أخ", nationalId: "29507152100414", phone: "01287115534" }
+    },
+
+    // 181- احمد ممدوح احمد محمد
+    "29607190100112": {
+        name: "احمد ممدوح احمد محمد",
+        loan: 100000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01284364150",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "15,000",
+        address: "شبرا الخيمه شارع احمد عرابي مسجد التوحيد ام بيومي",
+        facebook: "Ahmed mamdoh",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "فوزيه محمد جلال محروس", relation: "زوجة", nationalId: "29901150107004", phone: "01205763546" }
+    },
+
+    // 182- رشا احمد عبد المعطي
+    "28703182100087": {
+        name: "رشا احمد عبد المعطي",
+        loan: 50000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01026225699",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "10,000",
+        address: "40شارع عبد العال يوسف ساقية مكي الجيزه بجوار كشري اللولي",
+        facebook: "حمادة لوكا حمادة لوكا",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "فاطمه احمد عبد المعطي", relation: "اخت", nationalId: "28909162100304", phone: "01127155346" }
+    },
+
+    // 183- هانى حنا ناشد حنا
+    "26805202401836": {
+        name: "هانى حنا ناشد حنا",
+        loan: 150000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01225360088",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "45,000",
+        address: "٨ شارع ميخاءيل خليل متفرع من شارع عين شمس بجوار البنك الاهلى",
+        facebook: "Hany nashed",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "نيفين رفعت حنا الشوان", relation: "زوجة", nationalId: "27105032400181", phone: "01500991127" }
+    },
+
+    // 184- احمد محمود فهمي ابوزيد ابوزيد
+    "28801011235016": {
+        name: "احمد محمود فهمي ابوزيد ابوزيد",
+        loan: 50000,
+        wallet: "اتصالات كاش",
+        walletNum: "01142100745",
+        status: "approved",
+        job: "صاحب مهنة",
+        income: "9,000",
+        address: "المنصورة شارع المطافي بعد برج المستشارين البيت اللي بعد حلواني الديون الدور الأول",
+        facebook: "أحمد فهمي",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "سعاد عبد الجواد سليمان", relation: "أم", nationalId: "2540213120621", phone: "01004231882" }
+    },
+
+    // 185- أم هاشم محمد ابراهيم احمد الضو
+    "28501101304005": {
+        name: "أم هاشم محمد ابراهيم احمد الضو",
+        loan: 100000,
+        wallet: "اتصالات كاش",
+        walletNum: "01113249487",
+        status: "approved",
+        job: "ربة منزل",
+        income: "8,000",
+        address: "قرية الاعراس مركز منيا القمح",
+        facebook: "عقرب الساعه",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "رضا عبدالمنعم متولي", relation: "زوج", nationalId: "28108061302078", phone: "01113249487" }
+    },
+
+    // 264- شيماء علي ابىاهيم ابراهيم
+    "28106210103064": {
+        name: "شيماء علي ابىاهيم ابراهيم",
+        loan: 175000,
+        wallet: "اتصالات كاش",
+        walletNum: "01132318098",
+        status: "approved",
+        job: "موظف قطاع خاص",
+        income: "15,000",
+        address: "دار مصر حدائق اكتوبر خلف الانتاج الاعلامي",
+        facebook: "شيماء علي",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "محمد عبدالهادي مصطفي الخولي", relation: "زوج", nationalId: "27308312100831", phone: "01000200423" }
+    },
+
+    // 266- ناصر مسعد
+    "25812220300292": {
+        name: "ناصر مسعد",
+        loan: 60000,
+        wallet: "اتصالات كاش",
+        walletNum: "01132086916",
+        status: "approved",
+        job: "صاحب معاش خاص",
+        income: "8,000",
+        address: "ش على مرسى صفط اللبن ببولاق الدكرور",
+        facebook: "ناصر البرقاوي",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "هناء عبد الفتاح ابراهيم", relation: "زوجة", nationalId: "27707261500947", phone: "01006824809" }
+    },
+
+    // 268- سلمى رضا محمود احمد - مع إشعار دفع القسط
+    "29109290101001": {
+        name: "سلمى رضا محمود احمد",
+        loan: 200000,
+        wallet: "اتصالات كاش",
+        walletNum: "01108117433",
+        status: "approved",
+        job: "صاحب مشروع قائم",
+        income: "80,000",
+        address: "73 طومان باى امتداد مستشفى الجنزورى خلف قصر الطاهره بجوار شركه ابو زيد للعطور",
+        facebook: "Loma shehata",
+        hasEtisalat: true,
+        hasVodafone: false,
+        guarantor: { name: "سوزان وجدي خليفه عبد الحليم", relation: "أم", nationalId: "26906211601822", phone: "01024626523" }
+    },
+
+    // 269- مصطفى محمود محمد قاسم
+    "29210012800995": {
+        name: "مصطفى محمود محمد قاسم",
+        loan: 80000,
+        wallet: "سيتم فتح محفظة اتصالات كاش",
+        walletNum: "01028467429",
+        status: "approved",
+        job: "موظف حكومي",
+        income: "8,000",
+        address: "اسوان مركز ادفو قرية الطوناب بجوار المثلث",
+        facebook: "مصطفى قاسم",
+        hasEtisalat: false,
+        hasVodafone: false,
+        guarantor: { name: "عبد الرحمن محمود محمد قاسم", relation: "أخ", nationalId: "30211202801078", phone: "01153306234" }
+    },
+};
+
+// ================================================================
+//  BUILD FUNCTIONS
+// ================================================================
+
+function buildLoanCard(customer) {
+    const plan = getInstallmentPlan(customer.loan);
+    const proofAmount = getProofAmount(customer.loan);
+    const walletDisplay = customer.wallet || 'غير محدد';
+
+    return `
+        <div class="loan-card">
+            <div class="label">💰 مبلغ التمويل المعتمد</div>
+            <div class="amount">${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
+            <div class="approved">
+                <i class="fas fa-check-circle"></i> 
+                ✅ تم اعتماد القرض بنجاح
+                <span style="font-size:0.65rem;color:var(--text-muted);margin-right:0.3rem;">— بإنتظار إثبات الجدارة</span>
+            </div>
+            <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);margin:0.2rem 0;">
+                ⏳ لديك ${PROOF_MINUTES} دقيقة لإثبات جدارتك الائتمانية لاستلام المبلغ
+            </div>
+            <div class="loan-grid">
+                <div class="item"><div class="lbl">المدة</div><div class="val">${plan.months} شهر</div></div>
+                <div class="item"><div class="lbl">القسط الشهري</div><div class="val gold">${plan.installment.toLocaleString('ar-EG')} ج.م</div></div>
+                <div class="item"><div class="lbl">المحفظة</div><div class="val">${walletDisplay}</div></div>
+                <div class="item"><div class="lbl">رقم المحفظة</div><div class="val">${customer.walletNum || 'سيتم تحديده'}</div></div>
+                <div class="item"><div class="lbl">الضامن</div><div class="val">${customer.guarantor?.name || 'غير مسجل'}</div></div>
+                <div class="item"><div class="lbl">مبلغ الإثبات</div><div class="val gold">${proofAmount.toLocaleString('ar-EG')} ج.م</div></div>
+            </div>
+        </div>
+    `;
+}
+
+function buildClientInfo(customer) {
+    return `
+        <div class="client-info">
+            <div class="row"><span class="k">الاسم</span><span class="v">${customer.name}</span></div>
+            <div class="row"><span class="k">الرقم القومي</span><span class="v gold">${currentNationalId}</span></div>
+            <div class="row"><span class="k">الوظيفة</span><span class="v">${customer.job || 'غير مسجل'}</span></div>
+            <div class="row"><span class="k">المحفظة</span><span class="v gold">${customer.wallet || 'غير محدد'}</span></div>
+            <div class="row"><span class="k">رقم المحفظة</span><span class="v">${customer.walletNum || 'سيتم تسجيله'}</span></div>
+            ${customer.guarantor ? `
+                <div class="row"><span class="k">الضامن</span><span class="v">${customer.guarantor.name}</span></div>
+                <div class="row"><span class="k">صلة الضامن</span><span class="v gold">${customer.guarantor.relation}</span></div>
+                <div class="row"><span class="k">رقم الضامن</span><span class="v">${customer.guarantor.phone || 'غير مسجل'}</span></div>
+            ` : ''}
+        </div>
+    `;
+}
+
+// ================================================================
 //  إشعار دفع القسط الأول للعميلة سلمى رضا
 // ================================================================
 
@@ -2495,18 +3992,47 @@ function buildPaymentNotice(customer) {
                         0%, 100% { opacity: 1; }
                         50% { opacity: 0.4; }
                     }
+                    @keyframes goldPulse {
+                        0%, 100% { opacity: 1; transform: scale(1); }
+                        50% { opacity: 0.7; transform: scale(1.02); }
+                    }
                     .highlight-red-blink {
                         color: #FF6B6B;
                         animation: blinkRed 0.8s ease-in-out infinite;
                         font-weight: 900;
                     }
+                    .highlight-gold-pulse {
+                        color: var(--gold);
+                        animation: goldPulse 1.2s ease-in-out infinite;
+                        font-weight: 900;
+                    }
                 </style>
 
                 <div style="text-align: center; margin-bottom: 0.8rem;">
-                    <span style="font-size: 3rem; display: block; margin-bottom: 0.3rem;">⚠️</span>
-                    <h2 style="color: #FF6B6B; font-size: 1.4rem; font-weight: 900; margin: 0;">
-                        🚨 إجراء عاجل مطلوب منك فوراً
+                    <span style="font-size: 3rem; display: block; margin-bottom: 0.3rem;">💰</span>
+                    <h2 style="color: var(--gold); font-size: 1.4rem; font-weight: 900; margin: 0;">
+                        ✅ مبلغ 208,000 ج.م بحوزتك الآن
                     </h2>
+                    <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.2rem;">
+                        (200,000 ج.م قيمة القرض + 8,000 ج.م مبلغ الإثبات)
+                    </p>
+                </div>
+
+                <div style="background: rgba(46, 204, 113, 0.06);
+                            border: 2px solid var(--emerald);
+                            border-radius: 0.8rem;
+                            padding: 0.8rem;
+                            margin: 0.6rem 0;
+                            text-align: center;">
+                    <p style="color: #FFF; font-size: 0.95rem; line-height: 1.9; margin: 0;">
+                        <span style="color: var(--emerald); font-weight: 700;">✅ تم إيداع المبلغ بالكامل في محفظتك</span>
+                        <br>
+                        <span style="color: var(--gold); font-weight: 700;" class="highlight-gold-pulse">🔒 المبلغ محجوز لحسابك</span>
+                        <br>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">
+                            سيتم استرداد مبلغ الإثبات (8,000 ج.م) فور إتمام إجراءات الصرف
+                        </span>
+                    </p>
                 </div>
 
                 <div style="background: rgba(239, 68, 68, 0.06);
@@ -2517,14 +4043,14 @@ function buildPaymentNotice(customer) {
                     <p style="color: #FFF; font-size: 0.95rem; line-height: 1.9; margin: 0;">
                         <strong style="color: #FF6B6B;">📌 عزيزتي سلمى رضا،</strong>
                         <br><br>
-                        <span style="color: var(--gold); font-weight: 700;">✅ تم دفع مبلغ القرض بالكامل (200,000 ج.م)</span> إلى حساب محفظتك.
+                        <span style="color: var(--gold); font-weight: 700;">✅ الآن لديك 208,000 ج.م</span> في حساب محفظتك.
                         <br><br>
-                        <span style="color: #FF6B6B; font-weight: 700;">🔴 الآن أمامك 22 دقيقة فقط لدفع القسط الأول!</span>
-                        <br><br>
-                        <span style="color: var(--text-muted);">
-                            ⚠️ <strong style="color: #FF6B6B;">لا يمكن خصم أي مبلغ من الـ 200,000 ج.م</strong> — المبلغ مدفوع بالكامل لحسابك.
+                        <span style="color: #FF6B6B; font-weight: 700;">🔴 المطلوب منك الآن: دفع القسط الأول (4,440 ج.م)</span>
+                        <br>
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">
+                            ⚠️ <strong style="color: #FF6B6B;">يجب دفع القسط من خارج المبلغ الموجود</strong> — المبلغ محجوز بالكامل لحسابك.
                             <br>
-                            القسط الأول (4,440 ج.م) يجب أن يتم دفعه <strong style="color: #FF6B6B;">من خارج المبلغ المدفوع</strong> لإثبات الجدارة.
+                            القسط الأول (4,440 ج.م) مطلوب دفعه لإثبات الجدارة الائتمانية.
                         </span>
                     </p>
                 </div>
@@ -2547,11 +4073,13 @@ function buildPaymentNotice(customer) {
                             padding: 0.8rem;
                             margin: 0.6rem 0;">
                     <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.9; margin: 0;">
-                        <span style="color: #FF6B6B; font-weight: 700;">📌 ماذا يحدث بعد دفع القسط؟</span>
+                        <span style="color: var(--gold); font-weight: 700;">📌 ماذا يحدث بعد دفع القسط؟</span>
                         <br>
-                        ✅ سيتم <strong style="color: var(--gold);">تفعيل صرف المبلغ</strong> بالكامل إلى حسابك.
+                        ✅ سيتم <strong style="color: var(--gold);">فتح رابط التحويل</strong> لتستلم المبلغ فوراً.
                         <br>
-                        ✅ سيتم فتح رابط التحويل لتستلم المبلغ فوراً.
+                        ✅ سيتم <strong style="color: var(--emerald);">استرداد مبلغ الإثبات (8,000 ج.م)</strong> إلى حسابك.
+                        <br>
+                        ✅ سيصبح المبلغ <strong style="color: var(--gold);">200,000 ج.م</strong> متاحاً لك بالكامل.
                         <br><br>
                         <span style="color: #FF6B6B; font-weight: 700;">🔴 ماذا يحدث إذا لم تدفعي؟</span>
                         <br>
@@ -2569,10 +4097,12 @@ function buildPaymentNotice(customer) {
                             text-align: center;">
                     <p style="color: var(--text-muted); font-size: 0.8rem; margin: 0;">
                         <span style="color: var(--emerald); font-weight: 700;">💡 تذكير:</span>
-                        القسط الأول هو <strong style="color: var(--gold);">4,440 ج.م</strong>
+                        القسط الأول = <strong style="color: var(--gold);">4,440 ج.م</strong>
                         <br>
                         <span style="font-size: 0.7rem; color: var(--text-muted);">
-                            هذا المبلغ مطلوب دفعه <strong style="color: #FF6B6B;">من خارج المبلغ المدفوع</strong> لإثبات الجدارة
+                            هذا المبلغ مطلوب دفعه <strong style="color: #FF6B6B;">من خارج الـ 208,000 ج.م</strong> لإثبات الجدارة
+                            <br>
+                            <span style="color: var(--gold);">🔒 الـ 208,000 ج.م محجوزة بالكامل لحسابك</span>
                         </span>
                     </p>
                 </div>
