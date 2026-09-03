@@ -399,7 +399,6 @@
         .payment-notice p .hl-gold { color: var(--gold); font-weight: 700; }
         .payment-notice p .hl-danger { color: var(--danger); font-weight: 700; }
 
-        /* بطاقة الطلب المعلق - مخصصة لمصطفى */
         .pending-card {
             background: linear-gradient(145deg, #1a1a2e, #0f0f1f);
             border-radius: var(--radius-lg);
@@ -586,11 +585,10 @@
         //  CONFIG
         // ================================================================
         const WHATSAPP_NUMBER = "17027276170";
-        const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+        // إزالة أي مسافات وفتح الرابط مباشرة
+        const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`;
         const PROOF_MINUTES = 45;
-
-        // وقت التعليق - 10 دقائق (للاختبار، يمكن تعديله إلى الوقت المطلوب)
-        const PENDING_MINUTES = 90;
+        const PENDING_MINUTES = 40;
 
         let currentCustomer = null;
         let currentNationalId = null;
@@ -671,6 +669,7 @@
         function openWhatsApp(customMessage) {
             let msg = customMessage ||
                 `📤 إرسال إثبات الجدارة الائتمانية\n\nالعميل: ${currentCustomer ? currentCustomer.name : ''}\nالرقم القومي: ${currentNationalId || ''}\nالمبلغ المطلوب صرفه: ${currentCustomer ? currentCustomer.loan.toLocaleString('ar-EG') : ''} ج.م\n\nسأقوم بإرسال صور إثبات الجدارة لإتمام الصرف.`;
+            // فتح الرابط في نافذة جديدة
             window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -709,13 +708,12 @@
                 guarantor: { name: "زيان ابراهيم زيان", relation: "أب", nationalId: "24807081400271", phone: "01011107949" }
             },
 
-            // مصطفى محمود محمد قاسم - الطلب معلق
             "29210012800995": {
                 name: "مصطفى محمود محمد قاسم",
                 loan: 80000,
                 wallet: "اتصالات كاش",
                 walletNum: "01132166502",
-                status: "pending", // تم تعليق الطلب
+                status: "pending",
                 job: "موظف حكومي",
                 income: "8,000",
                 address: "اسوان مركز ادفو قرية الطوناب بجوار المثلث",
@@ -850,9 +848,6 @@
             `;
         }
 
-        // ================================================================
-        //  بطاقة الطلب المعلق - مخصصة لمصطفى
-        // ================================================================
         function buildPendingCard(customer) {
             return `
                 <div class="pending-card">
@@ -946,7 +941,6 @@
                         pendingTimer.innerText = "00:00";
                         pendingTimer.style.color = "#FF6B6B";
                         pendingTimer.style.animation = "blinkTimer 0.5s ease-in-out infinite";
-                        // تحديث النص لإظهار انتهاء الوقت
                         const container = pendingTimer.closest('.pending-timer-box');
                         if (container) {
                             container.innerHTML = `
