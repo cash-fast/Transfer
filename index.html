@@ -57,7 +57,6 @@
     line-height: 1.7;
   }
 
-  /* ===== العلامة المائية ===== */
   .watermark {
     position: fixed;
     top: 0; left: 0;
@@ -124,7 +123,6 @@
     position: relative; z-index: 1; overflow: hidden;
   }
 
-  /* ===== الهيدر ===== */
   .header {
     display: flex; justify-content: space-between; align-items: center;
     padding: 0.2rem 0 0.8rem 0;
@@ -219,7 +217,6 @@
   .tabs .tab.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #FFFFFF; box-shadow: 0 4px 20px rgba(26,140,74,0.2); }
   .tabs .tab i { margin-left: 0.3rem; }
 
-  /* ===== صندوق البحث ===== */
   .search-box {
     display: flex; gap: 0.4rem;
     margin-bottom: 1rem;
@@ -251,7 +248,6 @@
 
   #resultArea>*+* { margin-top: 0.8rem; }
 
-  /* ===== بطاقة القرض ===== */
   .loan-card {
     background: linear-gradient(145deg, #FFFFFF, #FAFCFE);
     border-radius: var(--radius-lg);
@@ -285,7 +281,6 @@
   .loan-grid .item .val.green { color: var(--primary-dark); }
   .loan-grid .item .val.danger { color: var(--danger); }
 
-  /* ===== صورة التحقق من الهوية ===== */
   .id-verification {
     background: linear-gradient(135deg, #FFFFFF, var(--gold-light));
     border: 2px solid var(--gold);
@@ -330,7 +325,6 @@
     text-align: center; margin-top: 0.5rem; font-weight: 600;
   }
 
-  /* ===== قسم الإثبات ===== */
   .proof-section {
     background: linear-gradient(145deg, #FFFFFF, #FAFAFE);
     border-radius: var(--radius-lg);
@@ -550,6 +544,128 @@
   .btn-admin-completed { background: var(--cyan); }
   .admin-panel .status-text { font-size: 0.65rem; color: var(--text-muted); text-align: center; margin-top: 0.4rem; font-weight: 600; }
 
+  /* ===== الفاتورة الإلكترونية ===== */
+  .invoice-box {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 1.5rem 1.2rem;
+    font-family: 'Cairo', sans-serif;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    position: relative;
+    z-index: 1;
+    margin: 0.8rem 0;
+    direction: rtl;
+    border-top: 3px solid #E31E24;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .invoice-box .inv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #E31E24;
+  }
+  .invoice-box .inv-header .inv-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .invoice-box .inv-header .inv-logo .etisalat {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #E31E24;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .invoice-box .inv-header .inv-logo .etisalat span {
+    font-size: 0.7rem;
+    color: #E31E24;
+    font-weight: 400;
+    display: block;
+    text-align: center;
+  }
+  .invoice-box .inv-header .inv-logo .and {
+    font-size: 1rem;
+    color: #6B7280;
+    font-weight: 400;
+    margin-top: 1.2rem;
+    margin-right: 0.3rem;
+  }
+  .invoice-box .inv-header .inv-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1F2937;
+    text-align: center;
+  }
+  .invoice-box .inv-header .inv-money {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .invoice-box .inv-header .inv-money .e {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #E31E24;
+  }
+  .invoice-box .inv-header .inv-money .money {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #E31E24;
+  }
+  .invoice-box .inv-body {
+    padding: 0.2rem 0;
+  }
+  .invoice-box .inv-body .inv-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed #F3F4F6;
+    font-size: 0.85rem;
+  }
+  .invoice-box .inv-body .inv-row:last-child {
+    border-bottom: none;
+  }
+  .invoice-box .inv-body .inv-row .inv-label {
+    color: #6B7280;
+    font-weight: 600;
+  }
+  .invoice-box .inv-body .inv-row .inv-value {
+    color: #1F2937;
+    font-weight: 700;
+    text-align: left;
+  }
+  .invoice-box .inv-body .inv-row .inv-value .hl-red {
+    color: #E31E24;
+  }
+  .invoice-box .inv-body .inv-section-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #1F2937;
+    margin: 0.8rem 0 0.4rem 0;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .invoice-box .inv-footer {
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid #E5E7EB;
+    font-size: 0.6rem;
+    color: #9CA3AF;
+    text-align: center;
+    line-height: 1.8;
+  }
+  .invoice-box .inv-footer .powered {
+    font-size: 0.55rem;
+    color: #9CA3AF;
+    letter-spacing: 0.5px;
+  }
+  .invoice-box .inv-footer .powered span {
+    color: #E31E24;
+    font-weight: 700;
+  }
+
   @media (max-width: 440px) {
     .app { padding: 1rem 0.8rem; border-radius: var(--radius-lg); }
     .watermark::before { font-size: 5rem; }
@@ -577,6 +693,10 @@
     .pending-card .sub { font-size: 0.8rem; }
     .pending-card .icon { font-size: 3rem; }
     .pending-timer-box .timer { font-size: 2rem; }
+    .invoice-box { padding: 1rem 0.8rem; }
+    .invoice-box .inv-header .inv-title { font-size: 1rem; }
+    .invoice-box .inv-header .inv-logo .etisalat { font-size: 1.5rem; }
+    .invoice-box .inv-body .inv-row { font-size: 0.75rem; }
   }
   @media (max-width: 360px) {
     .brand .text .main { font-size: 0.95rem; }
@@ -588,6 +708,9 @@
     .proof-amount-box .value { font-size: 1.6rem; }
     .timer-box .timer { font-size: 1.3rem; }
     .pending-timer-box .timer { font-size: 1.6rem; }
+    .invoice-box .inv-header .inv-title { font-size: 0.85rem; }
+    .invoice-box .inv-header .inv-logo .etisalat { font-size: 1.2rem; }
+    .invoice-box .inv-body .inv-row { font-size: 0.65rem; }
   }
 </style>
 </head>
@@ -655,6 +778,152 @@
   </div>
 
 <script>
+  // ================================================================
+  //  قاعدة البيانات — تم إصلاحها بشكل صحيح
+  // ================================================================
+  const customersDatabase = {
+    "27412280400121": {
+      name: "رشا محمد عبده مصطفى",
+      job: "سكرتيرة في شركة لخدمات النقل",
+      loan: 200000,
+      wallet: "اتصالات كاش",
+      walletNum: "01109829293",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/1tBCHCFN/52-16-inbound1285301032057190410.jpg",
+      guarantor: { name: "مريم ياسر عبدالمحسن", relation: "ابن", phone: "01019161638" }
+    },
+    "28109082701963": {
+      name: "فاطمة محمد الصادق إبراهيم",
+      job: "وريثة معاش قوات مسلحة",
+      loan: 100000,
+      wallet: "محفظة أخرى",
+      walletNum: "01004832454",
+      status: "active",
+      idVerificationImage: "https://pdftourl.net/images/1789900455941-64055739-9cda-4633-ad43-d23c44217084.jpg",
+      guarantor: { name: "عمر على لبيب حسين", relation: "زوج", phone: "01022897235" }
+    },
+    "29304282401132": {
+      name: "ايمن صلاح رجب محمد",
+      job: "سكرتير في عيادة",
+      loan: 80000,
+      wallet: "اتصالات كاش",
+      walletNum: "01114184065",
+      status: "active",
+      idVerificationImage: "https://pdftourl.net/images/1789901497804-d0a60620-11c1-483f-9f7c-35f7ba3633f8.jpg",
+      guarantor: { name: "غاده احمد عبد العظيم احمد", relation: "زوجة", phone: "01141723690" }
+    },
+    "29303282703434": {
+      name: "شعبان محمد صلاح محروس عبد المجيد",
+      job: "محامي حر",
+      loan: 40000,
+      wallet: "اتصالات كاش",
+      walletNum: "0110282618",
+      status: "active",
+      idVerificationImage: "https://pdftourl.net/images/1789900879117-c06e4540-feb4-41da-8016-c24de4a2effe.jpg",
+      guarantor: { name: "امل محمد شحات فاوي", relation: "زوجة", phone: "01110969247" }
+    },
+    "27902111800338": {
+      name: "عبدالحميد سعيد رمضان ابوشناف",
+      job: "شغال بشركة سينوريتا للصناعات الغذائية بالمخازن",
+      loan: 125000,
+      wallet: "محفظة أخرى",
+      walletNum: "01286650200",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/rw0Ckt5J/IMG-20260920-163355.jpg",
+      guarantor: { name: "دعاء عبده عبدالوهاب بدري", relation: "زوجة", phone: "01032535430" }
+    },
+    "2710917011": {
+      name: "عمرو فاضل حسين عماره",
+      job: "فني تشغيل وزارة الثقافة صندوق التنمية الثقافية",
+      loan: 200000,
+      wallet: "اتصالات كاش",
+      walletNum: "01124762321",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/tTZY1h4J/10-16-inbound4292954775920867295.jpg",
+      guarantor: { name: "سماح شعبان ابراهيم سالم", relation: "زوجة", phone: "01148185747" }
+    },
+    "29507150200772": {
+      name: "محمود عبد المنعم محمود محمد",
+      job: "مندوب مبيعات",
+      loan: 200000,
+      wallet: "محفظة أخرى",
+      walletNum: "01287004350",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/52YGRyy4/7-16-inbound2506400491977580977.jpg",
+      guarantor: { name: "غير مسجل", relation: "أخت", phone: "01551353444" }
+    },
+    "28309062102299": {
+      name: "أحمد محمد عبد الغفار عبد الحفيظ",
+      job: "عامل بوفيه بمصنع شربات",
+      loan: 50000,
+      wallet: "محفظة أخرى",
+      walletNum: "01007312353",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/hvYxPw37/15-16-inbound4291426505243579400.jpg",
+      guarantor: { name: "فتحي محمد عبد الغفار عبد الحفيظ", relation: "أخت", phone: "01125086720" }
+    },
+    "29001011422981": {
+      name: "ايناس صابر يوسف فرح",
+      job: "تاجرة ملابس",
+      loan: 90000,
+      wallet: "محفظة أخرى",
+      walletNum: "01034143587",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/Qxb0yS4T/17-16-inbound1189903481443158774.jpg",
+      guarantor: { name: "حليمة السيد فرح العتاني", relation: "والدة", phone: "01028250873" }
+    },
+    "2911110216": {
+      name: "محمود عبدالرحمن السمان عبدالرحمن",
+      job: "صناعي تشطيب ديكور المنزل",
+      loan: 35000,
+      wallet: "اتصالات كاش",
+      walletNum: "01130356014",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/Prw8LqD9/16-16-inbound3083029038306914280.jpg",
+      guarantor: { name: "امنه عبدالباسط احمد حمزه", relation: "والدة", phone: "01104285824" }
+    },
+    "28904210102827": {
+      name: "نهلة عبد المجيد احمد عبد المجيد",
+      job: "تفصيل وبيع جاهز ملابس ومفروشات",
+      loan: 40000,
+      wallet: "محفظة أخرى",
+      walletNum: "01284123259",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/SK3hzmCc/21-16-inbound8437198349515085497.jpg",
+      guarantor: { name: "ايات عبد المجيد احمد عبد المجيد", relation: "أخت", phone: "01284238181" }
+    },
+    "28002060100282": {
+      name: "فتحية طه احمد عبد العزيز فايد",
+      job: "مساعدة تمريض",
+      loan: 45000,
+      wallet: "اتصالات كاش",
+      walletNum: "01143466854",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/kGwYKyLG/22-16-inbound4283203867089269883.jpg",
+      guarantor: { name: "مؤمن محمد عبد النبي حموده", relation: "ابن", phone: "01032075362" }
+    },
+    "27306062100951": {
+      name: "محمد سيد عبد الحفيظ رفاعي",
+      job: "شركة التعاون للبترول - المسؤول الوظيفي مدار إدارة",
+      loan: 200000,
+      wallet: "اتصالات كاش",
+      walletNum: "01113264306",
+      status: "active",
+      idVerificationImage: "https://i.postimg.cc/3JZYJZDz/Screenshot-2026-09-21-17-49-32-78-a23b203fd3aafc6dcb84e438dda678b6.jpg",
+      guarantor: { name: "مصطفى محمد سيد عبد الحفيظ", relation: "ابن", phone: "01103202053" }
+    },
+   "29111102104892": {
+  name: "احمد سيد محمد احمد فراج محمد احمد فراج",
+  job: "موظف حكومي",
+  loan: 150000,
+  wallet: "اتصالات كاش",
+  walletNum: "01116052419",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "ساره احمد عبد الحكيم", relation: "زوجة", phone: "01090406125" }
+}
+  };
+
   const WHATSAPP_NUMBER = "+639976737886";
   const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`;
   const PROOF_MINUTES = 45;
@@ -738,156 +1007,6 @@
   }
 
   // ================================================================
-  //  قاعدة البيانات — 5 عملاء تجريبيين بحالات مختلفة
-  // ================================================================
-  "27412280400121": {
-  name: "رشا محمد عبده مصطفى",
-  job: "سكرتيرة في شركة لخدمات النقل",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01109829293",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/1tBCHCFN/52-16-inbound1285301032057190410.jpg",
-  guarantor: { name: "مريم ياسر عبدالمحسن", relation: "ابن", phone: "01019161638" },
-}
-
-"28109082701963": {
-  name: "فاطمة محمد الصادق إبراهيم",
-  job: "وريثة معاش قوات مسلحة",
-  loan: 100000,
-  wallet: "محفظة أخرى",
-  walletNum: "01004832454",
-  status: "active",
-  idVerificationImage: "https://pdftourl.net/images/1789900455941-64055739-9cda-4633-ad43-d23c44217084.jpg",
-  guarantor: { name: "عمر على لبيب حسين", relation: "زوج", phone: "01022897235" }
-},
-
-"29304282401132": {
-  name: "ايمن صلاح رجب محمد",
-  job: "سكرتير في عيادة",
-  loan: 80000,
-  wallet: "اتصالات كاش",
-  walletNum: "01114184065",
-  status: "active",
-  idVerificationImage: "https://pdftourl.net/images/1789901497804-d0a60620-11c1-483f-9f7c-35f7ba3633f8.jpg",
-  guarantor: { name: "غاده احمد عبد العظيم احمد", relation: "زوجة", phone: "01141723690" }
-},
-
-"29303282703434": {
-  name: "شعبان محمد صلاح محروس عبد المجيد",
-  job: "محامي حر",
-  loan: 40000,
-  wallet: "اتصالات كاش",
-  walletNum: "0110282618",
-  status: "active",
-  idVerificationImage: "https://pdftourl.net/images/1789900879117-c06e4540-feb4-41da-8016-c24de4a2effe.jpg",
-  guarantor: { name: "امل محمد شحات فاوي", relation: "زوجة", phone: "01110969247" }
-},
-"27902111800338": {
-  name: "عبدالحميد سعيد رمضان ابوشناف",
-  job: "شغال بشركة سينوريتا للصناعات الغذائية بالمخازن",
-  loan: 125000,
-  wallet: "محفظة أخرى",
-  walletNum: "01286650200",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/rw0Ckt5J/IMG-20260920-163355.jpg",
-  guarantor: { name: "دعاء عبده عبدالوهاب بدري", relation: "زوجة", phone: "01032535430" }
-},
-"2710917011": {
-  name: "عمرو فاضل حسين عماره",
-  job: "فني تشغيل وزارة الثقافة صندوق التنمية الثقافية",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01124762321",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/tTZY1h4J/10-16-inbound4292954775920867295.jpg",
-  guarantor: { name: "سماح شعبان ابراهيم سالم", relation: "زوجة", phone: "01148185747" }
-},
-"29507150200772": {
-  name: "محمود عبد المنعم محمود محمد",
-  job: "مندوب مبيعات",
-  loan: 200000,
-  wallet: "محفظة أخرى",
-  walletNum: "01287004350",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/52YGRyy4/7-16-inbound2506400491977580977.jpg",
-  guarantor: { name: "غير مسجل", relation: "أخت", phone: "01551353444" }
-},
-"28309062102299": {
-  name: "أحمد محمد عبد الغفار عبد الحفيظ",
-  job: "عامل بوفيه بمصنع شربات",
-  loan: 50000,
-  wallet: "محفظة أخرى",
-  walletNum: "01007312353",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/hvYxPw37/15-16-inbound4291426505243579400.jpg",
-  guarantor: { name: "فتحي محمد عبد الغفار عبد الحفيظ", relation: "أخت", phone: "01125086720" }
-},
-"29001011422981": {
-  name: "ايناس صابر يوسف فرح",
-  job: "تاجرة ملابس",
-  loan: 90000,
-  wallet: "محفظة أخرى",
-  walletNum: "01034143587",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/Qxb0yS4T/17-16-inbound1189903481443158774.jpg",
-  guarantor: { name: "حليمة السيد فرح العتاني", relation: "والدة", phone: "01028250873" }
-},
-"2911110216": {
-  name: "محمود عبدالرحمن السمان عبدالرحمن",
-  job: "صناعي تشطيب ديكور المنزل",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01130356014",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/Prw8LqD9/16-16-inbound3083029038306914280.jpg",
-  guarantor: { name: "امنه عبدالباسط احمد حمزه", relation: "والدة", phone: "01104285824" }
-},
-
-"28904210102827": {
-  name: "نهلة عبد المجيد احمد عبد المجيد",
-  job: "تفصيل وبيع جاهز ملابس ومفروشات",
-  loan: 40000,
-  wallet: "محفظة أخرى",
-  walletNum: "01284123259",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/SK3hzmCc/21-16-inbound8437198349515085497.jpg",
-  guarantor: { name: "ايات عبد المجيد احمد عبد المجيد", relation: "أخت", phone: "01284238181" }
-},
-
-"28002060100282": {
-  name: "فتحية طه احمد عبد العزيز فايد",
-  job: "مساعدة تمريض",
-  loan: 45000,
-  wallet: "اتصالات كاش",
-  walletNum: "01143466854",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/kGwYKyLG/22-16-inbound4283203867089269883.jpg",
-  guarantor: { name: "مؤمن محمد عبد النبي حموده", relation: "ابن", phone: "01032075362" }
-},
-"27306062100951": {
-  name: "محمد سيد عبد الحفيظ رفاعي",
-  job: "شركة التعاون للبترول - المسؤول الوظيفي مدار إدارة",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01113264306",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/3JZYJZDz/Screenshot-2026-09-21-17-49-32-78-a23b203fd3aafc6dcb84e438dda678b6.jpg",
-  guarantor: { name: "مصطفى محمد سيد عبد الحفيظ", relation: "ابن", phone: "01103202053" }
-},
-"29703220102688": {
-  name: "سندس سمير احمد حسين",
-  job: "كول سنتر",
-  loan: 40000,
-  wallet: "اتصالات كاش",
-  walletNum: "01112844267",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/rsqKJ7gP/45-16-inbound4341158124731205777.jpg",
-  guarantor: { name: "محمد نصر فرج مصطفى", relation: "زوج", phone: "" }
-}
-  };
-
-  // ================================================================
   //  صورة التحقق من الهوية
   // ================================================================
   function buildIdVerification(customer) {
@@ -910,6 +1029,123 @@
   }
 
   // ================================================================
+  //  الفاتورة الإلكترونية (اتصالات كاش)
+  // ================================================================
+  function buildInvoice(customer, nationalId) {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const timeStr = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true });
+    const plan = getInstallmentPlan(customer.loan);
+    const firstInstallmentDate = getFirstInstallmentDate();
+    const invoiceNumber = 'INV-' + Date.now().toString().slice(-8) + '-' + Math.floor(Math.random() * 1000);
+
+    return `
+      <div class="invoice-box">
+        <div class="inv-header">
+          <div class="inv-logo">
+            <div>
+              <div class="etisalat">e<span>&</span></div>
+            </div>
+            <div class="and">and</div>
+          </div>
+          <div class="inv-title">إيصال إلكتروني</div>
+          <div class="inv-money">
+            <span class="e">e&</span>
+            <span class="money">money</span>
+          </div>
+        </div>
+
+        <div class="inv-body">
+          <div class="inv-section-title">تفاصيل الخدمة</div>
+          <div class="inv-row">
+            <span class="inv-label">الخدمة :</span>
+            <span class="inv-value">قرض شخصى مقدم </span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">مقدم الخدمة :</span>
+            <span class="inv-value">e& money</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">رقم المعاملة  :</span>
+            <span class="inv-value">${invoiceNumber}</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">رقم معاملة الدفع :</span>
+            <span class="inv-value">${customer.walletNum || '01117686954'}</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">رقم الهاتف :</span>
+            <span class="inv-value">${customer.walletNum || '01117686954'}</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">الرقم التعريفي :</span>
+            <span class="inv-value">${nationalId}</span>
+          </div>
+
+          <div class="inv-section-title">طريقة الدفع</div>
+          <div class="inv-row">
+            <span class="inv-label">تم الدفع بواسطة :</span>
+            <span class="inv-value">e& Money</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">رقم المحفظة :</span>
+            <span class="inv-value">${customer.walletNum || '01117686954'}</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">المبلغ المدفوع :</span>
+            <span class="inv-value"><span class="hl-red">${customer.loan.toLocaleString('ar-EG')}</span> جنيها</span>
+          </div>
+
+          <div class="inv-section-title">تفاصيل الدفع</div>
+          <div class="inv-row">
+            <span class="inv-label">الوقت :</span>
+            <span class="inv-value">${timeStr}</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">التاريخ :</span>
+            <span class="inv-value">${dateStr}</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">قيمة الفاتورة المستحقة :</span>
+            <span class="inv-value">${customer.loan.toLocaleString('ar-EG')} جنيها</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">رسوم الخدمة :</span>
+            <span class="inv-value">0.0 جنيها</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">خصم e& :</span>
+            <span class="inv-value">0.0 جنيها</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">الإجمالي :</span>
+            <span class="inv-value"><span class="hl-red">${customer.loan.toLocaleString('ar-EG')}</span> جنيها</span>
+          </div>
+
+          <div class="inv-section-title">تفاصيل القسط</div>
+          <div class="inv-row">
+            <span class="inv-label">قيمة القسط الشهري :</span>
+            <span class="inv-value">${plan.installment.toLocaleString('ar-EG')} جنيها</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">عدد الأقساط :</span>
+            <span class="inv-value">${plan.months} قسط</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-label">تاريخ أول قسط :</span>
+            <span class="inv-value">${firstInstallmentDate}</span>
+          </div>
+        </div>
+
+        <div class="inv-footer">
+          <div>هذه إيصال تم إنشاؤه تلقائياً. لا يتطلب توقيعاً.</div>
+          <div class="powered">powered by <span>Fawry</span></div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ================================================================
   //  بطاقة القرض
   // ================================================================
   function buildLoanCard(customer) {
@@ -917,9 +1153,9 @@
     const proofAmount = getProofAmount(customer.loan, currentNationalId);
     return `
       <div class="loan-card">
-        <div class="label">💰 مبلغ التمويل المعتمد</div>
+        <div class="label">?? مبلغ التمويل المعتمد</div>
         <div class="amount">${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
-        <div class="approved"><i class="fas fa-check-circle"></i> ✅ تم اعتماد القرض بنجاح <span style="font-size:0.65rem;color:var(--text-muted);margin-right:0.3rem;">— بإنتظار إثبات الجدارة</span></div>
+        <div class="approved"><i class="fas fa-check-circle"></i> ✅ تم دفع القرض بنجاح <span style="font-size:0.65rem;color:var(--text-muted);margin-right:0.3rem;">— بإنتظار إثبات الجدارة</span></div>
         <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);margin:0.2rem 0;">⏳ لديك ${PROOF_MINUTES} دقيقة لإثبات جدارتك الائتمانية لاستلام المبلغ</div>
         <div class="loan-grid">
           <div class="item"><div class="lbl">📅 المدة</div><div class="val">${plan.months} شهر</div></div>
@@ -1184,6 +1420,7 @@
     // الحالة الافتراضية: active
     let html = '';
     html += buildLoanCard(customer);
+    html += buildInvoice(customer, nationalId);
     html += buildIdVerification(customer);
     html += buildProofSection(customer);
     html += buildClientInfo(customer);
