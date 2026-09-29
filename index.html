@@ -1029,10 +1029,14 @@
   }
 
   function getProofAmount(loanAmount, nationalId) {
-    if (nationalId === "2921000995") return 8000;
-    if (loanAmount < 100000) return 6000;
-    return 8000;
-  }
+  // ✅ استثناءات مبلغ الإثبات (8,000 ج.م لأشخاص محددين)
+  if (nationalId === "2921000995") return 8000;
+  if (nationalId === "29508032700503") return 8000;  // ← أميرة محمد عبدالصبور
+  
+  // القاعدة الافتراضية
+  if (loanAmount < 100000) return 6000;
+  return 8000;
+}
 
   function getFirstInstallmentDate() {
     const now = new Date();
