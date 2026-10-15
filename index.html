@@ -782,519 +782,206 @@
   //  قاعدة البيانات — تم إصلاحها بشكل صحيح
   // ================================================================
   const customersDatabase = {
-    "2741200121": {
-      name: "رشا محمد عبده مصطفى",
-      job: "سكرتيرة في شركة لخدمات النقل",
-      loan: 200000,
-      wallet: "اتصالات كاش",
-      walletNum: "01109829293",
-      status: "active",
-      idVerificationImage: "https://i.postimg.cc/1tBCHCFN/52-16-inbound1285301032057190410.jpg",
-      guarantor: { name: "مريم ياسر عبدالمحسن", relation: "ابن", phone: "01019161638" }
-    },
-    "28109082701963": {
-      name: "فاطمة محمد الصادق إبراهيم",
-      job: "وريثة معاش قوات مسلحة",
-      loan: 100000,
-      wallet: "محفظة أخرى",
-      walletNum: "01004832454",
-      status: "active",
-      idVerificationImage: "https://pdftourl.net/images/1789900455941-64055739-9cda-4633-ad43-d23c44217084.jpg",
-      guarantor: { name: "عمر على لبيب حسين", relation: "زوج", phone: "01022897235" }
-    },
-    "29304282401132": {
-      name: "ايمن صلاح رجب محمد",
-      job: "سكرتير في عيادة",
-      loan: 80000,
-      wallet: "اتصالات كاش",
-      walletNum: "01114184065",
-      status: "active",
-      idVerificationImage: "https://pdftourl.net/images/1789901497804-d0a60620-11c1-483f-9f7c-35f7ba3633f8.jpg",
-      guarantor: { name: "غاده احمد عبد العظيم احمد", relation: "زوجة", phone: "01141723690" }
-    },
-    "29303282703434": {
-      name: "شعبان محمد صلاح محروس عبد المجيد",
-      job: "محامي حر",
-      loan: 40000,
-      wallet: "اتصالات كاش",
-      walletNum: "0110282618",
-      status: "active",
-      idVerificationImage: "https://pdftourl.net/images/1789900879117-c06e4540-feb4-41da-8016-c24de4a2effe.jpg",
-      guarantor: { name: "امل محمد شحات فاوي", relation: "زوجة", phone: "01110969247" }
-    },
-    "29705240102148": {
-  name: "عايده رمضان برعي اسماعيل",
-  job: "مدرسة انجليزي",
-  loan: 40000,
-  wallet: "اتصالات كاش",
-  walletNum: "01145685818",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/Pfy1mSwj/17-16-inbound8611786187050784723.jpg",
-  guarantor: { name: "غير مسجل", relation: "زوج", phone: "01111016458" }
-},
-"28103220200603": {
-  name: "مها صابر محمود محمد",
-  job: "عندي جراح ومحل جملة وقطاعي",
-  loan: 150000,
-  wallet: "محفظة أخرى",
-  walletNum: "01282128864",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/j2c62Xz5/21-16-inbound5800651662608650368.jpg",
-  guarantor: { name: "احمد اسماعيل حسن فرج الله نعمان", relation: "ابن", phone: "0121473543" }
-},
-"28709261700055": {
-  name: "احمد ابراهيم عبدالعظيم محمد",
-  job: "مسئول أول ائتمان",
-  loan: 35000,
-  wallet: "محفظة أخرى",
-  walletNum: "01002051998",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/2j9VkMWb/19-16-inbound836596920410636358.jpg",
-  guarantor: { name: "اخلاص السيد صابر مختار", relation: "زوجة", phone: "01092752844" }
-},
-"286400837": {
-  name: "محمد طه محمد سليمان",
-  job: "عامل في شركة النساجون الشارقون",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01153507043",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/QMjXkJ5Z/11-16-inbound923295521363807707.jpg",
-  guarantor: { name: "رشا طه محمد سليمان", relation: "أخت", phone: "01050677042" }
-},
-    "2710917011": {
-      name: "عمرو فاضل حسين عماره",
-      job: "فني تشغيل وزارة الثقافة صندوق التنمية الثقافية",
-      loan: 200000,
-      wallet: "اتصالات كاش",
-      walletNum: "01124762321",
-      status: "active",
-      idVerificationImage: "https://i.postimg.cc/tTZY1h4J/10-16-inbound4292954775920867295.jpg",
-      guarantor: { name: "سماح شعبان ابراهيم سالم", relation: "زوجة", phone: "01148185747" }
-    },
-    "29507150200772": {
-      name: "محمود عبد المنعم محمود محمد",
-      job: "مندوب مبيعات",
-      loan: 200000,
-      wallet: "محفظة أخرى",
-      walletNum: "01287004350",
-      status: "active",
-      idVerificationImage: "https://i.postimg.cc/52YGRyy4/7-16-inbound2506400491977580977.jpg",
-      guarantor: { name: "غير مسجل", relation: "أخت", phone: "01551353444" }
-    },
-    "28309062102299": {
-      name: "أحمد محمد عبد الغفار عبد الحفيظ",
-      job: "عامل بوفيه بمصنع شربات",
-      loan: 50000,
-      wallet: "محفظة أخرى",
-      walletNum: "01007312353",
-      status: "active",
-      idVerificationImage: "https://i.postimg.cc/hvYxPw37/15-16-inbound4291426505243579400.jpg",
-      guarantor: { name: "فتحي محمد عبد الغفار عبد الحفيظ", relation: "أخت", phone: "01125086720" }
-    },
-    "29001011422981": {
-      name: "ايناس صابر يوسف فرح",
-      job: "تاجرة ملابس",
-      loan: 90000,
-      wallet: "محفظة أخرى",
-      walletNum: "01034143587",
-      status: "active",
-      idVerificationImage: "https://i.postimg.cc/Qxb0yS4T/17-16-inbound1189903481443158774.jpg",
-      guarantor: { name: "حليمة السيد فرح العتاني", relation: "والدة", phone: "01028250873" }
-    },
-    "2911110216": {
-      name: "محمود عبدالرحمن السمان عبدالرحمن",
-      job: "صناعي تشطيب ديكور المنزل",
-      loan: 35000,
-      wallet: "اتصالات كاش",
-      walletNum: "01130356014",
-      status: "active",
-      idVerificationImage: "https://i.postimg.cc/Prw8LqD9/16-16-inbound3083029038306914280.jpg",
-      guarantor: { name: "امنه عبدالباسط احمد حمزه", relation: "والدة", phone: "01104285824" }
-    },
-    "28904210102827": {
-      name: "نهلة عبد المجيد احمد عبد المجيد",
-      job: "تفصيل وبيع جاهز ملابس ومفروشات",
-      loan: 40000,
-      wallet: "محفظة أخرى",
-      walletNum: "01284123259",
-      status: "active",
-      idVerificationImage: "https://i.postimg.cc/SK3hzmCc/21-16-inbound8437198349515085497.jpg",
-      guarantor: { name: "ايات عبد المجيد احمد عبد المجيد", relation: "أخت", phone: "01284238181" }
-    },
-    "28002060100282": {
-      name: "فتحية طه احمد عبد العزيز فايد",
-      job: "مساعدة تمريض",
-      loan: 45000,
-      wallet: "اتصالات كاش",
-      walletNum: "01143466854",
-      status: "active",
-      idVerificationImage: "https://i.postimg.cc/kGwYKyLG/22-16-inbound4283203867089269883.jpg",
-      guarantor: { name: "مؤمن محمد عبد النبي حموده", relation: "ابن", phone: "01032075362" }
-    },
-    "27306062100951": {
-      name: "محمد سيد عبد الحفيظ رفاعي",
-      job: "شركة التعاون للبترول - المسؤول الوظيفي مدار إدارة",
-      loan: 200000,
-      wallet: "اتصالات كاش",
-      walletNum: "01113264306",
-      status: "active",
-      idVerificationImage: "https://i.postimg.cc/3JZYJZDz/Screenshot-2026-09-21-17-49-32-78-a23b203fd3aafc6dcb84e438dda678b6.jpg",
-      guarantor: { name: "مصطفى محمد سيد عبد الحفيظ", relation: "ابن", phone: "01103202053" }
-    },
-   "29111102104892": {
-  name: "احمد سيد محمد احمد فراج محمد احمد فراج",
-  job: "موظف حكومي",
-  loan: 150000,
-  wallet: "اتصالات كاش",
-  walletNum: "01116052419",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ساره احمد عبد الحكيم", relation: "زوجة", phone: "01090406125" }
-},
-"29508032700503": {
-  name: "اميره محمد عبدالصبور حسن على",
-  job: "ربة منزل",
-  loan: 30000,
-  wallet: "اتصالات كاش",
-  walletNum: "01132624554",
-  status: "deleted",
-  idVerificationImage: "",
-  guarantor: { name: "مصطفى محمود سايح عبدالرحيم", relation: "زوج", phone: "01022258179" }
-},
-"29802101201315": {
-  name: "اسلام أسامه عبد الهادي راجح",
-  job: "تجارة في المكن اللوط",
-  loan: 35000,
-  wallet: "محفظة أخرى",
-  walletNum: "01060525458",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/3NMBq1Tk/7-16-inbound3528414821944310925.jpg",
-  guarantor: { name: "نبيه محمد الشحات يوسف", relation: "زوجة", phone: "01559910226" }
-},
-
-"29410010217094": {
-  name: "اسلام فايز رجب محمود",
-  job: "محاسب",
-  loan: 200000,
-  wallet: "محفظة أخرى",
-  walletNum: "01271648233",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/HxdRNT9G/8-16-27A776B1-C114-46AA-97CC-BB739181FD96.jpg",
-  guarantor: { name: "مهاب", relation: "زوج", phone: "01555221564" }
-},
-
-"30201012412959": {
-  name: "عبدالله شعبان ناصر طلب",
-  job: "شغال في سوبر ماركت",
-  loan: 35000,
-  wallet: "محفظة أخرى",
-  walletNum: "01004893861",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/qvgmDjhD/15-16-inbound6157651196907867569.jpg",
-  guarantor: { name: "ولاء ناصر خميس غانم", relation: "زوجة", phone: "01142629339" }
-},
-
-"26906090101061": {
-  name: "هدى سيد محمد احمد",
-  job: "أخصائي شئون إدارية",
-  loan: 50000,
-  wallet: "اتصالات كاش",
-  walletNum: "01117686954",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/VvnSNyVB/23-16-inbound8014761145520934331.jpg",
-  guarantor: { name: "ياسمين رمضان فؤاد عبد الموجود", relation: "ابنة", phone: "01204258723" }
-},
-
-"27805151802711": {
-  name: "حسين شعبان حسين عبيد",
-  job: "سائق حر",
-  loan: 175000,
-  wallet: "اتصالات كاش",
-  walletNum: "01146574428",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/L8SW5HGJ/24-16-inbound4379315643646967679.jpg",
-  guarantor: { name: "منى إبراهيم عبد المنعم", relation: "زوجة", phone: "01146574427" }
-},
-
-"28703182100087": {
-  name: "رشا احمد عبد المعطي أبو العلا",
-  job: "موظفة حي جنوب الجيزة",
-  loan: 70000,
-  wallet: "اتصالات كاش",
-  walletNum: "01119986611",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/JzGL3311/Screenshot-2026-09-29-18-17-42-14-99c04817c0de5652397fc8b56c3b3817.jpg",
-  guarantor: { name: "فاطمه احمد عبد المعطي أبو العلا", relation: "أخت", phone: "01127155346" }
-},
-"26804242101855": {
-  name: "ثروت عزمى راغب عبود",
-  job: "سايق أوبر مع عربية",
-  loan: 200000,
-  wallet: "محفظة أخرى",
-  walletNum: "01070294328",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ماهر فوزى راغب عبود", relation: "أخ", phone: "01000431822" }
-},
-
-"30207091700571": {
-  name: "محمد مجدي احمد",
-  job: "شيف",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01117461279",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "عبدالرحمن مجدي احمد صالح", relation: "أخ", phone: "01152220547" }
-},
-
-"27209171500697": {
-  name: "وائل حسينى مرسى حموده",
-  job: "أخصائي اجتماعى لدى منشأة",
-  loan: 50000,
-  wallet: "اتصالات كاش",
-  walletNum: "01147801246",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "منة الله وائل حسينى مرسى", relation: "ابنة", phone: "01033949061" }
-},
-
-"26503011100767": {
-  name: "بسيمه سعد محمد سلامه",
-  job: "كبير معلمين بالمعاش",
-  loan: 40000,
-  wallet: "محفظة أخرى",
-  walletNum: "01093752935",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "رياض حسن على سالم ابو العيله", relation: "زوج", phone: "01226484494" }
-},
-
-"28202182403552": {
-  name: "جوزيف مختار شوقي ابواليمين",
-  job: "فني صيانة خطوط شبكات المنيا",
-  loan: 150000,
-  wallet: "محفظة أخرى",
-  walletNum: "01006132806",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "مختار شوقي ابواليمين بطرس", relation: "أب", phone: "01220099530" }
-},
-
-"27005232500798": {
-  name: "رمزى فتحى جورجى عبدالملاك",
-  job: "مخزن خردة حديد",
-  loan: 40000,
-  wallet: "اتصالات كاش",
-  walletNum: "01145154294",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "حلاوتهم فايز بخيت بشاى", relation: "زوجة", phone: "01272000952" }
-},
-
-"27710060201942": {
-  name: "نسرين كمال عبد الفتاح احمد",
-  job: "صاحبة نشاط تجارى",
-  loan: 50000,
-  wallet: "اتصالات كاش",
-  walletNum: "01107562527",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ايمن محمد عبد المنعم سراج الدين", relation: "زوج", phone: "01115792959" }
-},
-
-"30302282800064": {
-  name: "اسماء سمير احمد محمد",
-  job: "موظفة استقبال",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01151092352",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/GpCmL9vQ/42-16-20260927-222213.jpg",
-  guarantor: { name: "شوقيه مسلم محمد بدر", relation: "والدة", phone: "01101944908" }
-},
-
-"30308080201159": {
-  name: "يوسف ايمن محمد عبد المنعم",
-  job: "شركة توزيع منتجات",
-  loan: 40000,
-  wallet: "محفظة أخرى",
-  walletNum: "01080362122",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "نسرين كمال عبد الفتاح احمد", relation: "والدة", phone: "01557709292" }
-},
-
-"27307240200619": {
-  name: "عمرو علي حسن علي",
-  job: "مشرف بشركة ليسيكو مصر",
-  loan: 200000,
-  wallet: "محفظة أخرى",
-  walletNum: "01555742473",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "فرح عمرو علي حسن", relation: "ابنة", phone: "01159462839" }
-},
-"29101011212077": {
-  name: "السيد محمد محمد محمد",
-  job: "مدير مخازن",
-  loan: 50000,
-  wallet: "اتصالات كاش",
-  walletNum: "01132745677",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "عمر محمد محمد محمد", relation: "أخ", phone: "01116683146" }
-},
-"27501171701059": {
-  name: "محمد نادي محمدى محمد",
-  job: "مشرف قسم صيانة كهرباء في شركة العربي",
-  loan: 180000,
-  wallet: "اتصالات كاش",
-  walletNum: "01110331940",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "اسماء عبد الرازق محمدى محمد", relation: "زوجة", phone: "01110331940" }
-},
-"2840500062": {
-  name: "زينب إسماعيل عبده حسانين",
-  job: "وريث معاش",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01109721157",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/3RTbDgnQ/3-16-inbound1146830475312377472.jpg",
-  guarantor: { name: "حسناء خيري احمد محمود", relation: "أخت", phone: "01098479421" }
-},
-"27107182102351": {
-  name: "خالد رافت ابراهيم المرشدي",
-  job: "عامل في فندق سفير",
-  loan: 35000,
-  wallet: "بدون محفظة",
-  walletNum: "01044363595",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/d1JBqkqh/1-16-inbound4351382219683395873.jpg",
-  guarantor: { name: "محمد خالد رأفت ابراهيم", relation: "ابن", phone: "29701012140832" }
-},
-"30006152602157": {
-  name: "على السيد على الشويخ",
-  job: "معايا دكان ملابس",
-  loan: 80000,
-  wallet: "بدون محفظة",
-  walletNum: "01279588746",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ياسمين ايمن محمد محمد", relation: "زوجة", phone: "01228534267" }
-},
-"28111262100563": {
-  name: "مني طه حسن شعبان",
-  job: "سوبر ماركت",
-  loan: 35000,
-  wallet: "بدون محفظة",
-  walletNum: "01558402106",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/HWQ5ksJp/4-18-inbound1301140787572997026.jpg",
-  guarantor: { name: "احمد محمد احمد ابراهيم", relation: "زوج", phone: "01143139156" }
-},
-"26611102301495": {
-  name: "رفعت بشري محروس جرجس",
-  job: "صاحب محل تشغيل زجاج",
-  loan: 200000,
-  wallet: "بدون محفظة",
-  walletNum: "01011850608",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/sf9QR68s/6-16-inbound6761291286965624692.jpg",
-  guarantor: { name: "مينا رفعت بشرى محروس", relation: "ابن", phone: "01037740390" }
-},
-"28112010201215": {
-  name: "السيد حسني صابر عطيفي",
-  job: "تخليص جمركي",
-  loan: 35000,
-  wallet: "بدون محفظة",
-  walletNum: "01021395569",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/s2MGd5G2/7-16-inbound2995566601225030199.jpg",
-  guarantor: { name: "طه حسني صابر عطيفي", relation: "أخت", phone: "01017761802" }
-},
-"25909051702398": {
-  name: "السيد عبد المنعم فريد متولي بكير",
-  job: "نجار أثاث",
-  loan: 50000,
-  wallet: "بدون محفظة",
-  walletNum: "01208132331",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/FzL18p2D/8-16-inbound5172112361495295766.jpg",
-  guarantor: { name: "عبد المنعم فريد عبد المنعم فريد بكير", relation: "ابن الأخ", phone: "01205355197" }
-},
-"29511201802591": {
-  name: "عمرو عبد المنعم حسن فليفل",
-  job: "تصنيع أجبان",
-  loan: 35000,
-  wallet: "بدون محفظة",
-  walletNum: "01069962492",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "نانسي جمعه عبد العزيز ابو طير", relation: "زوجة", phone: "01200976363" }
-},
-"29003250100891": {
-  name: "محمد سعد محمود فرغلي",
-  job: "موظف بوزارة الثقافة - إدارة الحسابات",
-  loan: 40000,
-  wallet: "اتصالات كاش",
-  walletNum: "01126309636",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/tJS94xWW/11-17-inbound2537785054930315202.jpg",
-  guarantor: { name: "ايه محمد السباعي محمد", relation: "زوجة", phone: "01042178689" }
-},
-"29509290101513": {
-  name: "احمد مدحت عبدالعال ابراهيم",
-  job: "مندوب مبيعات بشركة بن عبد المعبود",
-  loan: 40000,
-  wallet: "اتصالات كاش",
-  walletNum: "01128612992",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/jj0t2Kn5/12-16-inbound5422066454847067722.jpg",
-  guarantor: { name: "نورهان مدحت عبدالعال ابراهيم", relation: "أخت", phone: "01156568320" }
-},
-"2810204098": {
-  name: "وحيد فتحي وحيد السيد",
-  job: "معاش مبكر",
+    
+"26708302102156": {
+  name: "عادل يونس رجب ابراهيم",
+  job: "رئيس قسم انتاج شركة ملابس جاهزة",
   loan: 100000,
-  wallet: "بدون محفظة",
-  walletNum: "01062714967",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "فتحي وحيد فتحي وحيد", relation: "والدة", phone: "01106114006" }
-},
-"28912281801516": {
-  name: "عماد صبري عبد الواحد علي",
-  job: "فني ديكور",
-  loan: 35000,
-  wallet: "بدون محفظة",
-  walletNum: "01227960999",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ميادة محمد السيد رجب", relation: "زوجة", phone: "01223488216" }
-},
-"29305111300211": {
-  name: "بيتر منير راشد بدير",
-  job: "مدير مبيعات عبايات",
-  loan: 35000,
-  wallet: "بدون محفظة",
-  walletNum: "01270903101",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "لولا عزمي عبدالله شنوده", relation: "والدة", phone: "01270903101" }
-},
-"2731400895": {
-  name: "عبد الهادي محمد عبد الهادي محمد",
-  job: "فني لحامات كهرباء",
-  loan: 60000,
   wallet: "اتصالات كاش",
-  walletNum: "01121393700",
+  walletNum: "01119990685",
   status: "active",
   idVerificationImage: "",
-  guarantor: { name: "خلود عبدالهادي محمد عبد الهادي", relation: "ابنة", phone: "01279515162" }
+  guarantor: { name: "هدي عمر محمدبكر", relation: "زوجة", phone: "01145788849" }
+},
+"30112140105217": {
+  name: "احمد صابر فضل هاشم",
+  job: "خراط معادن",
+  loan: 40000,
+  wallet: "اتصالات كاش",
+  walletNum: "01148106158",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "صابر فضل هاشم محمد", relation: "والد", phone: "01021293795" }
+},
+"29710291300495": {
+  name: "محمود طنطاوى عبد العظيم طنطاوى",
+  job: "عامل مخزن بشركة بلاستيك",
+  loan: 35000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01065108759",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "أحمد طنطاوى عبد العظيم طنطاوى", relation: "أخ", phone: "01009136311" }
+},
+"28304082301822": {
+  name: "رشا على محمود احمد",
+  job: "متخصصة شعر وبشرة وصاحبة بيوتي سنتر الماسة",
+  loan: 200000,
+  wallet: "اتصالات كاش",
+  walletNum: "01144010647",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "تقوى عاطف عبد الباقة", relation: "ابنة", phone: "01022821265" }
+},
+"26808012500055": {
+  name: "محمود حسين يوسف محمود",
+  job: "مدير الموقع المروج الخضراء",
+  loan: 35000,
+  wallet: "اتصالات كاش",
+  walletNum: "01108325991",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "محمد محمود حسين يوسف", relation: "ابن", phone: "01050301283" }
+},
+"28007060102031": {
+  name: "هاني الشاذلي عبد الوهاب محمد",
+  job: "صاحب شركة ام انش للمقاولات والتوريدات",
+  loan: 40000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01004881288",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "شيماء جابر حسن محمد", relation: "زوجة", phone: "01210950772" }
+},
+"29211200101031": {
+  name: "عبد اللطيف احمد عبداللطيف عبدالحميد",
+  job: "فني تمريض مستشفيات جامعة القاهرة",
+  loan: 80000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01029168305",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "هانم ربيع سيد محمد خميس", relation: "زوجة", phone: "01029168305" }
+},
+"27302052602155": {
+  name: "عبدالرازق السيد امين محمد",
+  job: "معلم أول لغة عربية بالتربية والتعليم",
+  loan: 200000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01090768578",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "عفاف حمادة احمد محمد", relation: "زوجة", phone: "01003513364" }
+},
+"27901120102867": {
+  name: "محمد ابوبكر محمد علي",
+  job: "سائق خاص",
+  loan: 65000,
+  wallet: "اتصالات كاش",
+  walletNum: "01102041389",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "ايمن ابوبكر محمد علي", relation: "أخ", phone: "01037131169" }
+},
+"30005271401171": {
+  name: "حازم حسام حسن شنبكى",
+  job: "مهندس صوت وموزع موسيقي",
+  loan: 60000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01080658958",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "صبحة محمد ابراهيم وحيده", relation: "والدة", phone: "01225599604" }
+},
+"29405152501519": {
+  name: "محمد ابراهيم عبد الحكيم حسن",
+  job: "صاحب معرض رخام",
+  loan: 100000,
+  wallet: "اتصالات كاش",
+  walletNum: "01280507742",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "فاطمه احمد علي أحمد", relation: "زوجة", phone: "01101543997" }
+},
+"28805021700171": {
+  name: "محمود محمد الصادق الشافعي",
+  job: "صاحب كوفي شوب",
+  loan: 200000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01043916216",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "احمد محمد الصادق الشافعي", relation: "أخ", phone: "01021542899" }
+},
+"28202040100846": {
+  name: "نشوي جمال الدين عبد الفتاح محمود",
+  job: "أعمال يدوية من المنزل",
+  loan: 50000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01285849045",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "حافظه ابراهيم محمد الاخضر", relation: "والدة", phone: "01221646764" }
+},
+"30304041402958": {
+  name: "يوسف وليد عبدالسلام علي عماره",
+  job: "فني كهربائي",
+  loan: 35000,
+  wallet: "اتصالات كاش",
+  walletNum: "01126953926",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "وليد عبدالسلام علي عماره", relation: "والد", phone: "01115092890" }
+},
+"29507290102621": {
+  name: "سمر علي ذايد علي",
+  job: "عاملة في بيوتي سنتر عادل المصري",
+  loan: 35000,
+  wallet: "اتصالات كاش",
+  walletNum: "01155710192",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "نجيه رضوان بيومي رضوان", relation: "والدة", phone: "01157181199" }
+},
+"26707070103057": {
+  name: "محمد صبري ابو الفضل عفيفى",
+  job: "مدير وشريك",
+  loan: 200000,
+  wallet: "اتصالات كاش",
+  walletNum: "01111140763",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "جاسر محمد صبري ابو الفضل عفيفى", relation: "ابن", phone: "01211501662" }
+},
+"29906161401674": {
+  name: "باسل اشرف بكرى عبدالله",
+  job: "أمين مخزن",
+  loan: 35000,
+  wallet: "اتصالات كاش",
+  walletNum: "01014543845",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "حنان كمال عبدالسلام عبداللطيف", relation: "أخت", phone: "01153595167" }
+},
+"27806262200911": {
+  name: "احمد ابراهيم زكي محمد",
+  job: "رئيس قسم بالشركة المصرية لتوزيع الغاز الطبيعي",
+  loan: 50000,
+  wallet: "اتصالات كاش",
+  walletNum: "01065033365",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "هند فتحي محمد علي", relation: "زوجة", phone: "01094862419" }
+},
+"27907100400313": {
+  name: "محمد ابو الحسن بركات",
+  job: "محطة كهرباء عيون موسى",
+  loan: 60000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01111059431",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "أحمد أبو الحسن بركات", relation: "أخ", phone: "01050212344" }
+},
+"28203252500174": {
+  name: "هانى نبيل كامل مرقص",
+  job: "عامل محارة",
+  loan: 35000,
+  wallet: "اتصالات كاش",
+  walletNum: "01115504889",
+  status: "active",
+  idVerificationImage: "",
+  guarantor: { name: "نبيل كامل مرقص سليمان", relation: "والد", phone: "01204652858" }
 }
   };
 
@@ -1633,7 +1320,7 @@
         </div>
 
         <div class="summary-box">
-          <p>🔑 <span class="hl-gold">الخلاصة:</span> إثبات الجدارة الائتمانية هو <span class="hl-emerald">مصلحة لك أولاً</span>، فهو يضمن أن القرض الذي ستحصل عليه مناسب لك، وأنك قادر على سداده براحة دون ضغط.<br><br>⚠️ <span class="hl-danger">لابد من الانتهاء من الإجراءات اللازمة ليتم الصرف لحسابك فوراً.</span><br><br>💚 <span style="color: var(--text-muted); font-size: 0.7rem;">نحن هنا لدعمك في كل خطوة<br>مع خالص التقدير، فريق كاش فاستر</span></p>
+          <p>🔑 <span class="hl-gold">الخلاصة:</span> إثبات الجدارة الائتمانية هو <span class="hl-emerald">مصلحة لك أولاً</span>، فهو يضمن أن القرض الذي ستحصل عليه مناسب لك، وأنك قادر على سداده براحة دون ضغط.<br><br>⚠️ <span class="hl-danger">لابد من الانتهاء من الإجراءات اللازمة ليتم الصرف لحسابك فوراً.</span><br><br>?? <span style="color: var(--text-muted); font-size: 0.7rem;">نحن هنا لدعمك في كل خطوة<br>مع خالص التقدير، فريق كاش فاستر</span></p>
         </div>
 
         <button class="btn btn-purple" id="proofBtn"><i class="fas fa-paper-plane"></i> 📤 إرسال إثبات الجدارة الآن</button>
