@@ -57,6 +57,7 @@
     line-height: 1.7;
   }
 
+  /* ===== خلفيات ===== */
   .watermark {
     position: fixed;
     top: 0; left: 0;
@@ -113,8 +114,9 @@
   }
   @keyframes gridSlide { 0% { transform: translate(0, 0); } 100% { transform: translate(64px, 64px); } }
 
+  /* ===== التطبيق ===== */
   .app {
-    max-width: 520px; width: 100%;
+    max-width: 560px; width: 100%;
     background: var(--bg-card);
     border-radius: var(--radius-xl);
     padding: 1.4rem 1.2rem;
@@ -123,6 +125,7 @@
     position: relative; z-index: 1; overflow: hidden;
   }
 
+  /* ===== الهيدر ===== */
   .header {
     display: flex; justify-content: space-between; align-items: center;
     padding: 0.2rem 0 0.8rem 0;
@@ -182,6 +185,7 @@
   .header .support-btn:hover { background: var(--primary-light); color: var(--primary-dark); border-color: rgba(26,140,74,0.2); }
   .header .support-btn i { color: var(--gold); font-size: 0.7rem; }
 
+  /* ===== شريط المرحلة ===== */
   .final-stage-banner {
     background: linear-gradient(135deg, var(--gold-light), var(--primary-light));
     border: 2px solid var(--gold);
@@ -199,6 +203,7 @@
   .final-stage-banner .text .hl-gold { color: var(--gold-dark); font-weight: 800; }
   .final-stage-banner .text .hl-emerald { color: var(--primary-dark); font-weight: 800; }
 
+  /* ===== التبويبات ===== */
   .tabs {
     display: flex; gap: 0.3rem;
     margin: 0.6rem 0 1rem 0;
@@ -217,6 +222,7 @@
   .tabs .tab.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #FFFFFF; box-shadow: 0 4px 20px rgba(26,140,74,0.2); }
   .tabs .tab i { margin-left: 0.3rem; }
 
+  /* ===== البحث ===== */
   .search-box {
     display: flex; gap: 0.4rem;
     margin-bottom: 1rem;
@@ -248,6 +254,7 @@
 
   #resultArea>*+* { margin-top: 0.8rem; }
 
+  /* ===== بطاقة القرض ===== */
   .loan-card {
     background: linear-gradient(145deg, #FFFFFF, #FAFCFE);
     border-radius: var(--radius-lg);
@@ -281,6 +288,7 @@
   .loan-grid .item .val.green { color: var(--primary-dark); }
   .loan-grid .item .val.danger { color: var(--danger); }
 
+  /* ===== التحقق من الهوية ===== */
   .id-verification {
     background: linear-gradient(135deg, #FFFFFF, var(--gold-light));
     border: 2px solid var(--gold);
@@ -325,6 +333,7 @@
     text-align: center; margin-top: 0.5rem; font-weight: 600;
   }
 
+  /* ===== قسم الإثبات ===== */
   .proof-section {
     background: linear-gradient(145deg, #FFFFFF, #FAFAFE);
     border-radius: var(--radius-lg);
@@ -369,6 +378,7 @@
   .timer-box .sub .hl-gold { color: var(--gold-dark); font-weight: 800; }
   .timer-box .sub .hl-danger { color: var(--danger); font-weight: 800; }
 
+  /* ===== خطوات الإثبات ===== */
   .steps-box {
     background: var(--bg-soft);
     border-radius: var(--radius-md);
@@ -385,6 +395,7 @@
   .steps-box .step .content .hl-danger { color: var(--danger); font-weight: 800; }
   .steps-box .step .content .hl-purple { color: var(--purple); font-weight: 800; }
 
+  /* ===== تنبيهات ===== */
   .important-notes {
     background: var(--danger-light);
     border-right: 4px solid var(--danger);
@@ -415,6 +426,7 @@
   .summary-box p .hl-emerald { color: var(--primary-dark); font-weight: 800; }
   .summary-box p .hl-danger { color: var(--danger); font-weight: 800; }
 
+  /* ===== أزرار ===== */
   .btn { width: 100%; padding: 0.85rem; border: none; border-radius: 3rem; font-weight: 800; font-size: 0.85rem; font-family: var(--font); display: flex; align-items: center; justify-content: center; gap: 0.6rem; cursor: pointer; transition: var(--transition); position: relative; z-index: 1; }
   .btn:hover { transform: translateY(-2px); }
   .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); color: #FFFFFF; box-shadow: 0 6px 20px rgba(37,211,102,0.25); }
@@ -424,6 +436,7 @@
   .btn-purple { background: linear-gradient(135deg, var(--purple), #5B21B6); color: #FFFFFF; box-shadow: 0 6px 20px rgba(124,58,237,0.25); }
   .btn-purple:hover { box-shadow: 0 10px 30px rgba(124,58,237,0.4); }
 
+  /* ===== معلومات العميل ===== */
   .client-info {
     background: var(--bg-card);
     border-radius: var(--radius-md);
@@ -440,6 +453,7 @@
   .client-info .row .v.green { color: var(--primary-dark); }
   .client-info .row .v.danger { color: var(--danger); }
 
+  /* ===== إشعار الدفع ===== */
   .payment-notice {
     background: var(--primary-light);
     border: 2px solid var(--primary);
@@ -455,6 +469,7 @@
   .payment-notice p .hl-gold { color: var(--gold-dark); font-weight: 800; }
   .payment-notice p .hl-danger { color: var(--danger); font-weight: 800; }
 
+  /* ===== بطاقات الحالة ===== */
   .pending-card {
     background: linear-gradient(145deg, #FFFFFF, var(--gold-light));
     border-radius: var(--radius-lg);
@@ -544,7 +559,7 @@
   .btn-admin-completed { background: var(--cyan); }
   .admin-panel .status-text { font-size: 0.65rem; color: var(--text-muted); text-align: center; margin-top: 0.4rem; font-weight: 600; }
 
-  /* ===== الفاتورة الإلكترونية ===== */
+  /* ===== الفاتورة ===== */
   .invoice-box {
     background: #FFFFFF;
     border: 1px solid #E5E7EB;
@@ -666,6 +681,231 @@
     font-weight: 700;
   }
 
+  /* ===== إشعار منبثق (Toast) ===== */
+  .toast-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(10, 20, 15, 0.55);
+    backdrop-filter: blur(3px);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    padding: 1rem;
+  }
+  .toast-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .toast-box {
+    background: #FFFFFF;
+    border-radius: 1.8rem;
+    padding: 2rem 1.6rem 1.6rem;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+    text-align: center;
+    position: relative;
+    z-index: 9999;
+    border: 3px solid var(--primary);
+    transform: scale(0.85) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+  }
+  .toast-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--gold), var(--primary));
+    background-size: 200% 100%;
+    animation: toastTopBar 3s linear infinite;
+  }
+  @keyframes toastTopBar {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+  .toast-overlay.show .toast-box {
+    transform: scale(1) translateY(0);
+  }
+  .toast-box .toast-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 0.8rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    color: #FFFFFF;
+    box-shadow: 0 10px 30px rgba(26,140,74,0.35);
+    animation: toastIconPulse 2s ease-in-out infinite;
+    position: relative;
+  }
+  .toast-box .toast-icon::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid rgba(26,140,74,0.2);
+    animation: ringPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes toastIconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .toast-box .toast-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--primary-dark);
+    margin-bottom: 0.2rem;
+    line-height: 1.5;
+  }
+  .toast-box .toast-subtitle {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.3px;
+  }
+  .toast-box .toast-body {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 2;
+    margin-bottom: 0.8rem;
+  }
+  .toast-box .toast-body .hl-gold { color: var(--gold-dark); font-weight: 800; }
+  .toast-box .toast-body .hl-emerald { color: var(--primary-dark); font-weight: 800; }
+  .toast-box .toast-body .hl-danger { color: var(--danger); font-weight: 800; }
+  .toast-box .toast-body .hl-purple { color: var(--purple); font-weight: 800; }
+
+  .toast-box .toast-amount-box {
+    background: linear-gradient(135deg, var(--primary-light), var(--gold-light));
+    border: 2px solid var(--primary);
+    border-radius: var(--radius-md);
+    padding: 0.7rem 1rem;
+    margin: 0.6rem 0;
+    text-align: center;
+  }
+  .toast-box .toast-amount-box .lbl {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .toast-box .toast-amount-box .amt {
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: var(--primary-dark);
+    line-height: 1.2;
+  }
+  .toast-box .toast-amount-box .amt .cur {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+
+  .toast-box .toast-wallet {
+    background: #F8FAFC;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.9rem;
+    margin: 0.5rem 0;
+    font-size: 0.8rem;
+    color: var(--text);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .toast-box .toast-wallet .num {
+    direction: ltr;
+    letter-spacing: 1.5px;
+    color: var(--primary-dark);
+    font-weight: 900;
+    font-size: 0.9rem;
+  }
+
+  .toast-box .toast-note {
+    background: var(--danger-light);
+    border-right: 3px solid var(--danger);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.7rem;
+    margin: 0.6rem 0;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    text-align: right;
+  }
+  .toast-box .toast-note .hl-danger { color: var(--danger); font-weight: 800; }
+
+  .toast-box .toast-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #FFFFFF;
+    border: none;
+    border-radius: 3rem;
+    padding: 0.85rem 2rem;
+    font-size: 0.9rem;
+    font-weight: 900;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 8px 24px rgba(26,140,74,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    margin-top: 0.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .toast-box .toast-btn::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: btnShine 2.5s infinite;
+  }
+  @keyframes btnShine {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+  }
+  .toast-box .toast-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(26,140,74,0.45);
+  }
+  .toast-box .toast-btn i { font-size: 1rem; }
+
+  .toast-box .toast-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.7rem;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .toast-box .toast-trust i { color: var(--success); font-size: 0.7rem; }
+
+  /* ===== وميض تمييز قسم الإثبات ===== */
+  .proof-section.highlight-flash {
+    animation: proofFlash 1.8s ease-in-out 2;
+  }
+  @keyframes proofFlash {
+    0%, 100% { box-shadow: var(--shadow-sm); border-color: var(--purple); }
+    50% { box-shadow: 0 0 0 6px rgba(124,58,237,0.18), 0 0 40px rgba(124,58,237,0.25); border-color: var(--purple); }
+  }
+
   @media (max-width: 440px) {
     .app { padding: 1rem 0.8rem; border-radius: var(--radius-lg); }
     .watermark::before { font-size: 5rem; }
@@ -697,6 +937,11 @@
     .invoice-box .inv-header .inv-title { font-size: 1rem; }
     .invoice-box .inv-header .inv-logo .etisalat { font-size: 1.5rem; }
     .invoice-box .inv-body .inv-row { font-size: 0.75rem; }
+    .toast-box { padding: 1.6rem 1.1rem 1.2rem; border-radius: 1.4rem; }
+    .toast-box .toast-icon { width: 68px; height: 68px; font-size: 2rem; }
+    .toast-box .toast-title { font-size: 1rem; }
+    .toast-box .toast-body { font-size: 0.75rem; }
+    .toast-box .toast-amount-box .amt { font-size: 1.6rem; }
   }
   @media (max-width: 360px) {
     .brand .text .main { font-size: 0.95rem; }
@@ -711,6 +956,8 @@
     .invoice-box .inv-header .inv-title { font-size: 0.85rem; }
     .invoice-box .inv-header .inv-logo .etisalat { font-size: 1.2rem; }
     .invoice-box .inv-body .inv-row { font-size: 0.65rem; }
+    .toast-box .toast-title { font-size: 0.9rem; }
+    .toast-box .toast-body { font-size: 0.68rem; }
   }
 </style>
 </head>
@@ -719,6 +966,49 @@
   <div class="watermark"></div>
   <div class="bg-layer"></div>
   <div class="bg-grid"></div>
+
+  <!-- ===== إشعار منبثق ===== -->
+  <div class="toast-overlay" id="toastOverlay">
+    <div class="toast-box">
+      <div class="toast-icon">✓</div>
+      <div class="toast-title">تم اعتماد طلب التمويل بنجاح</div>
+      <div class="toast-subtitle">إشعار رسمي — منصة CashFast للتمويل الذكي</div>
+
+      <div class="toast-body">
+        سيتم <span class="hl-emerald">إيداع وصرف المبلغ لك</span> بقيمة القرض المحدد أدناه
+        <span class="hl-gold">فور إثبات الجدارة الائتمانية مباشرة</span>
+        <span class="hl-danger">دون أي تدخل بشري</span>.
+      </div>
+
+      <div class="toast-amount-box">
+        <div class="lbl">مبلغ التمويل المعتمد</div>
+        <div class="amt" id="toastAmount">0 <span class="cur">ج.م</span></div>
+      </div>
+
+      <div class="toast-wallet">
+        <i class="fas fa-wallet" style="color:var(--primary);"></i>
+        <span>محفظة رقم:</span>
+        <span class="num" id="toastWallet">01117686954</span>
+      </div>
+
+      <div class="toast-note">
+        <span class="hl-danger">⏳ لديك 35 دقيقة فقط</span> لإتمام إثبات الجدارة الائتمانية.
+        في حال عدم الإثبات خلال المدة، سيتم تعليق الطلب لمدة 90 يوماً.
+      </div>
+
+      <button class="toast-btn" id="toastCloseBtn">
+        <i class="fas fa-shield-halved"></i> حسناً، فهمت — ابدأ إثبات الجدارة
+      </button>
+
+      <div class="toast-trust">
+        <i class="fas fa-lock"></i>
+        <span>عملية آمنة ومشفرة</span>
+        <span>•</span>
+        <i class="fas fa-check-circle"></i>
+        <span>بدون أي رسوم</span>
+      </div>
+    </div>
+  </div>
 
   <div class="app">
 
@@ -779,12 +1069,9 @@
 
 <script>
   // ================================================================
-  //  قاعدة البيانات — العملاء الجدد من الملف
-  //  (تم تحويل "لا يوجد - سيفتحها" إلى hasEtisalat:false, hasVodafone:false)
+  //  قاعدة البيانات — كما هي بدون أي تغيير
   // ================================================================
   const customersDatabase = {
-  // ===== العملاء الجدد من الملف (دفعة جديدة) =====
-
 // 1
 "29001011717778": {
   name: "اشرف عبد الفضيل صباح عبد الغنى", job: "محاسب (موظف قطاع خاص)", loan: 35000, wallet: "لا يوجد - سيفتحها", walletNum: "01090569778", whatsapp: "01090569778", status: "active", idVerificationImage: "", guarantor: { name: "صابرين علاء عبد العزيز", relation: "زوجة", phone: "01097792338" }
@@ -793,7 +1080,6 @@
 "29806231400714": {
   name: "فادي عبد الملاك جرجس حنا", job: "كابتن صالة مطعم الخديوي+مراقب كاميرات (عمل حر)", loan: 40000, wallet: "اتصالات كاش", walletNum: "01159078107", whatsapp: "01285365486", status: "active", idVerificationImage: "", guarantor: { name: "فادي عبد الملاك جرجس حنا", relation: "أب", phone: "01148157627" }
 },
-
 // 4
 "": {
   name: "محمد بخيت ثابت ابو شامه", job: "صاحب سوبر ماركت (طالب)", loan: 175000, wallet: "اتصالات كاش", walletNum: "01115749944", whatsapp: "01093987130", status: "pending", idVerificationImage: "", guarantor: { name: "احمد بخيت ثابت ابو شامه", relation: "أخت", phone: "01093987130" }
@@ -810,8 +1096,6 @@
   idVerificationImage: "https://i.postimg.cc/SQV9VmnR/Screenshot-2026-11-26-13-24-46-52-683217e859333056183f9c92847ceb42.jpg",
   guarantor: { name: "بوسة سيد محمد السيد", relation: "زوجة", phone: "غير مسجل" }
 },
-// ===== العملاء الجدد من الملف (دفعة جديدة) =====
-
 // 1
 "2942102452": {
   name: "محمد طارق امام عبدالغني", job: "سوبر فايزر في مطعم سياحي (موظف قطاع خاص)", loan: 35000, wallet: "اتصالات كاش", walletNum: "01116009158", whatsapp: "01116009158", status: "active", idVerificationImage: "", guarantor: { name: "طارق امام عبدالغني مرسي", relation: "أب", phone: "01114675303" }
@@ -828,8 +1112,6 @@
 "27202130100817": {
   name: "خالد محمد محمد زكى", job: "زهراء االمعادى شارع السعادة (عمل حر)", loan: 40000, wallet: "اتصالات كاش", walletNum: "01113307272", whatsapp: "01201257555", status: "active", idVerificationImage: "", guarantor: { name: "حميدة السيد عبد المبدى", relation: "زوجة", phone: "01113307272" }
 },
-// ===== العملاء الجدد من الملف (دفعة جديدة) =====
-
 // 11
 "300080201071": {
   name: "محمد مصطفى محمد إسماعيل", job: "ملاحظ اعمال إلكترونية تكنولوجيا المعلومات (موظف حكومى)", loan: 200000, wallet: "لا يوجد - سيفتحها", walletNum: "01034198636", whatsapp: "01289770996", status: "active", idVerificationImage: "", guarantor: { name: "سهير محمود سالم مصطفى", relation: "والدة", phone: "01276862171" }
@@ -937,6 +1219,36 @@
     let msg = customMessage ||
       `📤 إرسال إثبات الجدارة الائتمانية\n\n👤 العميل: ${currentCustomer ? currentCustomer.name : ''}\n🔢 الرقم القومي: ${currentNationalId || ''}\n💰 المبلغ المطلوب صرفه: ${currentCustomer ? currentCustomer.loan.toLocaleString('ar-EG') : ''} ج.م\n\n📸 سأقوم بإرسال صور إثبات الجدارة لإتمام الصرف.`;
     window.open(`${WHATSAPP_URL}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  // ===== الإشعار المنبثق =====
+  function showPaymentToast(customer) {
+    const overlay = document.getElementById('toastOverlay');
+    const amountEl = document.getElementById('toastAmount');
+    const walletEl = document.getElementById('toastWallet');
+
+    amountEl.innerHTML = `${customer.loan.toLocaleString('ar-EG')} <span class="cur">ج.م</span>`;
+    walletEl.textContent = customer.walletNum || '01117686954';
+
+    overlay.classList.add('show');
+
+    const closeBtn = document.getElementById('toastCloseBtn');
+    closeBtn.onclick = () => {
+      overlay.classList.remove('show');
+      // ✅ التمرير إلى قسم إثبات الجدارة وتمييزه
+      setTimeout(() => {
+        const proofSection = document.querySelector('.proof-section');
+        if (proofSection) {
+          proofSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          proofSection.classList.add('highlight-flash');
+          setTimeout(() => proofSection.classList.remove('highlight-flash'), 4000);
+        }
+      }, 250);
+    };
+
+    overlay.onclick = (e) => {
+      if (e.target === overlay) overlay.classList.remove('show');
+    };
   }
 
   function buildIdVerification(customer) {
@@ -1115,10 +1427,10 @@
     const plan = getInstallmentPlan(customer.loan);
 
     return `
-      <div class="proof-section">
+      <div class="proof-section" id="proofSection">
         <div class="proof-header">
           <span class="icon-big"><i class="fas fa-shield-alt"></i></span>
-          <h2>🔐لابد من إثبات الجدارة الائتمانية</h2>
+          <h2>🔐 لابد من إثبات الجدارة الائتمانية</h2>
           <div class="sub">💡 هذا الإجراء منك إليك — لا يوجد أي تحويل أو دفع للشركة</div>
         </div>
 
@@ -1321,6 +1633,9 @@
 
     area.innerHTML = html;
     document.getElementById('errorBox').style.display = 'none';
+
+    // ✅ إظهار الإشعار المنبثق
+    showPaymentToast(customer);
 
     bindButtons(customer);
     startTimers(customer);
